@@ -1,0 +1,16 @@
+# Reference this view as fake_talent_data
+uploaded_table_name: Fake talent data::3f38d3b4-389c-4342-ae29-d19eb69972c4
+
+dimensions:
+  quarter:
+    sql: "`Quarter`"
+    display_order: 0
+    primary_key: true
+
+  employee_retention:
+    sql: "`Employee Retention`"
+    display_order: 1
+
+measures:
+  count:
+    aggregate_type: count

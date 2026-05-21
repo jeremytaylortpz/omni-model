@@ -1,0 +1,19 @@
+# Reference this view as form_question_options
+schema: knowledge_management
+
+dimensions:
+  position: {}
+  value: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_question_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

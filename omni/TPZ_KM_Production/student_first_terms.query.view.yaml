@@ -1,0 +1,28 @@
+# Reference this view as student_first_terms
+label: Student First Terms
+description: Pre-aggregated lookup table of each student's first term at TPZ,
+  based on the earliest term start_date found in their attendance records. Used
+  to efficiently compute is_first_term in student_attendance_rates without
+  correlated subqueries.
+
+sql: |-
+  SELECT
+    sa.person_id,
+    MIN(t.start_date) AS first_term_start_date
+  FROM student_attendances sa
+  JOIN courses c ON c.id = sa.context_id AND sa.context_type = 'Course'
+  JOIN terms t ON t.id = c.term_id
+  WHERE sa.active = true
+  GROUP BY sa.person_id
+
+dimensions:
+  person_id:
+    sql: person_id
+    hidden: true
+    primary_key: true
+
+  first_term_start_date:
+    sql: first_term_start_date
+    description: The start_date of the earliest term in which this student has any
+      attendance record.
+    hidden: true

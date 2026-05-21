@@ -1,0 +1,33 @@
+# Reference this view as courses
+schema: knowledge_management
+
+dimensions:
+  course_code: {}
+  description: {}
+  created_at: {}
+  updated_at: {}
+  max_days: {}
+  class_length: {}
+  exclude_course: {}
+  friendly_name: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  course_type_id:
+    format: ID
+
+  term_id:
+    format: ID
+
+  schedule_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
+
+  course_code_list:
+    sql: ${courses.course_code}
+    aggregate_type: list

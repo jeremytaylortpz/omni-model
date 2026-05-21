@@ -1,0 +1,26 @@
+# Reference this view as safety_health_events
+schema: knowledge_management
+
+dimensions:
+  ref_key: {}
+  context_type: {}
+  title: {}
+  description: {}
+  event_ts: {}
+  time_frame: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  context_id:
+    format: ID
+
+  safety_health_event_type_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

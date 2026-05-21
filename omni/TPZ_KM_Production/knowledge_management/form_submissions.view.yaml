@@ -1,0 +1,26 @@
+# Reference this view as form_submissions
+schema: knowledge_management
+
+dimensions:
+  status: {}
+  smart_check_warnings: {}
+  submitted_at: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_id:
+    format: ID
+
+  student_id:
+    format: ID
+
+  language_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,24 @@
+# Reference this view as fablab_trainings
+schema: knowledge_management
+
+dimensions:
+  active: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  fablab_profile_id:
+    format: ID
+
+  fablab_training_course_id:
+    format: ID
+
+  trainer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

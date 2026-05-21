@@ -1,0 +1,373 @@
+# Reference this view as omni__survey_response_rate_query
+label: ⚡️🍣 Survey Response Rate Query
+
+sql: |-
+  WITH
+  /* ---------- SURVEY DIMENSION ---------- */
+  survey_dim AS (
+  	SELECT
+  		s.id AS survey_id,
+  		s.name AS survey_name
+  	FROM surveys s
+  ),
+
+  /* ---------- DEFINE SURVEY SETS ---------- */
+  dap_surveys AS (
+  	SELECT 419 AS survey_id
+  	UNION ALL SELECT 399
+  	UNION ALL SELECT 60
+  	UNION ALL SELECT 420
+  ),
+
+  entrepreneurial_spirit_surveys AS (
+  	SELECT 431 AS survey_id
+  	UNION ALL SELECT 401
+  	UNION ALL SELECT 70
+  	UNION ALL SELECT 61
+  	UNION ALL SELECT 88
+  ),
+
+  entrepreneurial_culture_surveys AS (
+  	SELECT 433 AS survey_id
+  	UNION ALL SELECT 432
+  	UNION ALL SELECT 402
+  ),
+
+  /* ---------- SURVEY ADMINISTRATION (term presence) ----------
+     We only want to include eligibles in terms where a survey was actually administered.
+     Using presence of ANY response (completed_at not null) as the proxy for administration.
+     If you want "sent" instead of "completed", switch to started_at is not null.
+  */
+  survey_admin_terms AS (
+  	SELECT DISTINCT
+  		sr.survey_id,
+  		sr.term_id
+  	FROM survey_responses sr
+  	WHERE sr.term_id IS NOT NULL
+  		AND sr.completed_at IS NOT NULL
+  ),
+
+  /* =========================================================
+  	TERM SEQUENCE PER STUDENT ("1st term", "2nd term", "3rd term", ...)
+  	Based on registrations -> courses -> terms.start_date
+  	========================================================= */
+  student_term_sequence AS (
+  	SELECT
+  		x.person_id,
+  		x.term_id,
+  		DENSE_RANK() OVER (
+  			PARTITION BY x.person_id
+  			ORDER BY x.term_start_date
+  		) AS term_seq
+  	FROM (
+  		SELECT DISTINCT
+  			r.person_id,
+  			c.term_id,
+  			DATE_FORMAT(t.start_date, '%Y-%m-%d') AS term_start_date
+  		FROM registrations r
+  		JOIN courses c
+  			ON c.id = r.context_id
+  		JOIN terms t
+  			ON t.id = c.term_id
+  		WHERE c.term_id IS NOT NULL
+  	) x
+  ),
+
+  /* =========================================================
+  	COURSE ELIGIBILITY (attendance threshold)
+  	========================================================= */
+  attendance_rollup AS (
+  	SELECT
+  		sa.person_id,
+  		sa.context_id,
+  		SUM(sa.att_pct) AS attended_session_equivalents
+  	FROM student_attendances sa
+  	WHERE 1 = 1
+  		/* Add your "inactive attendance row" filters here */
+  	GROUP BY sa.person_id, sa.context_id
+  ),
+
+  eligible_course_rows_raw AS (
+  	SELECT
+  		ar.person_id,
+  		c.term_id,
+  		c.id AS course_id,
+  		c.course_type_id
+  	FROM attendance_rollup ar
+  	JOIN courses c
+  		ON c.id = ar.context_id
+  	WHERE c.term_id IS NOT NULL
+  		AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+  		AND ar.attended_session_equivalents >= 3
+  ),
+
+  eligible_course_rows AS (
+  	SELECT
+  		e.*,
+  		sts.term_seq
+  	FROM eligible_course_rows_raw e
+  	JOIN student_term_sequence sts
+  		ON sts.person_id = e.person_id
+  		AND sts.term_id = e.term_id
+  ),
+
+  /* =========================================================
+  	NUMERATOR: responders attributed to eligible courses
+  	(we keep DAP out of this side)
+  	========================================================= */
+  responses_non_dap_attributed AS (
+  	SELECT DISTINCT
+  		ecr.term_id,
+  		ecr.course_id,
+  		ecr.course_type_id,
+  		sd.survey_name,
+  		sr.person_id
+  	FROM survey_responses sr
+  	JOIN survey_dim sd
+  		ON sd.survey_id = sr.survey_id
+  	LEFT JOIN dap_surveys ds
+  		ON ds.survey_id = sr.survey_id
+  	JOIN eligible_course_rows ecr
+  		ON ecr.person_id = sr.person_id
+  		AND ecr.term_id = sr.term_id
+  	WHERE sr.completed_at IS NOT NULL
+  		AND ds.survey_id IS NULL
+  ),
+
+  responding_course_agg AS (
+  	SELECT
+  		term_id,
+  		course_id,
+  		course_type_id,
+  		survey_name,
+  		COUNT(DISTINCT person_id) AS responding_students
+  	FROM responses_non_dap_attributed
+  	GROUP BY term_id, course_id, course_type_id, survey_name
+  ),
+
+  /* =========================================================
+  	DENOMINATORS PER SURVEY (term-seq rules + restrict to administered terms)
+  	========================================================= */
+  eligible_course_by_survey AS (
+  	/* Entrepreneurial Spirit: 1st or 3rd term */
+  	SELECT
+  		ecr.term_id,
+  		ecr.course_id,
+  		ecr.course_type_id,
+  		sd.survey_name,
+  		COUNT(DISTINCT ecr.person_id) AS eligible_students
+  	FROM eligible_course_rows ecr
+  	JOIN entrepreneurial_spirit_surveys ess
+  		ON 1 = 1
+  	JOIN survey_dim sd
+  		ON sd.survey_id = ess.survey_id
+  	JOIN survey_admin_terms sat
+  		ON sat.survey_id = ess.survey_id
+  		AND sat.term_id = ecr.term_id
+  	WHERE ecr.term_seq IN (1, 3)
+  	GROUP BY ecr.term_id, ecr.course_id, ecr.course_type_id, sd.survey_name
+
+  	UNION ALL
+
+  	/* Entrepreneurial Culture: 2nd term only */
+  	SELECT
+  		ecr.term_id,
+  		ecr.course_id,
+  		ecr.course_type_id,
+  		sd.survey_name,
+  		COUNT(DISTINCT ecr.person_id) AS eligible_students
+  	FROM eligible_course_rows ecr
+  	JOIN entrepreneurial_culture_surveys ecs
+  		ON 1 = 1
+  	JOIN survey_dim sd
+  		ON sd.survey_id = ecs.survey_id
+  	JOIN survey_admin_terms sat
+  		ON sat.survey_id = ecs.survey_id
+  		AND sat.term_id = ecr.term_id
+  	WHERE ecr.term_seq = 2
+  	GROUP BY ecr.term_id, ecr.course_id, ecr.course_type_id, sd.survey_name
+  ),
+
+  course_rates AS (
+  	SELECT
+  		ea.term_id,
+  		ea.survey_name,
+  		ea.course_type_id,
+  		ea.course_id,
+  		ea.eligible_students,
+  		COALESCE(ra.responding_students, 0) AS responding_students
+  	FROM eligible_course_by_survey ea
+  	LEFT JOIN responding_course_agg ra
+  		ON ra.term_id = ea.term_id
+  		AND ra.course_id = ea.course_id
+  		AND ra.course_type_id = ea.course_type_id
+  		AND ra.survey_name = ea.survey_name
+  ),
+
+  /* =========================================================
+  	DAP (term-only)
+  	Denominator: students in their 1st term (term_seq = 1)
+  	AND restrict to terms where each DAP survey actually appears
+  	========================================================= */
+  eligible_dap_terms AS (
+  	SELECT
+  		sts.term_id,
+  		COUNT(DISTINCT sts.person_id) AS eligible_students
+  	FROM student_term_sequence sts
+  	WHERE sts.term_seq = 1
+  	GROUP BY sts.term_id
+  ),
+
+  dap_responses AS (
+  	SELECT DISTINCT
+  		sr.term_id,
+  		sd.survey_name,
+  		sr.person_id
+  	FROM survey_responses sr
+  	JOIN dap_surveys ds
+  		ON ds.survey_id = sr.survey_id
+  	JOIN survey_dim sd
+  		ON sd.survey_id = sr.survey_id
+  	WHERE sr.completed_at IS NOT NULL
+  ),
+
+  responding_dap_agg AS (
+  	SELECT
+  		term_id,
+  		survey_name,
+  		COUNT(DISTINCT person_id) AS responding_students
+  	FROM dap_responses
+  	GROUP BY term_id, survey_name
+  ),
+
+  dap_survey_names AS (
+  	SELECT DISTINCT
+  		sd.survey_id,
+  		sd.survey_name
+  	FROM survey_dim sd
+  	JOIN dap_surveys ds
+  		ON ds.survey_id = sd.survey_id
+  ),
+
+  dap_rates AS (
+  	SELECT
+  		ed.term_id,
+  		dsn.survey_name,
+  		NULL AS course_type_id,
+  		NULL AS course_id,
+  		ed.eligible_students,
+  		COALESCE(rd.responding_students, 0) AS responding_students
+  	FROM eligible_dap_terms ed
+  	JOIN dap_survey_names dsn
+  		ON 1 = 1
+  	JOIN survey_admin_terms sat
+  		ON sat.survey_id = dsn.survey_id
+  		AND sat.term_id = ed.term_id
+  	LEFT JOIN responding_dap_agg rd
+  		ON rd.term_id = ed.term_id
+  		AND rd.survey_name = dsn.survey_name
+  ),
+
+  all_rates AS (
+  	SELECT * FROM course_rates
+  	UNION ALL
+  	SELECT * FROM dap_rates
+  )
+
+  SELECT
+  	ar.term_id,
+  	t.name AS term_name,
+  	DATE_FORMAT(t.start_date, '%Y-%m-%d') AS term_start_date,
+  	ar.survey_name,
+  	ar.course_type_id,
+  	ct.name AS course_type_name,
+  	ar.course_id,
+  	c.friendly_name AS course_name,
+  	ar.eligible_students,
+  	ar.responding_students,
+  	ar.responding_students / NULLIF(ar.eligible_students, 0) AS response_rate
+  FROM all_rates ar
+  JOIN terms t
+  	ON t.id = ar.term_id
+  LEFT JOIN courses c
+  	ON c.id = ar.course_id
+  LEFT JOIN course_types ct
+  	ON ct.id = ar.course_type_id
+  ORDER BY
+  	t.id,
+  	ar.survey_name,
+  	course_type_name,
+  	course_name
+
+dimensions:
+  term_id: {}
+  survey_name: {}
+  eligible_students: {}
+  responding_students: {}
+  response_rate: {}
+  term_start_date: {}
+  course_type_id: {}
+  course_type_name: {}
+  course_id: {}
+  course_name: {}
+  id: {}
+
+  term_name:
+    order_by_field: terms.start_date
+
+  survey_name_groups:
+    sql: ${omni__survey_response_rate_query.survey_name}
+    groups:
+      - filter:
+          is:
+            [
+              Discover SCALE Spring 2025,
+              Entrepreneurial Spirit Survey,
+              SCALE Survey DISCOVER,
+              SCALE Survey DISCOVER - Winter 2025,
+              SCALE Survey DISCOVER Version,
+              SCALE Survey INCUBATE Version
+            ]
+        name: Entrepreneurial Spirit
+      - filter:
+          is:
+            [
+              Developmental Relationships Survey,
+              Entrepreneurial Culture Survey (Launch Lab Version),
+              Spring 2025 - Entrepreneurial Culture Survey
+            ]
+        name: Entrepreneurial Culture
+      - filter:
+          contains: Developmental Assets
+        name: Developmental Assets
+      - filter:
+          is: Entrepreneurial Culture
+        name: Entrepreneurial Culture
+    else: Other
+    label: Survey Name Groups
+
+measures:
+  count:
+    aggregate_type: count
+
+  eligible_students_sum:
+    sql: ${omni__survey_response_rate_query.eligible_students}
+    aggregate_type: sum
+
+  responding_students_sum:
+    sql: ${omni__survey_response_rate_query.responding_students}
+    aggregate_type: sum
+
+  rates:
+    sql: CASE WHEN ${omni__survey_response_rate_query.eligible_students_sum} = 0
+      THEN NULL ELSE
+      COALESCE(${omni__survey_response_rate_query.responding_students_sum}, 0) /
+      ${omni__survey_response_rate_query.eligible_students_sum} END
+    label: Rates
+
+  rates_1:
+    sql: CASE WHEN ${omni__survey_response_rate_query.eligible_students_sum} = 0
+      THEN NULL ELSE
+      COALESCE(${omni__survey_response_rate_query.responding_students_sum}, 0) /
+      ${omni__survey_response_rate_query.eligible_students_sum} END
+    label: Rates

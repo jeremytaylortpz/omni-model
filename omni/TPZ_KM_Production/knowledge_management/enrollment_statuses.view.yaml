@@ -1,0 +1,22 @@
+# Reference this view as enrollment_statuses
+schema: knowledge_management
+
+dimensions:
+  status: {}
+  tags: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  enrollment_form_id:
+    format: ID
+
+  enrollment_form_status_type_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

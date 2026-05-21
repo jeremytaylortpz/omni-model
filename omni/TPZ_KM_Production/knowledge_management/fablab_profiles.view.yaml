@@ -1,0 +1,24 @@
+# Reference this view as fablab_profiles
+schema: knowledge_management
+
+dimensions:
+  educator: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  fabman_id:
+    format: ID
+
+  supersaas_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

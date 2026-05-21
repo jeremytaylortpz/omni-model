@@ -1,0 +1,22 @@
+# Reference this view as survey_types
+description: This table currently isnt being used since we switched from
+  collected surveys in Qualtrics instead of Survey Monkey. We would like to be
+  able to use this again in the future to track the type of survey over
+  different versions of it.
+
+schema: knowledge_management
+
+dimensions:
+  team: {}
+  created_at: {}
+  updated_at: {}
+  category: {}
+  sub_category: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

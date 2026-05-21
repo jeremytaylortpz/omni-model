@@ -1,0 +1,20 @@
+# Reference this view as temp_dashboard_datasets
+schema: knowledge_management
+
+dimensions:
+  dataset_name: {}
+  title: {}
+  updated_date: {}
+  next_updated_date: {}
+  last_updated_color: {}
+  note: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

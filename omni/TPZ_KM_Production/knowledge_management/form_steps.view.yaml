@@ -1,0 +1,18 @@
+# Reference this view as form_steps
+schema: knowledge_management
+
+dimensions:
+  position: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

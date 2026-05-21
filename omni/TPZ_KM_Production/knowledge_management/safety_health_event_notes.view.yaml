@@ -1,0 +1,15 @@
+# Reference this view as safety_health_event_notes
+schema: knowledge_management
+
+dimensions:
+  note: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

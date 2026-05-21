@@ -1,0 +1,4 @@
+base_view: question_taxonomy
+label: ECES Question Taxonomy
+
+joins: {}

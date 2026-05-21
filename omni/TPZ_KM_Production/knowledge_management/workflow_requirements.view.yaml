@@ -1,0 +1,22 @@
+# Reference this view as workflow_requirements
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  in_use: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  workflow_id:
+    format: ID
+
+  node_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

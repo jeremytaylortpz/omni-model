@@ -1,0 +1,28 @@
+# Reference this view as fablab_equipments
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  created_at: {}
+  updated_at: {}
+  active: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  fablab_equipment_type_id:
+    format: ID
+
+  fabman_id:
+    format: ID
+
+  supersaas_id:
+    format: ID
+
+  fablab_location_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

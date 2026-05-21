@@ -1,0 +1,25 @@
+# Reference this view as roles
+schema: knowledge_management
+
+dimensions:
+  entity_type: {}
+  context_type: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  entity_id:
+    format: ID
+
+  role_type_id:
+    format: ID
+
+  context_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

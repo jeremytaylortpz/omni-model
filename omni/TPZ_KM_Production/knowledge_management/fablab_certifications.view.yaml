@@ -1,0 +1,25 @@
+# Reference this view as fablab_certifications
+schema: knowledge_management
+
+dimensions:
+  certification_level: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  fablab_profile_id:
+    format: ID
+
+  fablab_equipment_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
+
+  certification_level_list:
+    sql: ${fablab_certifications.certification_level}
+    aggregate_type: list

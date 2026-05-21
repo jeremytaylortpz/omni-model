@@ -1,0 +1,27 @@
+# Reference this view as workflow_evidences
+schema: knowledge_management
+
+dimensions:
+  evidence_object_type: {}
+  verified: {}
+  last_updated_at: {}
+  last_updated_term: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  workflow_id:
+    format: ID
+
+  evidence_object_id:
+    format: ID
+
+  completion_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

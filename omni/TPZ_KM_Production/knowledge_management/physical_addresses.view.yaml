@@ -1,0 +1,20 @@
+# Reference this view as physical_addresses
+schema: knowledge_management
+
+dimensions:
+  street: {}
+  city: {}
+  state: {}
+  apt_number: {}
+  zip_code: {}
+  created_at: {}
+  updated_at: {}
+  is_mailing_address: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

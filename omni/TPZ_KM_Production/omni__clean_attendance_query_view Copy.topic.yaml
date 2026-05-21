@@ -1,0 +1,165 @@
+base_view: omni__clean_attendance_query_view
+label: Cleaned Student Attendances
+description: Deduplicated student attendance records. One row per student ×
+  course × date. Use for attendance rates, present/absent/half-day counts,
+  course enrollment tracking, and demographic breakdowns of attendance patterns.
+
+ai_fields:
+  [
+    omni__clean_attendance_query_view.*,
+    people.id,
+    people.full_name,
+    people.date_of_birth,
+    student_profiles.person_id,
+    student_profiles.current_grade,
+    student_profiles.school,
+    student_profiles.iep,
+    student_profiles.first_gen_college,
+    student_profiles.pronouns,
+    student_profiles.referral,
+    student_profiles.dismissed,
+    student_profiles.esl,
+    student_profiles.school_release_consent,
+    courses.course_code,
+    courses.friendly_name,
+    courses.max_days,
+    terms.name,
+    terms.start_date,
+    terms.end_date,
+    terms.year,
+    term_sorting_v2.name,
+    term_sorting_v2.term_status,
+    schools.name,
+    schools.is_target_school,
+    schools.name_groups,
+    school_tiers.name,
+    registrations.active,
+    registrations.context_type,
+    registrations.person_id,
+    enrollment_forms.term_name,
+    enrollment_forms.person_id,
+    enrollment_forms.submitted_at,
+    enrollment_forms.student_grade,
+    enrollment_forms.student_school,
+    enrollment_forms.has_enrollment_form,
+    interest_forms.person_id,
+    interest_forms.submitted_at,
+    interest_forms.referral_source,
+    interest_forms.has_interest_form,
+    schedules.name,
+    schedules.block_name,
+    schedules.start_date,
+    schedules.end_date,
+    student_attendances.att_pct,
+    student_attendances.date,
+    student_attendances.person_id,
+    student_attendances.active,
+    student_attendances.person_id_count_distinct,
+    spring_2026_enrollments.id,
+    spring_2026_enrollments.course_code,
+    spring_2026_enrollments.friendly_name
+  ]
+
+joins:
+  people:
+    student_profiles:
+      schools:
+        school_tiers: {}
+    registrations: {}
+    enrollment_forms: {}
+    interest_forms: {}
+    spring_2026_enrollments: {}
+  courses:
+    schedules: {}
+    terms:
+      term_sorting_v2: {}
+
+views:
+  omni__clean_attendance_query_view:
+    dimensions:
+      date_string_1:
+        sql: CAST(${omni__clean_attendance_query_view.attendance_date} AS VARCHAR(10))
+        label: date_string
+
+      date_string_level_of_detail:
+        sql: ${omni__clean_attendance_query_view.date_string_1}
+        label: "# of Class Days"
+        ai_context: Count of distinct class dates per course_code. Use to determine how
+          many days a course has met.
+        level_of_detail:
+          aggregate_type: count_distinct
+          fixed: [ omni__clean_attendance_query_view.course_code ]
+
+      course_name_groups:
+        sql: ${omni__clean_attendance_query_view.course_name}
+        groups:
+          - filter:
+              contains: Deep Dive
+            name: Deep Dives
+          - filter:
+              is:
+                [
+                  Discover,
+                  Explore - 2D Design,
+                  Explore - Electronics,
+                  Explore - Garment & Textile,
+                  Ideate,
+                  Incubate,
+                  TPP Eship Level 1,
+                  TPP Eship Level 2,
+                  TPP Eship Level 3,
+                  TPP Eship Level 4,
+                  TPP Eship Level 5,
+                  TPP Eship Level 6
+                ]
+            name: EShip
+          - filter:
+              contains: Launch Lab - Open Studio
+            name: Open Studio
+          - filter:
+              and:
+                - contains: Launch Lab
+                - not_contains: Open Studio
+            name: Launch Labs
+          - filter:
+              or:
+                - contains: Pathways
+                - is:
+                    [
+                      Consult,
+                      Future You,
+                      Intern,
+                      TPP Intern,
+                      TPP Made Possible,
+                      TPP Made Possible Level 1,
+                      TPP Made Possible Level 2,
+                      TPP Made Possible Level 3,
+                      TPP Made Possible Level 4,
+                      TPP Virtual Business
+                    ]
+                - contains: We Sell
+            name: Pathways & WBL
+          - filter:
+              contains: Ambassador
+            name: Ambassadors
+        else: Other
+        label: Course Name Groups
+        sample_values:
+          [
+            Deep Dives,
+            EShip,
+            Open Studio,
+            Launch Labs,
+            Pathways & WBL,
+            Ambassadors,
+            Other
+          ]
+        ai_context: "Groups course names into program categories: Deep Dives, EShip,
+          Open Studio, Launch Labs, Pathways & WBL, Ambassadors, Other."
+
+ai_context: "Base view is deduplicated attendance (one record per
+  student/course/date). Key fields: att_pct (1=present, 0.5=half-day, 0=absent),
+  p/a/h (LOD sums per student/course), course_name_groups (program categories).
+  Join path: base view → people → student_profiles/demographics. Use
+  omni__clean_attendance_query_view fields for attendance; use
+  student_attendances only if you need raw un-deduplicated records."

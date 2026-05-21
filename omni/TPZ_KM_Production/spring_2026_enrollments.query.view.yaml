@@ -1,0 +1,22 @@
+# Reference this view as spring_2026_enrollments
+label: Spring 2026 Enrollments
+
+query:
+  fields:
+    people.id: id
+    courses.course_code: course_code
+    courses.friendly_name: friendly_name
+  base_view: omni__clean_attendance_query_view
+  filters:
+    terms.name:
+      is: Spring 2026
+    registrations.active:
+      is: true
+  sorts:
+    - field: people.id
+  topic: omni__clean_attendance_query_view Copy
+
+dimensions:
+  id: {}
+  course_code: {}
+  friendly_name: {}

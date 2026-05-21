@@ -1,0 +1,67 @@
+# Reference this view as student_profiles
+schema: knowledge_management
+
+dimensions:
+  date_of_birth: {}
+  current_grade: {}
+  school: {}
+  iep: {}
+  first_gen_college: {}
+  dietary_restrictions: {}
+  created_at: {}
+  updated_at: {}
+  pronouns: {}
+  school_release_consent: {}
+  referral: {}
+  community_org_referral: {}
+  notes: {}
+  interest_form_most_recent_submitted: {}
+  enrollment_form_most_recent_submitted: {}
+  enrollment_form_most_recent_status: {}
+  interest_form_most_recent_status: {}
+  student_phone: {}
+  student_primary_contact_phone: {}
+  student_email: {}
+  student_primary_contact_email: {}
+  student_primary_contact_email_full_name: {}
+  student_primary_contact_phone_full_name: {}
+  latest_term: {}
+  dismissed: {}
+  citywide_release_consent: {}
+  allergies: {}
+  esl: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  powerschool_id:
+    format: ID
+
+  latest_term_id:
+    format: ID
+
+  student_email_original_id:
+    format: ID
+
+  student_phone_original_id:
+    format: ID
+
+  student_primary_contact_phone_original_id:
+    format: ID
+
+  student_primary_contact_email_original_id:
+    format: ID
+
+  student_type_id:
+    format: ID
+
+  school_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

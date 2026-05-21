@@ -1,0 +1,21 @@
+# Reference this view as ahoy_events
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  properties: {}
+  time: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  visit_id:
+    format: ID
+
+  dashboard_user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

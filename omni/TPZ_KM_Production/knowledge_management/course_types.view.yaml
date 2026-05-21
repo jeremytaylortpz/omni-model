@@ -1,0 +1,27 @@
+# Reference this view as course_types
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  department_id:
+    format: ID
+
+  name_groups:
+    sql: ${course_types.name}
+    groups:
+      - filter:
+          is: Ambassadors - STEAM
+        name: Ambassadors STEAM
+    else: Other
+    label: Name Groups
+
+measures:
+  count:
+    aggregate_type: count

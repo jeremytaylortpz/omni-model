@@ -1,0 +1,65 @@
+# Reference this view as most_recent_ef_by_student
+label: Most Recent EF by Student
+
+schema: knowledge_management
+sql: |-
+  SELECT *
+  FROM (
+    SELECT
+      ef.*,
+      ROW_NUMBER() OVER (
+        PARTITION BY ef.person_id
+        ORDER BY ef.submitted_at DESC
+      ) AS rn
+    FROM enrollment_forms ef
+  ) x
+  WHERE x.rn = 1
+
+dimensions:
+  id: {}
+  person_id: {}
+  term_name: {}
+  term_year: {}
+  release_media: {}
+  release_survey: {}
+  release_student_info: {}
+  release_student_info_2: {}
+  created_at: {}
+  updated_at: {}
+  submitted_at: {}
+  rn: {}
+
+  release_basb:
+    sql: "`release_BASB`"
+
+  release_media_groups:
+    sql: ${most_recent_ef_by_student.release_media}
+    groups:
+      - filter:
+          is:
+            [
+              "1",
+              "I give consent ",
+              I give consent to The Possible Zone to use my child's likeness
+                for these reasons.,
+              I give consent to The Possible Zone to use my child’s likeness
+                for these reasons.,
+              Yes
+            ]
+        name: Consent
+      - filter:
+          is:
+            [
+              "0",
+              "I DO NOT CONSENT ",
+              I DO NOT CONSENT to The Possible Zone using my child’s likeness
+                for these reasons.,
+              No
+            ]
+        name: Decline
+    else: Unknown
+    label: Release Media Groups
+
+measures:
+  count:
+    aggregate_type: count

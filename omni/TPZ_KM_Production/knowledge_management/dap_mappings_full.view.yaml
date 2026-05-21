@@ -1,0 +1,52 @@
+# Reference this view as dap_mappings_full
+schema: knowledge_management
+
+dimensions:
+  question_text: {}
+  weight: {}
+
+  competency_type:
+    ai_context: Type of competency measured. Rarely needed for analysis — prefer
+      question_taxonomy.competency_name.
+
+  competency_level:
+    ai_context: Level within the competency framework. Rarely needed for DAP analysis.
+
+  sub_scale:
+    label: DAP Sub-Scale
+    sample_values:
+      [
+        Support,
+        Empowerment,
+        Boundaries & Expectations,
+        Constructive Use of Time,
+        Commitment to Learning,
+        Positive Values,
+        Social Competencies,
+        Positive Identity
+      ]
+    ai_context: DAP asset category. Group by this + student_id for per-asset scores.
+
+  context:
+    label: DAP Context
+    sample_values: [ Personal, Social, Family, School/Community ]
+    ai_context: "DAP context dimension: Personal, Social, Family, or
+      School/Community. Group by this + student_id for per-context scores."
+
+  context_scale:
+    label: Context Scale
+    ai_context: Numeric scale value for the DAP context. Rarely needed directly —
+      prefer dap_context_score measure.
+
+  question_map:
+    sql: REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(${dap_mappings_full.question_text},
+      ' ', ''), '.', ''), '(', ''), ')', ''), ',', '')
+    label: Question Map Key
+
+measures:
+  count:
+    aggregate_type: count
+
+ai_context: DAP (Developmental Assets Profile) scoring reference. Maps DAP
+  questions to asset categories (sub_scale) and contexts. Use context for
+  context-level scores, sub_scale for asset-category scores.

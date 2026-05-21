@@ -1,0 +1,234 @@
+# Reference this view as enrollment_forms
+schema: knowledge_management
+
+dimensions:
+  term_year: {}
+  contact_1_address: {}
+  contact_1_address_2: {}
+  contact_1_apartment_number: {}
+  contact_1_can_pick_up: {}
+  contact_1_city: {}
+  contact_1_custody: {}
+  contact_1_email: {}
+  contact_1_first_name: {}
+  contact_1_gender: {}
+  contact_1_last_name: {}
+  contact_1_middle_name: {}
+  contact_1_phone_1_ext: {}
+  contact_1_phone_1_number: {}
+  contact_1_phone_1_preferred: {}
+  contact_1_phone_1_sms: {}
+  contact_1_phone_1_type: {}
+  contact_1_phone_2_ext: {}
+  contact_1_phone_2_number: {}
+  contact_1_phone_2_preferred: {}
+  contact_1_phone_2_sms: {}
+  contact_1_phone_2_type: {}
+  contact_1_primary_language: {}
+  contact_1_priority: {}
+  contact_1_relationship_to_student: {}
+  contact_1_suffix: {}
+  contact_1_zip_code: {}
+  contact_2_address: {}
+  contact_2_address_2: {}
+  contact_2_apartment_number: {}
+  contact_2_can_pick_up: {}
+  contact_2_city: {}
+  contact_2_custody: {}
+  contact_2_email: {}
+  contact_2_first_name: {}
+  contact_2_gender: {}
+  contact_2_last_name: {}
+  contact_2_middle_name: {}
+  contact_2_phone_1_ext: {}
+  contact_2_phone_1_number: {}
+  contact_2_phone_1_preferred: {}
+  contact_2_phone_1_sms: {}
+  contact_2_phone_1_type: {}
+  contact_2_phone_2_ext: {}
+  contact_2_phone_2_number: {}
+  contact_2_phone_2_preferred: {}
+  contact_2_phone_2_sms: {}
+  contact_2_phone_2_type: {}
+  contact_2_primary_language: {}
+  contact_2_priority: {}
+  contact_2_relationship_to_student: {}
+  contact_2_suffix: {}
+  contact_2_zip_code: {}
+  contact_3_address: {}
+  contact_3_address_2: {}
+  contact_3_apartment_number: {}
+  contact_3_can_pick_up: {}
+  contact_3_city: {}
+  contact_3_custody: {}
+  contact_3_email: {}
+  contact_3_first_name: {}
+  contact_3_gender: {}
+  contact_3_last_name: {}
+  contact_3_middle_name: {}
+  contact_3_phone_1_ext: {}
+  contact_3_phone_1_number: {}
+  contact_3_phone_1_preferred: {}
+  contact_3_phone_1_sms: {}
+  contact_3_phone_1_type: {}
+  contact_3_phone_2_ext: {}
+  contact_3_phone_2_number: {}
+  contact_3_phone_2_preferred: {}
+  contact_3_phone_2_sms: {}
+  contact_3_phone_2_type: {}
+  contact_3_primary_language: {}
+  contact_3_priority: {}
+  contact_3_relationship_to_student: {}
+  contact_3_suffix: {}
+  contact_3_zip_code: {}
+  contact_4_address: {}
+  contact_4_address_2: {}
+  contact_4_apartment_number: {}
+  contact_4_city: {}
+  contact_4_email: {}
+  contact_4_employer: {}
+  contact_4_first_name: {}
+  contact_4_last_name: {}
+  contact_4_middle_name: {}
+  contact_4_phone_1_ext: {}
+  contact_4_phone_1_number: {}
+  contact_4_phone_2_ext: {}
+  contact_4_phone_2_number: {}
+  contact_4_phone_3_ext: {}
+  contact_4_phone_3_number: {}
+  contact_4_zip_code: {}
+  contact_5_address: {}
+  contact_5_address_2: {}
+  contact_5_apartment_number: {}
+  contact_5_can_pick_up: {}
+  contact_5_city: {}
+  contact_5_custody: {}
+  contact_5_email: {}
+  contact_5_first_name: {}
+  contact_5_gender: {}
+  contact_5_last_name: {}
+  contact_5_middle_name: {}
+  contact_5_phone_1_ext: {}
+  contact_5_phone_1_number: {}
+  contact_5_phone_1_preferred: {}
+  contact_5_phone_1_sms: {}
+  contact_5_phone_1_type: {}
+  contact_5_phone_2_ext: {}
+  contact_5_phone_2_number: {}
+  contact_5_phone_2_preferred: {}
+  contact_5_phone_2_sms: {}
+  contact_5_phone_2_type: {}
+  contact_5_primary_language: {}
+  contact_5_priority: {}
+  contact_5_relationship_to_student: {}
+  contact_5_suffix: {}
+  contact_5_zip_code: {}
+  contact_6_address: {}
+  contact_6_address_2: {}
+  contact_6_apartment_number: {}
+  contact_6_city: {}
+  contact_6_email: {}
+  contact_6_first_name: {}
+  contact_6_last_name: {}
+  contact_6_middle_name: {}
+  contact_6_phone_1_ext: {}
+  contact_6_phone_1_number: {}
+  contact_6_phone_2_ext: {}
+  contact_6_phone_2_number: {}
+  is_parent_guardian: {}
+  agree_mask_mandate_and_screening: {}
+  consent_form_agree_date: {}
+  agree_elective_participation: {}
+  release_transportation_central_hub: {}
+  release_student_website: {}
+  release_transportation_pickup: {}
+  release_transportation_private: {}
+  agree_general_release: {}
+  consent_signature: {}
+  school_student_id: {}
+  release_media: {}
+  release_survey: {}
+  release_student_info: {}
+  release_student_info_2: {}
+  student_address: {}
+  student_address_2: {}
+  student_allergies: {}
+  student_covid_vaccinated: {}
+  student_cell: {}
+  student_city: {}
+  student_dcid: {}
+  student_dietary_restrictions: {}
+  student_has_dietary_restrictions: {}
+  student_date_of_birth: {}
+  student_email: {}
+  student_ethnicity: {}
+  student_first_gen_college: {}
+  student_first_name: {}
+  student_gender: {}
+  student_grade: {}
+  student_id: {}
+  student_insurance: {}
+  student_insurance_company: {}
+  student_language_at_home: {}
+  student_last_name: {}
+  student_mailing_address: {}
+  student_mailing_address_2: {}
+  student_mailing_city: {}
+  student_mailing_zip_code: {}
+  student_middle_name: {}
+  student_other_school: {}
+  student_school: {}
+  student_physician: {}
+  student_physician_phone_number: {}
+  student_policy_number: {}
+  student_primary_language: {}
+  student_race_1: {}
+  student_race_american_indian: {}
+  student_race_asian: {}
+  student_race_black: {}
+  student_race_native: {}
+  student_esl: {}
+  student_iep: {}
+  student_state: {}
+  student_zip_code: {}
+  student_extra_notes: {}
+  student_pronouns: {}
+  student_referral_source: {}
+  created_at: {}
+  updated_at: {}
+  student_race_white: {}
+  submitted_at: {}
+
+  term_name:
+    order_by_field: terms.start_date
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  release_basb:
+    sql: "`release_BASB`"
+
+  has_enrollment_form:
+    sql: NOT COALESCE(${enrollment_forms.person_id} IS NULL, FALSE)
+    label: has_enrollment_form
+    format: ""
+
+measures:
+  count:
+    aggregate_type: count
+
+  person_id_count_distinct:
+    sql: ${enrollment_forms.person_id}
+    aggregate_type: count_distinct
+
+  has_enrollment_form_count_true:
+    sql: ${enrollment_forms.has_enrollment_form}
+    label: Has Enrollment Form True Count
+    aggregate_type: count
+    filters:
+      has_enrollment_form:
+        is: true

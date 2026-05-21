@@ -1,0 +1,21 @@
+# Reference this view as measurement_items
+schema: knowledge_management
+
+dimensions:
+  item_type: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  item_id:
+    format: ID
+
+  measurement_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

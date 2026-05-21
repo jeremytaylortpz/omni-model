@@ -1,0 +1,19 @@
+# Reference this view as events
+schema: knowledge_management
+
+dimensions:
+  title: {}
+  description: {}
+  start: {}
+  end: {}
+  created_at: {}
+  updated_at: {}
+  stipended: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

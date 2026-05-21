@@ -1,0 +1,47 @@
+# Reference this view as registrations
+schema: knowledge_management
+
+dimensions:
+  date: {}
+  created_at: {}
+  updated_at: {}
+  hidden: {}
+
+  context_type:
+    description: defines the context the registrastions is for - typically course or event
+
+  active:
+    description: this is set to 0 when a student is dropped from this section of a course
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  context_id:
+    format: ID
+
+  has_registration:
+    sql: NOT COALESCE(${registrations.person_id} IS NULL, FALSE)
+    label: has_registration
+    format: ""
+
+measures:
+  count:
+    aggregate_type: count
+
+  active_count_false:
+    sql: ${registrations.active}
+    label: Active False Count
+    description: "(Count) Active: this is set to 0 when a student is dropped from
+      this section of a course"
+    aggregate_type: count
+    filters:
+      active:
+        is: false
+
+  person_id_count_distinct:
+    sql: ${registrations.person_id}
+    aggregate_type: count_distinct

@@ -1,0 +1,21 @@
+# Reference this view as schedule_days
+schema: knowledge_management
+
+dimensions:
+  date: {}
+  cancelled: {}
+  start_time: {}
+  end_time: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  schedule_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

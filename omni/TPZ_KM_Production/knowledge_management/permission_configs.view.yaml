@@ -1,0 +1,23 @@
+# Reference this view as permission_configs
+schema: knowledge_management
+
+dimensions:
+  label: {}
+  km_name: {}
+  model: {}
+  view_method: {}
+  access_column: {}
+  edit_method: {}
+  info_type: {}
+  context_method: {}
+  position: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

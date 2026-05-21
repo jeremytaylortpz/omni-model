@@ -1,0 +1,38 @@
+# Reference this view as survey_answers
+schema: knowledge_management
+
+dimensions:
+  created_at: {}
+  updated_at: {}
+  value: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  sm_id:
+    format: ID
+
+  survey_question_id:
+    format: ID
+
+  value_decoded:
+    sql: CAST(value AS CHAR)
+    label: Value (Decoded)
+    description: The raw answer value decoded from MySQL binary/blob storage into a
+      readable string. The underlying value column stores answer text as ASCII
+      character codes; CAST AS CHAR converts it to human-readable text (e.g.,
+      'Never', 'Strongly Agree').
+
+  value_clean:
+    sql: REPLACE(REPLACE(CAST(value AS CHAR), ' disagree', ' Disagree'), ' agree', '
+      Agree')
+    label: Value (Clean)
+    description: Decoded answer value with capitalization normalized — ' disagree' →
+      ' Disagree' and ' agree' → ' Agree'. Mirrors the answer_value_clean logic
+      used in the omni__all_survey_data_with_demos view. Use this field for
+      consistent display and filtering of Likert-scale responses.
+
+measures:
+  count:
+    aggregate_type: count

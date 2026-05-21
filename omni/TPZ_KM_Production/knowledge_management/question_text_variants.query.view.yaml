@@ -1,0 +1,139 @@
+# Reference this view as question_text_variants
+label: Question Text Variants
+description: One row per unique question text variant per survey source. Links
+  back to question_taxonomy via question_match_key. Use for auditing question
+  text across survey versions.
+
+schema: knowledge_management
+sql: |-
+  SELECT DISTINCT
+    LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) AS question_match_key,
+    survey_source,
+    question_text
+  FROM knowledge_management.ec_es_subscale_mapping
+  WHERE LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) IS NOT NULL
+    AND LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) != ''
+
+dimensions:
+  question_match_key:
+    sql: question_match_key
+    description: Normalized match key. Foreign key linking to question_taxonomy.
+
+  survey_source:
+    sql: survey_source
+
+  question_text:
+    sql: question_text
+    label: Question Text (Raw Variant)
+
+measures:
+  count:
+    aggregate_type: count

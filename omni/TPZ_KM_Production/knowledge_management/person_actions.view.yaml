@@ -1,0 +1,46 @@
+# Reference this view as person_actions
+description: This table was intended to capture every action a person took
+  during their time with us at TPZ. The ideal would be that you could pull all
+  of a person’s actions and get a timeline of everything that happened to them
+  at TPZ, from completing an interest or enrollment form, to being registered
+  for a class, to signing into the building, to an educator marking their
+  attendance, to completing a survey or having a competency value calculated
+  based on that survey, through to returning as a volunteer or alumni and
+  interacting with new students in a classroom. This could even include more
+  granular behaviors like interacting with a particular tool or device during
+  class. However, much of the automated pieces necessary to create these time
+  points have not yet been added to the back-end system.
+
+schema: knowledge_management
+
+dimensions:
+  linked_item_type: {}
+  context_type: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  action_type_id:
+    format: ID
+
+  linked_item_id:
+    format: ID
+
+  context_id:
+    format: ID
+
+  term_id:
+    format: ID
+
+  role_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,65 @@
+# Reference this view as interest_forms
+schema: knowledge_management
+
+dimensions:
+  term_name: {}
+  term_year: {}
+  contact_email: {}
+  contact_first_name: {}
+  contact_last_name: {}
+  contact_phone: {}
+  contact_language: {}
+  contact_relationship: {}
+  student_phone: {}
+  student_grade: {}
+  student_school_raw: {}
+  student_dob: {}
+  student_email: {}
+  extra_notes: {}
+  student_first_name: {}
+  student_last_name: {}
+  student_gender: {}
+  other_school: {}
+  student_language: {}
+  student_pronouns: {}
+  referral_source: {}
+  created_at: {}
+  updated_at: {}
+  referral_community_org: {}
+  submitted_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  has_interest_form:
+    sql: NOT COALESCE(${interest_forms.person_id} IS NULL, FALSE)
+    label: has_interest_form
+    format: ""
+    ai_context: TRUE if this person has submitted an interest form. Use for
+      pipeline/funnel analysis.
+
+  has_interest:
+    sql: NOT COALESCE(${interest_forms.person_id} IS NULL, FALSE)
+    label: has_interest
+    format: ""
+    hidden: true
+
+measures:
+  count:
+    aggregate_type: count
+
+  person_id_count_distinct:
+    sql: ${interest_forms.person_id}
+    aggregate_type: count_distinct
+
+  has_interest_count_true:
+    sql: ${interest_forms.has_interest}
+    label: Has Interest True Count
+    aggregate_type: count
+    filters:
+      has_interest:
+        is: true

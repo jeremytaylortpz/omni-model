@@ -1,0 +1,21 @@
+# Reference this view as development_goals
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  amount: {}
+  fiscal_quarter: {}
+  fiscal_year: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  dev_category_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

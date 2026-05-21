@@ -1,0 +1,314 @@
+# Reference this view as question_taxonomy
+label: Question Taxonomy
+description: One row per unique question_match_key. Use this view for joins to
+  survey response data. Canonical question text is the cleanest available
+  version of the question, excluding block-header prefixes.
+
+schema: knowledge_management
+sql: |-
+  SELECT
+    LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) AS question_match_key,
+    competency_level,
+    competency_name,
+    competency_tree,
+    competency_type,
+    sub_scale,
+    weight,
+    revised_question,
+    MIN(CASE WHEN question_text NOT LIKE '%How true are%' AND question_text NOT LIKE '%How much do%' THEN question_text ELSE NULL END) AS canonical_question_text
+  FROM knowledge_management.ec_es_subscale_mapping
+  WHERE LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) IS NOT NULL
+    AND LOWER(
+      CASE
+        WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          90)
+        WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          45)
+        WHEN LOCATE('Howmuchdoyouagreewiththe',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          68)
+        WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')) = 1
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          34)
+        WHEN ASCII(LEFT(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          1)) BETWEEN 97 AND 102
+        THEN SUBSTRING(
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', ''),
+          2)
+        ELSE
+          REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(question_text,'<br>',''),'<BR>',''),'<br/>',''),'<BR/>',''), '[^a-zA-Z0-9]', '')
+      END
+    ) != ''
+  GROUP BY
+    question_match_key,
+    competency_level,
+    competency_name,
+    competency_tree,
+    competency_type,
+    sub_scale,
+    weight,
+    revised_question
+
+dimensions:
+  question_match_key:
+    sql: question_match_key
+    description: Normalized match key derived from question_text. Use this field to
+      join to survey response data.
+    primary_key: true
+
+  competency_level:
+    sql: competency_level
+    label: Competency Level
+    sample_values: [ I_COULD, I_CAN, I_AM ]
+    ai_context: "ES domain level: I_COULD, I_CAN, or I_AM. For EC surveys, use
+      eces_level instead."
+
+  competency_name:
+    sql: competency_name
+    label: Competency Name
+    sample_values:
+      [
+        Growth Mindset,
+        Creativity,
+        Sense of Belonging,
+        STEAM Interest,
+        Communication,
+        Teamwork,
+        Problem Solving,
+        STEAM Agency,
+        Adaptability,
+        Self-Efficacy,
+        Persistence,
+        Opportunity Recognition,
+        Continuous Learning,
+        Social Capital,
+        express_care,
+        provide_support,
+        challenge_growth,
+        share_power,
+        expand_possibilities
+      ]
+    ai_context: The specific competency (ES) or element (EC) measured by this
+      question. Use for grouping scores by skill area.
+
+  competency_tree:
+    sql: competency_tree
+    label: Competency Tree
+    ai_context: "Hierarchical path: level > competency. Useful for tree visualizations."
+
+  competency_type:
+    sql: competency_type
+
+  sub_scale:
+    sql: sub_scale
+    label: Sub-Scale
+    sample_values:
+      [
+        Support,
+        Empowerment,
+        Boundaries & Expectations,
+        Constructive Use of Time,
+        Commitment to Learning,
+        Positive Values,
+        Social Competencies,
+        Positive Identity
+      ]
+    ai_context: DAP sub-scale category. Only populated for DAP-related questions.
+
+  weight:
+    sql: weight
+    sample_values: [ "1", "-1" ]
+    ai_context: "Scoring direction: 1 = positively worded, -1 = negatively worded
+      (requires reverse scoring via numeric_value_weighted)."
+
+  revised_question:
+    sql: revised_question
+
+  canonical_question_text:
+    sql: canonical_question_text
+    label: Question Text (Canonical)
+    description: Cleanest available version of the question text, excluding
+      block-header prefixes like 'How true are...' and 'How much do...'.
+
+  new_eces_competencies:
+    sql: CASE WHEN CAST(${question_taxonomy.competency_name} AS BINARY(1)) =
+      CAST('developmental_relationships' AS BINARY(1)) THEN
+      ${question_taxonomy.sub_scale} ELSE ${question_taxonomy.competency_name}
+      END
+    label: ECES Competency
+    order_by_field: new_eces_competencies_order
+    ai_context: Unified competency field that maps EC developmental_relationships
+      items to their sub_scale. Use for cross-survey competency comparisons.
+
+  eces_level:
+    sql: CASE WHEN ${question_taxonomy.new_eces_competencies} =
+      'expand_possibilities' THEN 'inspire' WHEN
+      ${question_taxonomy.new_eces_competencies} IN ('express_care',
+      'provide_support', 'challenge_growth') THEN 'ignite' WHEN
+      ${question_taxonomy.new_eces_competencies} = 'share_power' THEN 'thrive'
+      ELSE CONCAT(LEFT(competency_level, 1), LOWER(SUBSTRING(competency_level,
+      2))) END
+    label: ECES Level
+    order_by_field: eces_level_order
+    sample_values: [ inspire, ignite, thrive, I_could, I_can, I_am ]
+    ai_context: "Unified domain grouping across ES and EC surveys. ES domains:
+      I_could, I_can, I_am. EC domains: inspire, ignite, thrive. Prefer this
+      over competency_level for cross-survey domain analysis."
+
+  eces_level_order:
+    sql: CASE WHEN LOWER(${question_taxonomy.eces_level}) = 'inspire' THEN 1 WHEN
+      LOWER(${question_taxonomy.eces_level}) = 'ignite' THEN 2 WHEN
+      LOWER(${question_taxonomy.eces_level}) = 'thrive' THEN 3 WHEN
+      LOWER(${question_taxonomy.eces_level}) = 'i_could' THEN 4 WHEN
+      LOWER(${question_taxonomy.eces_level}) = 'i_can' THEN 5 WHEN
+      LOWER(${question_taxonomy.eces_level}) = 'i_am' THEN 6 ELSE 99 END
+    label: ECES Level Order
+    format: ID_0
+    hidden: true
+    ai_context: "Sort order for eces_level: inspire=1, ignite=2, thrive=3,
+      I_could=4, I_can=5, I_am=6. Hidden sort helper."
+
+  new_eces_competencies_order:
+    sql: |-
+      CASE
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'student_spaces' THEN 1
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'youth_voice' THEN 2
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'culturally_responsive_design' THEN 3
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'psychological_safety' THEN 4
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'expand_possibilities' THEN 5
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'challenge_growth' THEN 6
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'express_care' THEN 7
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'provide_support' THEN 8
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'reflection' THEN 9
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'college_and_career_advising' THEN 10
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'program_support' THEN 11
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'progress_towards_goals' THEN 12
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'volunteer_support' THEN 13
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'share_power' THEN 14
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'sense_of_belonging' THEN 15
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'growth_mindset' THEN 16
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'steam_interest' THEN 17
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'creativity' THEN 18
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'communication' THEN 19
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'teamwork' THEN 20
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'problem_solving' THEN 21
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'steam_agency' THEN 22
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'adaptability' THEN 23
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'self_efficacy' THEN 24
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'persistence' THEN 25
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'opportunity_recognition' THEN 26
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'continuous_learning' THEN 27
+        WHEN LOWER(${question_taxonomy.new_eces_competencies}) = 'social_capital' THEN 28
+        ELSE 99
+      END
+    label: New ECES Competencies Order
+    format: ID_0
+    hidden: true
+    ai_context: Sort order for new_eces_competencies. Hidden sort helper.
+
+  eces_level_sorted:
+    sql: CASE WHEN LOWER(${question_taxonomy.eces_level}) = 'inspire' THEN '1.
+      Inspire' WHEN LOWER(${question_taxonomy.eces_level}) = 'ignite' THEN '2.
+      Ignite' WHEN LOWER(${question_taxonomy.eces_level}) = 'thrive' THEN '3.
+      Thrive' WHEN LOWER(${question_taxonomy.eces_level}) = 'i_could' THEN '4.
+      i_could' WHEN LOWER(${question_taxonomy.eces_level}) = 'i_can' THEN '5.
+      i_can' WHEN LOWER(${question_taxonomy.eces_level}) = 'i_am' THEN '6. i_am'
+      ELSE ${question_taxonomy.eces_level} END
+    label: ECES Level (Sorted)
+
+measures:
+  count:
+    aggregate_type: count
+
+ai_context: "Maps survey questions to competencies, domains, and scoring
+  weights. One row per unique question_match_key. Use competency_name for
+  competency/element grouping, eces_level for domain grouping (ES: I COULD/I
+  CAN/I AM; EC: INSPIRE/IGNITE/THRIVE)."

@@ -1,0 +1,4 @@
+base_view: quarters
+label: Org Dashboard
+
+joins: {}

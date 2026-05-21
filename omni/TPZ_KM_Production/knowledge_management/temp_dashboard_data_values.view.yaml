@@ -1,0 +1,21 @@
+# Reference this view as temp_dashboard_data_values
+schema: knowledge_management
+
+dimensions:
+  column_name: {}
+  column_type: {}
+  column_value: {}
+  row_number: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  dataset_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

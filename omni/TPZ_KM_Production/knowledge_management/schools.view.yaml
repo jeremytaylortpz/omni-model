@@ -1,0 +1,51 @@
+# Reference this view as schools
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  is_target_school: {}
+  is_bps_school: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  school_tier_id:
+    format: ID
+
+  name_groups:
+    sql: ${schools.name}
+    groups:
+      - filter:
+          is: Lawrence High School
+        name: Lawrence
+      - filter:
+          not: Lawrence High School
+        name: Boston
+    else: Other
+    label: Sites
+    sample_values: [ Lawrence, Boston ]
+    ai_context: "TPZ program sites: 'Lawrence' (Lawrence High School) vs 'Boston'
+      (all others)."
+
+  is_target_school_copy:
+    sql: is_target_school
+    label: Is Target School Copy
+
+measures:
+  count:
+    aggregate_type: count
+
+  is_target_school_count_distinct:
+    sql: ${schools.is_target_school}
+    aggregate_type: count_distinct
+
+  is_target_school_copy_count_true:
+    sql: ${schools.is_target_school_copy}
+    label: Is Target School Copy True Count
+    aggregate_type: count
+    filters:
+      is_target_school_copy:
+        is: true

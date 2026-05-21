@@ -1,0 +1,210 @@
+# Reference this view as omni__clean_attendance_query_view
+label: ⚡️🍣 Clean Attendance Query View
+
+sql: |-
+  WITH ranked_attendance AS (
+    SELECT
+      sa.*,
+      ROW_NUMBER() OVER (
+        PARTITION BY sa.person_id, sa.context_type, sa.context_id, sa.date
+        ORDER BY sa.created_at DESC, sa.id DESC
+      ) AS rn
+    FROM student_attendances sa
+    WHERE sa.active = 1
+      AND sa.context_type = 'Course'
+  ),
+  deduped_attendance AS (
+    SELECT *
+    FROM ranked_attendance
+    WHERE rn = 1
+  )
+  SELECT
+    t.name AS term_name,
+    t.id AS term_id,
+    c.course_code,
+    ct.name AS course_name,
+    p.id AS person_id,
+
+    -- row-level fields for “individual days”
+    da.date AS attendance_date,
+    da.att_pct,
+    da.created_at AS attendance_created_at
+
+  FROM deduped_attendance da
+  LEFT JOIN people p
+    ON p.id = da.person_id
+  LEFT JOIN courses c
+    ON da.context_id = c.id
+  LEFT JOIN terms t
+    ON c.term_id = t.id
+  LEFT JOIN course_types ct
+    ON c.course_type_id = ct.id
+
+  ORDER BY
+    c.course_code,
+    p.id,
+    da.date
+
+dimensions:
+  course_code: {}
+  course_name: {}
+  attendance_date: {}
+  attendance_created_at: {}
+  term_id: {}
+
+  att_pct:
+    ai_context: "Single-day attendance value: 1=present, 0.5=half-day/tardy,
+      0=absent. Not a cumulative rate."
+
+  term_name:
+    order_by_field: terms.start_date
+
+  person_id:
+    sql: person_id
+    format: ID
+    primary_key: true
+
+  is_true_drop:
+    sql: |-
+      CASE WHEN EXISTS (
+        SELECT 1
+        FROM registrations r_inactive
+        JOIN courses c_inactive
+          ON r_inactive.context_id = c_inactive.id
+          AND r_inactive.context_type = 'Course'
+        JOIN terms t
+          ON c_inactive.term_id = t.id
+        WHERE r_inactive.person_id = ${omni__clean_attendance_query_view.person_id}
+          AND r_inactive.active = FALSE
+          AND NOT EXISTS (
+            SELECT 1
+            FROM registrations r_active
+            JOIN courses c_active
+              ON r_active.context_id = c_active.id
+              AND r_active.context_type = 'Course'
+            WHERE r_active.person_id = r_inactive.person_id
+              AND r_active.active = TRUE
+              AND c_active.friendly_name = c_inactive.friendly_name
+              AND c_active.term_id = c_inactive.term_id
+          )
+      ) THEN 1 ELSE 0 END
+    label: Is True Drop
+    ai_context: 1 if student has an inactive registration with no active replacement
+      in the same course/term; 0 otherwise. Binary flag, not a count.
+
+  binary_att:
+    sql: CASE WHEN att_pct = 1 THEN 1 WHEN att_pct = 0.5 THEN 1 ELSE 0 END
+    description: This field is an adjustment of att_pct where it marks 1 for att_pct
+      is 1 or 0.5. This way we can count unique attendance days regardless of
+      percentage.
+    ai_context: 1 if student was present or half-day (att_pct >= 0.5), 0 if absent.
+      Use to count attendance days regardless of full/half status.
+
+  att_pct_bin:
+    sql: ${omni__clean_attendance_query_view.att_pct}
+    bin_boundaries: [ 0.5, 1 ]
+    bin_labels: [ A, H, P ]
+    label: Att Pct Bins
+
+  att_P:
+    sql: CASE WHEN att_pct = 1 THEN 1 ELSE 0 END
+
+  att_H:
+    sql: CASE WHEN att_pct = 0.5 THEN 1 ELSE 0 END
+
+  att_A:
+    sql: CASE WHEN att_pct = 0 THEN 1 ELSE 0 END
+
+  p:
+    sql: ${omni__clean_attendance_query_view.att_P}
+    label: P
+    ai_context: Total present days (att_pct=1) per student per course. LOD fixed at
+      person_id + course_code.
+    level_of_detail:
+      aggregate_type: sum
+      fixed:
+        [
+          omni__clean_attendance_query_view.person_id,
+          omni__clean_attendance_query_view.course_code
+        ]
+
+  a:
+    sql: ${omni__clean_attendance_query_view.att_A}
+    label: A
+    ai_context: Total absent days (att_pct=0) per student per course. LOD fixed at
+      person_id + course_code.
+    level_of_detail:
+      aggregate_type: sum
+      fixed:
+        [
+          omni__clean_attendance_query_view.person_id,
+          omni__clean_attendance_query_view.course_code
+        ]
+
+  h:
+    sql: ${omni__clean_attendance_query_view.att_H}
+    label: H
+    ai_context: Total half-day/tardy days (att_pct=0.5) per student per course. LOD
+      fixed at person_id + course_code.
+    level_of_detail:
+      aggregate_type: sum
+      fixed:
+        [
+          omni__clean_attendance_query_view.person_id,
+          omni__clean_attendance_query_view.course_code
+        ]
+
+  omni__of_attendance_days_1:
+    sql: COALESCE(${omni__clean_attendance_query_view.p}, 0) +
+      COALESCE(${omni__clean_attendance_query_view.h}, 0)
+    label: "# of Attendance Days"
+    ai_context: Sum of present + half-day days per student per course. Equivalent to p + h.
+
+  rounded_att_pct:
+    sql: CAST(CEIL(${omni__clean_attendance_query_view.att_pct} ) AS NUMERIC)
+    label: Rounded Att Pct
+    format: ID_0
+
+measures:
+  att_pct_sum:
+    sql: ${omni__clean_attendance_query_view.att_pct}
+    aggregate_type: sum
+
+  person_id_count_distinct:
+    sql: ${omni__clean_attendance_query_view.person_id}
+    aggregate_type: count_distinct
+
+  effective_course_days:
+    sql: COUNT(DISTINCT attendance_date) END
+    description: Returns courses.max_days when populated, otherwise counts unique
+      attendance dates
+
+  course_code_list:
+    sql: ${omni__clean_attendance_query_view.course_code}
+    aggregate_type: list
+
+  course_name_list:
+    sql: ${omni__clean_attendance_query_view.course_name}
+    aggregate_type: list
+
+  count_drops:
+    sql: "COUNT(DISTINCT CONCAT(person_id, course_name)) FROM (SELECT
+      registrations.person_id, course_types.name AS course_name,
+      registrations.active, MAX(CASE WHEN registrations.active = 1 THEN 1 ELSE 0
+      END) OVER (PARTITION BY registrations.person_id, course_types.name) AS
+      has_active_enrollment FROM registrations LEFT OUTER JOIN courses ON
+      registrations.context_id = courses.id LEFT OUTER JOIN course_types ON
+      courses.course_type_id = course_types.id WHERE registrations.context_type
+      = 'Course') AS RegistrationStatus WHERE active = 0 AND
+      has_active_enrollment = 0 -- "
+
+  rounded_att_pct_sum:
+    sql: ${omni__clean_attendance_query_view.rounded_att_pct}
+    label: Rounded Att Pct Sum
+    format: ID_0
+    aggregate_type: sum
+
+ai_context: "Deduplicated attendance: one row per student × course × date.
+  att_pct values: 1=present, 0.5=half-day/tardy, 0=absent. LOD fields (p, a, h)
+  sum attendance by student+course. course_name/course_code come from the SQL
+  view itself, not the courses table."

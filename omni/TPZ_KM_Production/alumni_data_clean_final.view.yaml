@@ -1,0 +1,495 @@
+# Reference this view as alumni_data_clean_final
+uploaded_table_name: alumni_data_clean_final.csv::2937e47f-4587-48a1-97f7-dd3976664f37
+
+dimensions:
+  id:
+    display_order: 0
+
+  full_name_x:
+    sql: "`full_name.x`"
+    display_order: 1
+
+  first_name:
+    display_order: 2
+
+  last_name:
+    display_order: 3
+
+  graduation_year:
+    display_order: 4
+
+  student_phone:
+    display_order: 5
+
+  student_email:
+    display_order: 6
+
+  group:
+    display_order: 7
+
+  full_name_std_x:
+    sql: "`full_name_std.x`"
+    display_order: 8
+
+  email_std:
+    display_order: 9
+
+  response_id:
+    sql: "`Response.ID`"
+    format: ID
+    display_order: 10
+
+  date_created:
+    sql: "`Date.Created`"
+    display_order: 11
+
+  date_modified:
+    sql: "`Date.Modified`"
+    display_order: 12
+
+  ip_address:
+    sql: "`IP.Address`"
+    display_order: 13
+
+  duration:
+    sql: "`Duration`"
+    display_order: 14
+
+  response_status:
+    sql: "`Response.Status`"
+    display_order: 15
+
+  email:
+    sql: "`Email`"
+    display_order: 16
+
+  first_name___18:
+    sql: "`First.Name...18`"
+    display_order: 17
+
+  last_name___19:
+    sql: "`Last.Name...19`"
+    display_order: 18
+
+  collector_id:
+    sql: "`Collector.ID`"
+    display_order: 19
+
+  collector_type:
+    sql: "`Collector.Type`"
+    display_order: 20
+
+  custom_value:
+    sql: "`Custom.Value`"
+    display_order: 21
+
+  first_name___23:
+    sql: "`First.Name...23`"
+    display_order: 22
+
+  last_name___24:
+    sql: "`Last.Name...24`"
+    display_order: 23
+
+  email_address:
+    display_order: 24
+
+  primary_phone:
+    sql: "`Primary.phone`"
+    display_order: 25
+
+  street_address:
+    display_order: 26
+
+  street_address_2:
+    display_order: 27
+
+  city:
+    display_order: 28
+
+  state:
+    display_order: 29
+
+  zip_code:
+    display_order: 30
+
+  high_school:
+    display_order: 31
+
+  grad_year:
+    display_order: 32
+
+  pursued_no_degree:
+    display_order: 33
+
+  pursued_certificate:
+    display_order: 34
+
+  pursued_2year_degree:
+    display_order: 35
+
+  pursued_4year_degree:
+    display_order: 36
+
+  pursued_ma:
+    sql: "`pursued_MA`"
+    display_order: 37
+
+  pursued_phd:
+    sql: "`pursued_PhD`"
+    display_order: 38
+
+  pursued_np:
+    display_order: 39
+
+  pursued_none:
+    display_order: 40
+
+  pursued_other:
+    display_order: 41
+
+  certification_name:
+    display_order: 42
+
+  certification_major:
+    display_order: 43
+
+  certification_graduated:
+    display_order: 44
+
+  two_year_name:
+    display_order: 45
+
+  two_year_major:
+    display_order: 46
+
+  two_year_graduated:
+    display_order: 47
+
+  four_year_name:
+    display_order: 48
+
+  four_year_major:
+    display_order: 49
+
+  four_year_graduated:
+    display_order: 50
+
+  ma_name:
+    sql: "`MA_name`"
+    display_order: 51
+
+  ma_major:
+    sql: "`MA_major`"
+    display_order: 52
+
+  ma_graduated:
+    sql: "`MA_graduated`"
+    display_order: 53
+
+  phd_name:
+    sql: "`PhD_name`"
+    display_order: 54
+
+  phd_major:
+    sql: "`PhD_major`"
+    display_order: 55
+
+  phd_graduated:
+    sql: "`PhD_graduated`"
+    display_order: 56
+
+  additional_degree:
+    display_order: 57
+
+  employment_temp:
+    display_order: 58
+
+  employment_intern:
+    display_order: 59
+
+  employment_full_time:
+    display_order: 60
+
+  employment_part_time:
+    display_order: 61
+
+  employment_self:
+    display_order: 62
+
+  employment_seeking:
+    display_order: 63
+
+  employment_work_study:
+    display_order: 64
+
+  employment_unemployed:
+    display_order: 65
+
+  employment_other:
+    display_order: 66
+
+  current_field_comm:
+    display_order: 67
+
+  current_field_design:
+    display_order: 68
+
+  current_field_education:
+    display_order: 69
+
+  current_field_finance:
+    display_order: 70
+
+  current_field_government:
+    display_order: 71
+
+  current_field_health:
+    display_order: 72
+
+  current_field_manufacture:
+    display_order: 73
+
+  current_field_nonprofit:
+    display_order: 74
+
+  current_field_recreation:
+    display_order: 75
+
+  current_field_retail:
+    display_order: 76
+
+  current_field_tech:
+    display_order: 77
+
+  current_field_na:
+    display_order: 78
+
+  current_field_other:
+    display_order: 79
+
+  current_title:
+    display_order: 80
+
+  aspire_stay_current:
+    display_order: 81
+
+  aspire_comm:
+    display_order: 82
+
+  aspire_design:
+    display_order: 83
+
+  aspire_education:
+    display_order: 84
+
+  aspire_finance:
+    display_order: 85
+
+  aspire_government:
+    display_order: 86
+
+  aspire_health:
+    display_order: 87
+
+  aspire_manufacture:
+    display_order: 88
+
+  aspire_nonprofit:
+    display_order: 89
+
+  aspire_recreation:
+    display_order: 90
+
+  aspire_retail:
+    display_order: 91
+
+  aspire_tech:
+    display_order: 92
+
+  aspire_na:
+    display_order: 93
+
+  aspire_other:
+    display_order: 94
+
+  proggress_made_plan:
+    display_order: 95
+
+  proggress_sought_people:
+    display_order: 96
+
+  proggress_making_progress:
+    display_order: 97
+
+  proggress_life_experiences:
+    display_order: 98
+
+  proggress_people_like_me:
+    display_order: 99
+
+  proggress_find_info:
+    display_order: 100
+
+  proggress_network:
+    display_order: 101
+
+  proggress_resume:
+    display_order: 102
+
+  proggress_application:
+    display_order: 103
+
+  proggress_interview:
+    display_order: 104
+
+  income_yearly:
+    display_order: 105
+
+  income_hourly:
+    display_order: 106
+
+  food_security:
+    display_order: 107
+
+  connected_network:
+    display_order: 108
+
+  run_business_at_tpz:
+    sql: "`run_business_at_TPZ`"
+    display_order: 109
+
+  run_business_outside_tpz:
+    sql: "`run_business_outside_TPZ`"
+    display_order: 110
+
+  run_business_no:
+    display_order: 111
+
+  run_business_new:
+    display_order: 112
+
+  run_business_continue:
+    display_order: 113
+
+  run_business_too_soon:
+    display_order: 114
+
+  compare_parents:
+    display_order: 115
+
+  no_business:
+    display_order: 116
+
+  business_field_comm:
+    display_order: 117
+
+  business_field_design:
+    display_order: 118
+
+  business_field_education:
+    display_order: 119
+
+  business_field_finance:
+    display_order: 120
+
+  business_field_government:
+    display_order: 121
+
+  business_field_health:
+    display_order: 122
+
+  business_field_manufacture:
+    display_order: 123
+
+  business_field_nonprofit:
+    display_order: 124
+
+  business_field_recreation:
+    display_order: 125
+
+  business_field_retail:
+    display_order: 126
+
+  business_field_tech:
+    display_order: 127
+
+  business_field_na:
+    display_order: 128
+
+  business_field_other:
+    display_order: 129
+
+  business_hours:
+    display_order: 130
+
+  business_money:
+    display_order: 131
+
+  tpz_experience:
+    display_order: 132
+
+  tpz_change:
+    display_order: 133
+
+  tpz_useful:
+    display_order: 134
+
+  tpz_connected:
+    display_order: 135
+
+  tpz_connected_why:
+    display_order: 136
+
+  tpz_involved_internal:
+    display_order: 137
+
+  tpz_involved_external:
+    display_order: 138
+
+  tpz_involved_mailing_list:
+    display_order: 139
+
+  tpz_involved_degree_support:
+    display_order: 140
+
+  tpz_involved_none:
+    display_order: 141
+
+  tpz_involved_other:
+    display_order: 142
+
+  alumni_council:
+    display_order: 143
+
+  permission:
+    display_order: 144
+
+  full_name_y:
+    sql: "`full_name.y`"
+    display_order: 145
+
+  full_address:
+    display_order: 146
+
+  latitude:
+    display_order: 147
+
+  longitude:
+    display_order: 148
+
+  full_name_std_y:
+    sql: "`full_name_std.y`"
+    display_order: 149
+
+  email_std_x:
+    sql: "`email_std.x`"
+    display_order: 150
+
+  email_std_y:
+    sql: "`email_std.y`"
+    display_order: 151
+
+measures:
+  count:
+    aggregate_type: count

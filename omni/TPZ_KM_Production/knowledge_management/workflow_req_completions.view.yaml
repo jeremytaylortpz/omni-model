@@ -1,0 +1,32 @@
+# Reference this view as workflow_req_completions
+schema: knowledge_management
+
+dimensions:
+  completed_at: {}
+  completed_term: {}
+  created_at: {}
+  updated_at: {}
+  linked_item_type: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  workflow_id:
+    format: ID
+
+  requirement_id:
+    format: ID
+
+  stage_id:
+    format: ID
+
+  linked_item_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

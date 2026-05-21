@@ -1,0 +1,36 @@
+base_view: fablab_profiles
+label: FabLab Certifications & Training
+description: A comprehensive view of FabLab certifications, training programs,
+  and participant journeys — covering equipment certifications, course
+  enrollments, attendance, student profiles, and program pathways across FabLab
+  locations.
+
+fields:
+  [
+    all_views.*,
+    -omni__all_survey_data_with_demos.numeric_value_weighted,
+    -omni__all_survey_data_with_demos.numeric_value_weighted_average
+  ]
+
+joins:
+  fablab_certifications:
+    fablab_equipments:
+      fablab_locations: {}
+      fablab_equipment_types: {}
+  people:
+    student_profiles: {}
+    registrations: {}
+    demographic_profiles:
+      races: {}
+    student_attendance_rates:
+      courses:
+        schedules: {}
+        course_types: {}
+      terms: {}
+      student_first_terms: {}
+
+ai_context: |-
+  Use this topic to analyze FabLab certification and training data. Key use cases include:
+  - **Certification tracking**: Use `fablab_certifications` and `fablab_equipment_types`/`fablab_equipments` to analyze which certifications participants have earned and on what equipment.
+  - **Location-based analysis**: Use `fablab_locations` and `fablab_profiles` to filter or group by FabLab site.
+  - `fablab_profiles` is the base view — all participant-level analysis should anchor here.

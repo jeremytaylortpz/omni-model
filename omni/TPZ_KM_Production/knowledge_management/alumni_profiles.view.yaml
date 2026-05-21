@@ -1,0 +1,21 @@
+# Reference this view as alumni_profiles
+schema: knowledge_management
+
+dimensions:
+  graduation_year: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  salesforce_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

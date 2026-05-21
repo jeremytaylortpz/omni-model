@@ -1,0 +1,567 @@
+- join_from_view: omni__clean_attendance_query_view
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${omni__clean_attendance_query_view.term_id} = ${terms.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: most_recent_ef_by_student
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${most_recent_ef_by_student.term_name} = ${terms.name}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: interest_forms
+  join_to_view: student_attendances
+  join_type: always_left
+  on_sql: ${interest_forms.person_id} = ${student_attendances.person_id}
+  relationship_type: one_to_many
+  reversible: true
+
+- join_from_view: spring_2026_enrollments
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${people.id} = ${spring_2026_enrollments.id}
+  relationship_type: assumed_many_to_one
+  reversible: true
+
+- join_from_view: student_drop_patterns_by_term_data
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${student_drop_patterns_by_term_data.term_id} = ${terms.id}
+  relationship_type: one_to_one
+
+- join_from_view: student_drop_patterns_by_term_data
+  join_to_view: term_sorting_v2
+  join_type: always_left
+  on_sql: ${student_drop_patterns_by_term_data.term_id} = ${term_sorting_v2.id}
+  relationship_type: one_to_one
+
+- join_from_view: fablab_equipments
+  join_to_view: fablab_equipment_types
+  join_type: always_left
+  on_sql: ${fablab_equipments.fablab_equipment_type_id} = ${fablab_equipment_types.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: people
+  join_to_view: fablab_profiles
+  join_type: always_left
+  on_sql: ${people.id} = ${fablab_profiles.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.term_id} = ${terms.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: question_taxonomy
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.question_match_key} =
+    ${question_taxonomy.question_match_key}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: form_invitations
+  join_to_view: forms
+  join_type: always_left
+  on_sql: ${form_invitations.form_id} = ${forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_invitations
+  join_to_view: form_submissions
+  join_type: always_left
+  on_sql: ${form_invitations.form_submission_id} = ${form_submissions.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_question_option_translations
+  join_to_view: form_question_options
+  join_type: always_left
+  on_sql: ${form_question_option_translations.form_question_option_id} =
+    ${form_question_options.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_question_option_translations
+  join_to_view: languages
+  join_type: always_left
+  on_sql: ${form_question_option_translations.language_id} = ${languages.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_question_options
+  join_to_view: form_questions
+  join_type: always_left
+  on_sql: ${form_question_options.form_question_id} = ${form_questions.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_question_translations
+  join_to_view: form_questions
+  join_type: always_left
+  on_sql: ${form_question_translations.form_question_id} = ${form_questions.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_question_translations
+  join_to_view: languages
+  join_type: always_left
+  on_sql: ${form_question_translations.language_id} = ${languages.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_questions
+  join_to_view: form_steps
+  join_type: always_left
+  on_sql: ${form_questions.form_step_id} = ${form_steps.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_schools
+  join_to_view: forms
+  join_type: always_left
+  on_sql: ${form_schools.form_id} = ${forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_schools
+  join_to_view: schools
+  join_type: always_left
+  on_sql: ${form_schools.school_id} = ${schools.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_step_translations
+  join_to_view: form_steps
+  join_type: always_left
+  on_sql: ${form_step_translations.form_step_id} = ${form_steps.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_step_translations
+  join_to_view: languages
+  join_type: always_left
+  on_sql: ${form_step_translations.language_id} = ${languages.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_steps
+  join_to_view: forms
+  join_type: always_left
+  on_sql: ${form_steps.form_id} = ${forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_submission_answers
+  join_to_view: form_submissions
+  join_type: always_left
+  on_sql: ${form_submission_answers.form_submission_id} = ${form_submissions.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_submission_answers
+  join_to_view: form_questions
+  join_type: always_left
+  on_sql: ${form_submission_answers.form_question_id} = ${form_questions.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_submissions
+  join_to_view: forms
+  join_type: always_left
+  on_sql: ${form_submissions.form_id} = ${forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_submissions
+  join_to_view: languages
+  join_type: always_left
+  on_sql: ${form_submissions.language_id} = ${languages.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_translations
+  join_to_view: forms
+  join_type: always_left
+  on_sql: ${form_translations.form_id} = ${forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_translations
+  join_to_view: languages
+  join_type: always_left
+  on_sql: ${form_translations.language_id} = ${languages.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: dap_mappings_full
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.question_match_key} =
+    ${dap_mappings_full.question_map}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: term_sorting_v2
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.term_id} = ${term_sorting_v2.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.student_id} = ${people.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: omni__all_survey_data_with_demos
+  join_to_view: surveys
+  join_type: always_left
+  on_sql: ${omni__all_survey_data_with_demos.survey_id} = ${surveys.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: student_attendance_rates
+  join_to_view: student_first_terms
+  join_type: always_left
+  on_sql: ${student_attendance_rates.person_id} = ${student_first_terms.person_id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: student_attendance_rates
+  join_to_view: courses
+  join_type: always_left
+  on_sql: ${student_attendance_rates.course_code} = ${courses.course_code}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: student_attendance_rates
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${student_attendance_rates.person_id} = ${people.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: student_attendance_rates
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${student_attendance_rates.term_name} = ${terms.name}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: term_sorting_v2
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${terms.id} = ${term_sorting_v2.id}
+  relationship_type: assumed_many_to_one
+  reversible: true
+
+- join_from_view: omni__survey_response_rate_query
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${omni__survey_response_rate_query.term_id} = ${terms.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: most_recent_ef_by_student
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${most_recent_ef_by_student.person_id} = ${people.id}
+  relationship_type: one_to_one
+
+- join_from_view: enrollment_forms
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${enrollment_forms.term_name} = ${terms.name}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: omni__clean_attendance_query_view
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${omni__clean_attendance_query_view.person_id} = ${people.id}
+  relationship_type: many_to_one
+  reversible: true
+
+- join_from_view: courses
+  join_to_view: omni__clean_attendance_query_view
+  join_type: always_left
+  on_sql: ${courses.course_code} = ${omni__clean_attendance_query_view.course_code}
+  relationship_type: one_to_many
+  reversible: true
+
+- join_from_view: races
+  join_to_view: demographic_profiles
+  join_type: always_left
+  on_sql: ${races.demographic_profile_id} = ${demographic_profiles.id}
+  relationship_type: many_to_one
+  reversible: true
+
+- join_from_view: people
+  join_to_view: interest_forms
+  id: people_interest_forms_0
+  join_type: left_right
+  on_sql: ${people.id} = ${interest_forms.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: courses
+  join_to_view: schedules
+  join_type: always_left
+  on_sql: ${courses.schedule_id} = ${schedules.id}
+  relationship_type: many_to_one
+
+- join_from_view: student_attendances
+  join_to_view: courses
+  join_type: always_left
+  on_sql: ${student_attendances.context_id} = ${courses.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: student_attendances
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${student_attendances.person_id} = ${people.id}
+  relationship_type: many_to_one
+  reversible: true
+
+- join_from_view: people
+  join_to_view: student_profiles
+  join_type: always_left
+  on_sql: ${people.id} = ${student_profiles.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: people
+  join_to_view: registrations
+  join_type: always_left
+  on_sql: ${people.id} = ${registrations.person_id}
+  relationship_type: one_to_many
+
+- join_from_view: registrations
+  join_to_view: courses
+  join_type: always_left
+  on_sql: ${registrations.context_id} = ${courses.id}
+  relationship_type: many_to_one
+
+- join_from_view: people
+  join_to_view: course_interests
+  join_type: always_left
+  on_sql: ${people.id} = ${course_interests.person_id}
+  relationship_type: one_to_many
+
+- join_from_view: course_types
+  join_to_view: courses
+  join_type: always_left
+  on_sql: ${course_types.id} = ${courses.course_type_id}
+  relationship_type: one_to_many
+
+- join_from_view: course_types
+  join_to_view: departments
+  join_type: always_left
+  on_sql: ${course_types.department_id} = ${departments.id}
+  relationship_type: many_to_one
+
+- join_from_view: courses
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${courses.term_id} = ${terms.id}
+  relationship_type: many_to_one
+
+- join_from_view: people
+  join_to_view: demographic_profiles
+  join_type: always_left
+  on_sql: ${people.id} = ${demographic_profiles.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: survey_response_answers
+  join_to_view: survey_answers
+  join_type: always_left
+  on_sql: ${survey_response_answers.survey_answer_id} = ${survey_answers.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: survey_responses
+  join_to_view: survey_response_answers
+  join_type: always_left
+  on_sql: ${survey_responses.id} = ${survey_response_answers.survey_response_id}
+  relationship_type: one_to_many
+  reversible: false
+
+- join_from_view: survey_responses
+  join_to_view: terms
+  join_type: always_left
+  on_sql: ${survey_responses.term_id} = ${terms.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: survey_responses
+  join_to_view: people
+  join_type: left_right
+  on_sql: ${survey_responses.person_id} = ${people.id}
+  relationship_type: many_to_one
+
+- join_from_view: survey_questions
+  join_to_view: surveys
+  join_type: always_left
+  on_sql: ${survey_questions.survey_id} = ${surveys.id}
+  relationship_type: many_to_one
+  reversible: false
+
+- join_from_view: survey_questions
+  join_to_view: question_types
+  join_type: always_left
+  on_sql: ${survey_questions.question_type_id} = ${question_types.id}
+  relationship_type: many_to_one
+
+- join_from_view: survey_questions
+  join_to_view: survey_answers
+  join_type: always_left
+  on_sql: ${survey_questions.id} = ${survey_answers.survey_question_id}
+  relationship_type: one_to_many
+
+- join_from_view: surveys
+  join_to_view: survey_types
+  join_type: always_left
+  on_sql: ${surveys.survey_type_id} = ${survey_types.id}
+  relationship_type: many_to_one
+
+- join_from_view: surveys
+  join_to_view: survey_sections
+  join_type: always_left
+  on_sql: ${surveys.id} = ${survey_sections.survey_id}
+  relationship_type: one_to_many
+
+- join_from_view: ahoy_events
+  join_to_view: dashboard_users
+  join_type: always_left
+  on_sql: ${ahoy_events.dashboard_user_id} = ${dashboard_users.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: ahoy_visits
+  join_to_view: dashboard_users
+  join_type: always_left
+  on_sql: ${ahoy_visits.dashboard_user_id} = ${dashboard_users.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: enrollment_statuses
+  join_to_view: enrollment_forms
+  join_type: always_left
+  on_sql: ${enrollment_statuses.enrollment_form_id} = ${enrollment_forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: enrollment_statuses
+  join_to_view: enrollment_form_status_types
+  join_type: always_left
+  on_sql: ${enrollment_statuses.enrollment_form_status_type_id} =
+    ${enrollment_form_status_types.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: fablab_certifications
+  join_to_view: fablab_profiles
+  join_type: always_left
+  on_sql: ${fablab_certifications.fablab_profile_id} = ${fablab_profiles.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: fablab_certifications
+  join_to_view: fablab_equipments
+  join_type: always_left
+  on_sql: ${fablab_certifications.fablab_equipment_id} = ${fablab_equipments.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: fablab_equipments
+  join_to_view: fablab_locations
+  join_type: always_left
+  on_sql: ${fablab_equipments.fablab_location_id} = ${fablab_locations.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: interest_form_statuses
+  join_to_view: interest_forms
+  join_type: always_left
+  on_sql: ${interest_form_statuses.interest_form_id} = ${interest_forms.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: interest_form_statuses
+  join_to_view: interest_form_status_types
+  join_type: always_left
+  on_sql: ${interest_form_statuses.interest_form_status_type_id} =
+    ${interest_form_status_types.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: measurement_items
+  join_to_view: measurements
+  join_type: always_left
+  on_sql: ${measurement_items.measurement_id} = ${measurements.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: measurements
+  join_to_view: measurement_types
+  join_type: always_left
+  on_sql: ${measurements.measurement_type_id} = ${measurement_types.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: person_relationships
+  join_to_view: relationship_types
+  join_type: always_left
+  on_sql: ${peson_relationships.relationship_type_id} = ${relationship_types.id}
+  relationship_type: many_to_one
+
+- join_from_view: people
+  join_to_view: languages_people
+  join_type: always_left
+  on_sql: ${people.id} = ${languages_people.person_id}
+  relationship_type: one_to_many
+
+- join_from_view: languages
+  join_to_view: languages_people
+  join_type: always_left
+  on_sql: ${languages.id} = ${languages_people.language_id}
+  relationship_type: one_to_many
+  reversible: true
+
+- join_from_view: people
+  join_to_view: person_actions
+  join_type: always_left
+  on_sql: ${people.id} = ${person_actions.person_id}
+  relationship_type: one_to_many
+
+- join_from_view: person_actions
+  join_to_view: action_types
+  join_type: always_left
+  on_sql: ${person_actions.action_type_id} = ${action_types.id}
+  relationship_type: one_to_one
+
+- join_from_view: person_actions
+  join_to_view: roles
+  join_type: always_left
+  on_sql: ${person_actions.role_id} = ${roles.id}
+  relationship_type: one_to_one
+
+- join_from_view: student_profiles
+  join_to_view: schools
+  join_type: always_left
+  on_sql: ${student_profiles.school_id} = ${schools.id}
+  relationship_type: one_to_one
+
+- join_from_view: schools
+  join_to_view: school_tiers
+  join_type: always_left
+  on_sql: ${schools.school_tier_id} = ${school_tiers.id}
+  relationship_type: one_to_one
+
+- join_from_view: people
+  join_to_view: pathways_profiles
+  join_type: always_left
+  on_sql: ${people.id} = ${pathways_profiles.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: people
+  join_to_view: alumni_profiles
+  join_type: always_left
+  on_sql: ${people.id} = ${alumni_profiles.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: contact_orders
+  join_to_view: roles
+  join_type: always_left
+  on_sql: ${contact_orders.role_id} = ${roles.id}
+  relationship_type: one_to_one
+
+- join_from_view: people
+  join_to_view: enrollment_forms
+  join_type: left_right
+  on_sql: ${people.id} = ${enrollment_forms.person_id}
+  relationship_type: one_to_one
+
+- join_from_view: dashboard_users
+  join_to_view: people
+  join_type: always_left
+  on_sql: ${dashboard_users.person_id} = ${people.id}
+  relationship_type: one_to_one

@@ -1,0 +1,15 @@
+# Reference this view as action_types
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

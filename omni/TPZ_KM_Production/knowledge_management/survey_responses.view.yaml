@@ -1,0 +1,40 @@
+# Reference this view as survey_responses
+schema: knowledge_management
+
+dimensions:
+  started_at: {}
+  completed_at: {}
+  created_at: {}
+  updated_at: {}
+  user_language: {}
+  straightlining_score: {}
+  bot_score: {}
+  unanswered_percent: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  sm_id:
+    format: ID
+
+  survey_id:
+    format: ID
+
+  person_id:
+    format: ID
+
+  survey_collector_id:
+    format: ID
+
+  term_id:
+    format: ID
+
+  combined_value_text_decoded_:
+    sql: CONCAT(${survey_answers.value_decoded}, ' ',
+      ${survey_response_answers.text_decoded})
+    label: Combined Value & Text (Decoded)
+
+measures:
+  count:
+    aggregate_type: count

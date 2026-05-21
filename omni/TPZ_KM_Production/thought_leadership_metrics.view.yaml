@@ -1,0 +1,29 @@
+# Reference this view as thought_leadership_metrics
+uploaded_table_name: Thought Leadership Metrics::5fdcd045-bf14-42ca-8e26-7e39926630a8
+
+dimensions:
+  id:
+    display_order: 0
+
+  category:
+    sql: "`Category`"
+    display_order: 1
+
+  status:
+    sql: "`Status`"
+    display_order: 2
+    ai_context: "Always order the status in the following order in visuals:
+      Unplanned, Planned, Submitted, Accepted/Comleted"
+
+  year:
+    sql: "`Year`"
+    format: ID
+    display_order: 3
+
+  deliverable:
+    sql: "`Deliverable`"
+    display_order: 4
+
+measures:
+  count:
+    aggregate_type: count

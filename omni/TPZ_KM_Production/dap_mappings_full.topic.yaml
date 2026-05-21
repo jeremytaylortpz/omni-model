@@ -1,0 +1,12 @@
+base_view: dap_mappings_full
+label: Developmental Assets
+
+joins:
+  question_taxonomy: {}
+
+relationships:
+  - join_from_view: dap_mappings_full
+    join_to_view: question_taxonomy
+    join_type: always_left
+    on_sql: ${dap_mappings_full.question_map} = ${question_taxonomy.question_match_key}
+    relationship_type: many_to_one

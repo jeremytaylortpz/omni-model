@@ -1,0 +1,29 @@
+base_view: most_recent_ef_by_student
+label: Most Recent EF by Student
+
+fields:
+  [
+    all_views.*,
+    -courses.*,
+    -most_recent_ef_by_student.*,
+    -people.*,
+    people.full_name,
+    -registrations.*,
+    registrations.active,
+    -terms.*,
+    terms.current_term_label,
+    most_recent_ef_by_student.release_media_groups,
+    -most_recent_ef_by_student.release_media,
+    -schools.*,
+    schools.name_groups,
+    -student_profiles.*,
+    courses.friendly_name
+  ]
+
+joins:
+  people:
+    registrations:
+      courses:
+        terms: {}
+    student_profiles:
+      schools: {}

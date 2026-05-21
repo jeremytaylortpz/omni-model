@@ -1,0 +1,19 @@
+# Reference this view as locations
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  address_type: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  address_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

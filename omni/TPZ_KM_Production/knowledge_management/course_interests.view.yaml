@@ -1,0 +1,35 @@
+# Reference this view as course_interests
+schema: knowledge_management
+
+dimensions:
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  course_type_id:
+    format: ID
+
+  interested_term_id:
+    format: ID
+
+  preferred_day_type_id:
+    format: ID
+
+  offered_type_id:
+    format: ID
+
+  status_type_id:
+    format: ID
+
+  confirmed_course_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,17 @@
+# Reference this view as languages_people
+schema: knowledge_management
+
+dimensions:
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+  language_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,22 @@
+# Reference this view as races
+schema: knowledge_management
+
+dimensions:
+  race: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  demographic_profile_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
+
+  race_list:
+    sql: ${races.race}
+    aggregate_type: list

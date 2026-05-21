@@ -1,0 +1,32 @@
+# Reference this view as person_relationships
+schema: knowledge_management
+
+dimensions:
+  created_at: {}
+  updated_at: {}
+  last_verified: {}
+
+  active:
+    description: Whether the relationship is still active. The most common reason
+      for a relationship to be inactive is if someone was listed as an
+      “emergency contact” relationship on an enrollment form one year, and then
+      a different person was listed as the emergency contact on a subsequent
+      enrollment form. In that case we would mark the first relationship as
+      active=0 but keep the record for historical purposes.
+
+  id:
+    format: ID
+    primary_key: true
+
+  from_person_id:
+    format: ID
+
+  to_person_id:
+    format: ID
+
+  relationship_type_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

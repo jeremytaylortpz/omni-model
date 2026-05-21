@@ -1,0 +1,21 @@
+# Reference this view as form_submission_answers
+schema: knowledge_management
+
+dimensions:
+  value: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_submission_id:
+    format: ID
+
+  form_question_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

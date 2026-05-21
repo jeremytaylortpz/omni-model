@@ -1,0 +1,68 @@
+# Reference this view as all_survey_data
+label: All Survey Data
+
+schema: knowledge_management
+sql: |-
+  SELECT
+      s.name AS name,
+      s.id AS survey_id,
+      r.id AS response_id,
+      r.person_id,
+      p.first_name, p.last_name,
+      CONCAT_WS(' ', p.first_name, p.last_name) AS full_name,
+      r.completed_at,
+      sq.id AS question_id,
+      sq.text AS question_text,
+      CAST(sa.value AS CHAR) AS choice_value,
+      ra.text AS free_text_value
+    FROM survey_responses r
+    JOIN surveys s ON s.id = r.survey_id
+    LEFT OUTER JOIN people p ON p.id = r.person_id
+    LEFT OUTER JOIN survey_response_answers ra ON ra.survey_response_id = r.id
+    LEFT OUTER JOIN survey_questions sq ON sq.id = ra.survey_question_id
+    LEFT OUTER JOIN survey_answers sa ON sa.id = ra.survey_answer_id
+    LEFT OUTER JOIN terms as t ON t.id = r.term_id
+    ORDER BY r.id, sq.id
+
+dimensions:
+  survey_id: {}
+  first_name: {}
+  last_name: {}
+  full_name: {}
+  completed_at: {}
+  question_text: {}
+  choice_value: {}
+  free_text_value: {}
+
+  name:
+    sql: name
+    label: Survey Name
+
+  response_id:
+    sql: response_id
+    format: ID
+
+  person_id:
+    sql: person_id
+    format: ID
+
+  question_id:
+    sql: question_id
+    format: ID
+
+  numeric_value:
+    sql: CASE WHEN ${all_survey_data.choice_value} = 'Somewhat or Sometimes' THEN 1
+      WHEN ${all_survey_data.choice_value} = 'Very or Often' THEN 2 WHEN
+      ${all_survey_data.choice_value} = 'Not At All or Rarely' THEN 0 WHEN
+      ${all_survey_data.choice_value} = 'Extremely or Almost Always' THEN 3 ELSE
+      NULL END
+    label: Numeric Value
+
+  question_text_clean:
+    sql: "REPLACE(REPLACE(REPLACE(${all_survey_data.question_text}, 'I have . . . :
+      ', ''), 'I am . . .: ', ''),'I . . .<br>: ', '')"
+    label: question_text_clean
+
+measures:
+  count:
+    aggregate_type: count

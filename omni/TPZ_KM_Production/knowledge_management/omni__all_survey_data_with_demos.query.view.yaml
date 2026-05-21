@@ -1,0 +1,454 @@
+# Reference this view as omni__all_survey_data_with_demos
+label: ⚡️🍣 All Survey Data with Demos
+description: "One row per student × survey question × response. Grain:
+  individual item-level responses with demographics pre-joined. Use
+  numeric_value for unweighted scoring (0–3), numeric_value_weighted for
+  reverse-scored items. student_id = people.id. survey_name identifies which
+  survey instrument."
+
+schema: knowledge_management
+sql: |-
+  select 
+  p.id as student_id, 
+  r.id as response_id, 
+  t.id as term_id,
+  s.id as survey_id,
+  q.id as survey_questions_id,
+  t.name as term_name, 
+  t.start_date, 
+  p.first_name, 
+  p.last_name, 
+  sp.current_grade, 
+  sc.name as school_name, 
+  sct.name as school_tier, 
+  sc.is_target_school, 
+  sc.is_bps_school, 
+  sp.iep, 
+  sp.esl, 
+  dp.gender, 
+  dp.ethnicity, 
+  rc.race, 
+  st.category, 
+  s.name as survey_name,
+  r.completed_at, 
+  ss.title as section_title, 
+  q.text as question_text, 
+  cast(a.value as char) as answer_value
+    from survey_responses as r
+    left outer join people as p on r.person_id = p.id
+    left outer join student_profiles as sp on p.id = sp.person_id
+    left outer join schools sc on sp.school_id = sc.id
+    left outer join school_tiers sct on sc.school_tier_id = sct.id
+    left outer join demographic_profiles as dp on p.id = dp.person_id
+    left outer join races as rc on rc.demographic_profile_id = dp.id
+    left outer join surveys as s on s.id = r.survey_id
+    left outer join survey_types as st on st.id = s.survey_type_id
+    left outer join terms as t on r.term_id = t.id
+    left outer join survey_response_answers as ra on ra.survey_response_id = r.id
+    left outer join survey_questions as q on q.id = ra.survey_question_id
+    left outer join survey_sections as ss on ss.id = q.survey_section_id
+    left outer join survey_answers as a on a.id = ra.survey_answer_id
+
+dimensions:
+  term_id: {}
+  current_grade: {}
+  school_name: {}
+  school_tier: {}
+  is_target_school: {}
+  is_bps_school: {}
+  iep: {}
+  esl: {}
+  gender: {}
+  ethnicity: {}
+  race: {}
+  category: {}
+  completed_at: {}
+  start_date: {}
+  survey_id: {}
+  survey_questions_id: {}
+
+  first_name:
+    hidden: true
+
+  last_name:
+    hidden: true
+
+  survey_name:
+    sample_values:
+      [
+        Entrepreneurial Spirit Survey,
+        Developmental Assets Profile,
+        Entrepreneurial Culture Survey
+      ]
+    ai_context: Name of the survey instrument. Filter on this to isolate a specific survey.
+
+  section_title:
+    ai_context: Survey section/block header grouping questions. Not the same as
+      competency — use question_taxonomy.competency_name for competency
+      grouping.
+
+  question_text:
+    ai_context: Raw question text from survey platform, may include HTML and
+      block-header prefixes. Prefer question_taxonomy.canonical_question_text
+      for display.
+
+  answer_value:
+    ai_context: Raw survey answer text before normalization. Prefer
+      answer_value_clean for display or numeric_value for scoring.
+
+  term_name:
+    order_by_field: start_date
+    ai_context: Term name from the base SQL view. Equivalent to terms.name. Use
+      term_sorting_v2.name for sorted term display.
+
+  student_id:
+    sql: student_id
+    format: ID
+    ai_context: Foreign key to people.id. Use for counting distinct students
+      (student_id_count_distinct measure).
+
+  response_id:
+    sql: response_id
+    format: ID
+
+  answer_value_clean:
+    sql: REPLACE(REPLACE(${omni__all_survey_data_with_demos.answer_value}, '
+      disagree', ' Disagree'), ' agree', ' Agree')
+    label: Answer Value (Clean)
+    sample_values:
+      [
+        Strongly Disagree,
+        Disagree,
+        Somewhat Agree,
+        Agree,
+        Strongly Agree,
+        A Little Like Me,
+        Somewhat Like Me,
+        Mostly Like Me,
+        Extremely Like Me
+      ]
+    ai_context: Normalized answer text with consistent capitalization. Use for
+      display. Use numeric_value for quantitative analysis.
+
+  numeric_value:
+    sql: |-
+      CASE
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Disagree' THEN 0
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A little like adults at TPZ' THEN 0
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like My Educator(s)' THEN 0    
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little True' THEN 0
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Rarely' THEN 0      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like Me' THEN 0      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'No' THEN 0
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Not At All or Rarely' THEN 0      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Disagree' THEN 1
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat like adults at TPZ' THEN 1
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like My Educator(s)' THEN 1 
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat True' THEN 1 
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Sometimes' THEN 1 
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like Me' THEN 1           
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly No' THEN 1
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat or Sometimes' THEN 1      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Disagree' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly True' THEN 2   
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Often' THEN 2         
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like Me' THEN 2         
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly like adults at TPZ' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like My Educator(s)' THEN 2      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Disagree; Somewhat Agree' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Agree' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Agree' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Yes' THEN 2
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Very or Often' THEN 2      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Agree' THEN 3
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Almost Always' THEN 3      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like Me' THEN 3      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Completely True' THEN 3      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like My Educator(s)' THEN 3
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely like adults at TPZ' THEN 3      
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Agree' THEN 4
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Yes' THEN 3
+        WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely or Almost Always' THEN 3      
+        ELSE NULL
+      END
+    label: Numeric Value
+    ai_context: Likert score (0–3) mapped from answer text. 0=lowest agreement,
+      3=highest. Use for quantitative analysis. For negatively-worded items, use
+      numeric_value_weighted instead.
+
+  full_name:
+    sql: CONCAT(${omni__all_survey_data_with_demos.first_name}, ' ',
+      ${omni__all_survey_data_with_demos.last_name})
+    label: Full Name
+    hidden: true
+    ai_context: Student full name. Hidden — use people.full_name instead. Do not
+      expose in aggregate reporting.
+
+  question_text_clean:
+    sql: "REPLACE(${omni__all_survey_data_with_demos.question_text}, 'How much do
+      you disagree or agree with each statement?: ', '')"
+    label: Question Text Clean
+    ai_context: Question text with 'How much do you disagree or agree...' prefix
+      stripped. Prefer question_taxonomy.canonical_question_text for cleanest
+      version.
+
+  question_match_key:
+    sql: |-
+      LOWER(
+        CASE
+          WHEN LOCATE('HowmuchdoyoudisagreeoragreewitheachstatementEachstatementbeginswithIhavepeopleinmynetwork',
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')) = 1
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            90)
+          WHEN LOCATE('Howmuchdoyoudisagreeoragreewitheachstatement',
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')) = 1
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            45)
+          WHEN LOCATE('HowmuchdothesestatementssoundlikeadultsatTPZ',
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')) = 1
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            45)
+          WHEN LOCATE('Howmuchdoyouagreewiththe',
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')) = 1
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            68)
+          WHEN LOCATE('HowtruearethesestatementsaboutTPZ',
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')) = 1
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            34)
+          WHEN ${omni__all_survey_data_with_demos.survey_name} = 'Developmental Assets Profile'
+          THEN REGEXP_REPLACE(
+            REGEXP_REPLACE(
+              REGEXP_REPLACE(
+                REGEXP_REPLACE(
+                  REGEXP_REPLACE(
+                    REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''),
+                    '^[[:space:]]*I[[:space:]]+have[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*:?[[:space:]]*',
+                    ''),
+                  '^[[:space:]]*I[[:space:]]+am[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*:?[[:space:]]*',
+                  ''),
+                '^[[:space:]]*I[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*\\.[[:space:]]*:?[[:space:]]*',
+                ''),
+              '^[[:space:]]*I[[:space:]]+',
+              ''),
+            '[^a-zA-Z0-9]',
+            '')
+          WHEN ASCII(LEFT(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            1)) BETWEEN 97 AND 102
+          THEN SUBSTRING(
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', ''),
+            2)
+          ELSE
+            REGEXP_REPLACE(REGEXP_REPLACE(${omni__all_survey_data_with_demos.question_text}, '<[^>]+>', ''), '[^a-zA-Z0-9]', '')
+        END
+      )
+    description: Normalized match key derived from question_text. Strips HTML tags,
+      known question prefixes, SAYO lettered prefixes, all punctuation, spaces,
+      and lowercases the result. For DAP surveys, also strips leading 'I have',
+      'I am', or 'I' prefix patterns before normalization. Use this field to
+      join question text across different survey tables.
+
+  numeric_value_weighted:
+    sql: |-
+      CASE 
+        WHEN ${question_taxonomy.weight} = -1 
+        THEN 4 - CASE 
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Disagree' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A little like adults at TPZ' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like My Educator(s)' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little True' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Rarely' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like Me' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'No' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Not At All or Rarely' THEN 0       
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Disagree' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat like adults at TPZ' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like My Educator(s)' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat True' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Sometimes' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like Me' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly No' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat or Sometimes' THEN 1            
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Disagree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly True' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Often' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like Me' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly like adults at TPZ' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like My Educator(s)' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Disagree; Somewhat Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Yes' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Very or Often' THEN 2         
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Agree' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Almost Always' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like Me' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Completely True' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like My Educator(s)' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely like adults at TPZ' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Agree' THEN 4
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Yes' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely or Almost Always' THEN 3            
+          ELSE NULL
+        END
+        ELSE CASE 
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Disagree' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A little like adults at TPZ' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like My Educator(s)' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little True' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Rarely' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like Me' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'No' THEN 0
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Not At All or Rarely' THEN 0       
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Disagree' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat like adults at TPZ' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like My Educator(s)' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat True' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Sometimes' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like Me' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly No' THEN 1
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat or Sometimes' THEN 1            
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Disagree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly True' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Often' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like Me' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly like adults at TPZ' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like My Educator(s)' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Disagree; Somewhat Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Agree' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Yes' THEN 2
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Very or Often' THEN 2         
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Agree' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Almost Always' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like Me' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Completely True' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like My Educator(s)' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely like adults at TPZ' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Agree' THEN 4
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Yes' THEN 3
+          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely or Almost Always' THEN 3            
+          ELSE NULL
+        END
+      END
+    label: Numeric Value (Weighted)
+    description: Numeric value with reverse scoring applied for negatively-worded
+      items. When question_taxonomy.weight = -1, applies reverse scoring (4 -
+      value). Requires question_taxonomy to be joined via the topic layer.
+    ai_context: Reverse-scored Likert value for negatively-worded items (weight=-1).
+      Identical to numeric_value when weight=1. Prefer this for ES/EC analysis
+      that includes negatively-worded items.
+
+  dap_context_category:
+    sql: |-
+      CASE
+        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 15 THEN 'Challenged'
+        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 21 THEN 'Vulnerable'
+        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 26 THEN 'Adequate'
+        ELSE 'Thriving'
+      END
+    label: DAP Context Category
+    description: "Categorizes the DAP Context Score (0–30) into four levels:
+      Challenged (0–14), Vulnerable (15–20), Adequate (21–25), Thriving (26–30).
+      Based on Search Institute DAP scoring benchmarks."
+
+measures:
+  count:
+    aggregate_type: count
+
+  student_id_count_distinct:
+    sql: ${omni__all_survey_data_with_demos.student_id}
+    aggregate_type: count_distinct
+
+  numeric_value_average:
+    sql: ${omni__all_survey_data_with_demos.numeric_value}
+    label: Numeric Value Average
+    aggregate_type: average
+
+  numeric_value_weighted_average:
+    sql: ${omni__all_survey_data_with_demos.numeric_value_weighted}
+    label: Numeric Value (Weighted) Average
+    format: NUMBER_2
+    description: Average of reverse-scored Likert values (0–3 scale).
+    aggregate_type: average
+    ai_context: Prefer this over numeric_value_average when analyzing ES/EC surveys
+      that include negatively-worded items.
+
+  dap_context_score:
+    sql: AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10
+    label: DAP Context Score
+    format: NUMBER_0
+    description: "DAP context score: AVG(numeric_value) × 10. Group by
+      dap_mappings_full.context and student_id for per-student, per-context
+      scores on a 0–30 scale."
+    ai_context: DAP context score (0–30 scale). Group by dap_mappings_full.context +
+      student_id. Produces per-context scores (Personal, Social, Family,
+      School/Community). AGGREGATE_EXPRESSION — cannot be used in GROUP BY.
+
+  dap_asset_score:
+    sql: AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10
+    label: DAP Asset Score
+    description: "DAP asset score: AVG(numeric_value) × 10. Group by
+      dap_mappings_full.sub_scale and student_id for per-student, per-sub-scale
+      scores on a 0–30 scale."
+    ai_context: DAP asset score (0–30 scale). Group by dap_mappings_full.sub_scale +
+      student_id. Produces per-asset-category scores (Support, Empowerment,
+      etc.). AGGREGATE_EXPRESSION — cannot be used in GROUP BY.
+
+  dap_context_score_label:
+    sql: CASE WHEN ${omni__all_survey_data_with_demos.dap_context_score} <= 14 THEN
+      'Challenged' WHEN ${omni__all_survey_data_with_demos.dap_context_score} <=
+      20 THEN 'Vulnerable' WHEN
+      ${omni__all_survey_data_with_demos.dap_context_score} <= 25 THEN
+      'Adequate' WHEN ${omni__all_survey_data_with_demos.dap_context_score} <=
+      30 THEN 'Thriving' ELSE NULL END
+    label: DAP Context Score Label
+    description: "Categorizes the DAP Context Score (0–30) into four levels:
+      Challenged (0–14), Vulnerable (15–20), Adequate (21–25), Thriving (26–30).
+      Based on Search Institute DAP scoring benchmarks. This is a computed
+      aggregate expression — it cannot be used as a dimension or in GROUP BY
+      clauses."
+    synonyms: [ DAP context category ]
+    ai_context: "Values: Challenged, Vulnerable, Adequate, Thriving. Sort by
+      context_sort measure. AGGREGATE_EXPRESSION — cannot be used in GROUP BY or
+      as a dimension."
+
+  dap_asset_score_label:
+    sql: CASE WHEN ${omni__all_survey_data_with_demos.dap_asset_score} <= 14 THEN
+      'Challenged' WHEN ${omni__all_survey_data_with_demos.dap_asset_score} <=
+      20 THEN 'Vulnerable' WHEN
+      ${omni__all_survey_data_with_demos.dap_asset_score} <= 25 THEN 'Adequate'
+      WHEN ${omni__all_survey_data_with_demos.dap_asset_score} <= 30 THEN
+      'Thriving' ELSE NULL END
+    label: DAP Asset Score Label
+    description: "Categorizes the DAP Asset Score (0–30) into four levels:
+      Challenged (0–14), Vulnerable (15–20), Adequate (21–25), Thriving (26–30).
+      Based on Search Institute DAP scoring benchmarks. This is a computed
+      aggregate expression — it cannot be used as a dimension or in GROUP BY
+      clauses."
+    synonyms: [ DAP asset category ]
+    ai_context: "Values: Challenged, Vulnerable, Adequate, Thriving.
+      AGGREGATE_EXPRESSION — cannot be used in GROUP BY or as a dimension."
+
+  context_sort:
+    sql: CASE WHEN ${omni__all_survey_data_with_demos.dap_context_score_label} =
+      'Vulnerable' THEN 1 WHEN
+      ${omni__all_survey_data_with_demos.dap_context_score_label} = 'Challenged'
+      THEN 2 WHEN ${omni__all_survey_data_with_demos.dap_context_score_label} =
+      'Adequate' THEN 3 WHEN
+      ${omni__all_survey_data_with_demos.dap_context_score_label} = 'Thriving'
+      THEN 4 ELSE NULL END
+    label: Context Sort
+    description: "Numeric sort order for DAP Context Score Label values:
+      Vulnerable=1, Challenged=2, Adequate=3, Thriving=4. Use this field to sort
+      visualizations by DAP context category in a consistent, meaningful order
+      regardless of which categories are present in a filtered result."
+    synonyms: [ DAP context category order ]
+    ai_context: "Sort order for dap_context_score_label: Vulnerable=1, Challenged=2,
+      Adequate=3, Thriving=4. Sort ascending for meaningful order."

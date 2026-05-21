@@ -1,0 +1,35 @@
+# Reference this view as survey_response_answers
+schema: knowledge_management
+
+dimensions:
+  created_at: {}
+  updated_at: {}
+  text: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  survey_response_id:
+    format: ID
+
+  survey_question_id:
+    format: ID
+
+  survey_answer_id:
+    format: ID
+
+  text_decoded:
+    sql: CAST(text AS CHAR)
+    label: Text (Decoded)
+    description: The raw free-text response decoded from MySQL binary/blob storage
+      into a readable string. The underlying text column stores response text as
+      ASCII character codes; CAST AS CHAR converts it to human-readable text.
+
+measures:
+  count:
+    aggregate_type: count
+
+  survey_response_id_count_distinct:
+    sql: ${survey_response_answers.survey_response_id}
+    aggregate_type: count_distinct

@@ -1,0 +1,26 @@
+# Reference this view as queued_emails
+schema: knowledge_management
+
+dimensions:
+  mailer_class: {}
+  mailer_method: {}
+  args: {}
+  args_hash: {}
+  status: {}
+  sent_at: {}
+  error_message: {}
+  created_at: {}
+  updated_at: {}
+  emailable_type: {}
+  on_send_status: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  emailable_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

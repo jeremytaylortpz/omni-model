@@ -1,0 +1,235 @@
+# Reference this view as student_attendance_rates
+label: Student Attendance Rates
+
+schema: knowledge_management
+sql: |-
+  SELECT
+    sa.person_id,
+    sa.context_id AS course_id,
+    c.course_code,
+    c.friendly_name AS course_name,
+    t.name AS term_name,
+    ct.name AS full_course_name,
+    ct.id AS course_type_id,
+    SUM(sa.att_pct) AS att_pct_sum,
+    cd.total_course_days AS total_days,
+    COUNT(CASE WHEN sa.att_pct > 0 THEN 1 END) AS days_attended,
+    SUM(sa.att_pct) / NULLIF(cd.total_course_days, 0) AS student_attendance_rate
+  FROM (
+    SELECT
+      ra.person_id,
+      ra.context_id,
+      ra.context_type,
+      ra.date,
+      ra.att_pct
+    FROM (
+      SELECT
+        sa_inner.*,
+        ROW_NUMBER() OVER (
+          PARTITION BY sa_inner.person_id, sa_inner.context_type, sa_inner.context_id, sa_inner.date
+          ORDER BY sa_inner.created_at DESC, sa_inner.id DESC
+        ) AS rn
+      FROM student_attendances sa_inner
+      WHERE sa_inner.active = 1
+        AND sa_inner.context_type = 'Course'
+    ) ra
+    WHERE ra.rn = 1
+  ) sa
+  JOIN courses c ON c.id = sa.context_id
+  JOIN terms t ON t.id = c.term_id
+  JOIN course_types ct ON ct.id = c.course_type_id
+  JOIN ${course_days} cd ON cd.course_id = sa.context_id
+  GROUP BY
+    sa.person_id,
+    sa.context_id,
+    c.course_code,
+    c.friendly_name,
+    t.name,
+    ct.name,
+    ct.id,
+    cd.total_course_days
+  HAVING COUNT(CASE WHEN sa.att_pct > 0 THEN 1 END) >= 3
+
+dimensions:
+  full_course_name: {}
+  course_type_id: {}
+
+  person_id:
+    sql: person_id
+
+  course_id:
+    sql: course_id
+
+  course_code:
+    sql: course_code
+
+  course_name:
+    sql: course_name
+
+  term_name:
+    sql: term_name
+    label: Term
+
+  att_pct_sum:
+    sql: att_pct_sum
+    label: Total Attendance Points
+    ai_context: "This is a calculated sum of values in the att_pct column in
+      student_attendances, which has a value of 0, 0.5, or 1 for each day of a
+      class for each student. This column is the sum of those values for each
+      student within a given course and term. This value is used as the
+      numerator in the Student Attendance Rates column. "
+
+  total_days:
+    sql: total_days
+    label: Total Class Days
+    ai_context: "This is a calculated count of days for a particular section of a
+      course in a given term for each student. This value is used as the
+      denominator in the Student Attendance Rates column. "
+
+  days_attended:
+    sql: days_attended
+
+  student_attendance_rate:
+    sql: student_attendance_rate
+    format: percent
+
+  full_course_name_groups:
+    sql: ${student_attendance_rates.full_course_name}
+    groups:
+      - filter:
+          or:
+            - contains: Eship
+            - contains: [ Discover, Explore, Incubate, Ideate ]
+        name: Eship
+      - filter:
+          contains: Deep Dive
+        name: Deep Dive
+      - filter:
+          contains: Open Studio
+        name: Open Studio
+      - filter:
+          and:
+            - contains: Launch Lab
+            - not_contains: Open Studio
+        name: Launch Lab
+      - filter:
+          contains: [ Pathways, We Sell, Made Possible, Intern, Future You, Consult ]
+        name: Pathways & WBL
+    else: Other
+    label: Full Course Name Groups
+
+  is_first_term:
+    sql: CASE WHEN ${student_first_terms.first_term_start_date} =
+      ${terms.start_date} THEN 'New Student' ELSE 'Returning Student' END
+    label: is_first_term
+    description: Indicates whether this term was the student's first term at TPZ
+      based on attendance data. 'New Student' = earliest term the student
+      attended any class; 'Returning Student' = all subsequent terms.
+    ai_context: "Indicates whether this term was the student's first term at TPZ
+      based on attendance data. 'New Student' means this course is the student's
+      first for which they have attendance data.   'Returning Student' means
+      there is a previous term in which the student had attendance data in a
+      ccourse. "
+
+  is_deep_dive:
+    sql: ${student_attendance_rates.full_course_name}
+    groups:
+      - filter:
+          contains: Deep Dive
+        name: Deep Dive
+    else: Not Deep Dive
+    label: is_deep_dive
+
+measures:
+  count_students:
+    sql: ${student_attendance_rates.person_id}
+    label: Students Enrolled
+    aggregate_type: count_distinct
+
+  attendance_rate:
+    sql: SUM(${student_attendance_rates.att_pct_sum}) /
+      NULLIF(SUM(${student_attendance_rates.total_days}), 0)
+    format: percent
+    description: Average attendance rate across all qualifying students (>= 3 days
+      attended) in the current grouping
+    drill_fields:
+      [
+        student_attendance_rates.term_name,
+        student_attendance_rates.person_id,
+        people.full_name,
+        student_attendance_rates.is_first_term,
+        student_attendance_rates.course_code,
+        student_attendance_rates.full_course_name,
+        student_attendance_rates.days_attended,
+        student_attendance_rates.attendance_rate
+      ]
+    ai_context: Calculated field that divides the sum of individual students'
+      attendance in a given course by the number of days in that course to
+      provide a attendance rate for each student for each course they took.
+
+  retention_rate_70:
+    sql: COUNT(DISTINCT CASE WHEN
+      ${student_attendance_rates.student_attendance_rate} >= 0.70 THEN
+      ${student_attendance_rates.person_id} END) / NULLIF(COUNT(DISTINCT
+      ${student_attendance_rates.person_id}), 0)
+    label: Retention Rate (70%)
+    format: percent
+    description: Percentage of qualifying students (>= 3 days attended) with an
+      attendance rate >= 70%
+    drill_fields:
+      [
+        student_attendance_rates.term_name,
+        student_attendance_rates.person_id,
+        people.full_name,
+        student_attendance_rates.is_first_term,
+        student_attendance_rates.course_code,
+        student_attendance_rates.full_course_name,
+        student_attendance_rates.days_attended,
+        student_attendance_rates.student_attendance_rate,
+        student_attendance_rates.attendance_rate
+      ]
+
+  retention_rate_75:
+    sql: COUNT(DISTINCT CASE WHEN
+      ${student_attendance_rates.student_attendance_rate} >= 0.75 THEN
+      ${student_attendance_rates.person_id} END) / NULLIF(COUNT(DISTINCT
+      ${student_attendance_rates.person_id}), 0)
+    label: Retention Rate (75%)
+    format: percent
+    description: Percentage of qualifying students (>= 3 days attended) with an
+      attendance rate >= 75%
+    drill_fields:
+      [
+        student_attendance_rates.term_name,
+        student_attendance_rates.person_id,
+        people.full_name,
+        student_attendance_rates.is_first_term,
+        student_attendance_rates.course_code,
+        student_attendance_rates.full_course_name,
+        student_attendance_rates.days_attended,
+        student_attendance_rates.attendance_rate
+      ]
+
+  retention_rate_80:
+    sql: COUNT(DISTINCT CASE WHEN
+      ${student_attendance_rates.student_attendance_rate} >= 0.80 THEN
+      ${student_attendance_rates.person_id} END) / NULLIF(COUNT(DISTINCT
+      ${student_attendance_rates.person_id}), 0)
+    label: Retention Rate (80%)
+    format: percent
+    description: Percentage of qualifying students (>= 3 days attended) with an
+      attendance rate >= 80%
+    drill_fields:
+      [
+        student_attendance_rates.term_name,
+        student_attendance_rates.person_id,
+        people.full_name,
+        student_attendance_rates.is_first_term,
+        student_attendance_rates.course_code,
+        student_attendance_rates.full_course_name,
+        student_attendance_rates.days_attended,
+        student_attendance_rates.attendance_rate
+      ]
+
+  count:
+    aggregate_type: count

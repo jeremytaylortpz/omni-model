@@ -1,0 +1,42 @@
+base_view: student_attendance_rates
+label: Comparing Retention by Threshold and Term
+
+fields: [ all_views.* ]
+always_where_filters:
+  terms.name:
+    not: [ "2020", Multi-Term, Fall/Winter 21/22, 2021-2022 ]
+  student_attendance_rates.full_course_name_groups:
+    not: [ Open Studio, Other ]
+
+joins:
+  courses: {}
+  people:
+    student_profiles:
+      schools:
+        school_tiers: {}
+    demographic_profiles:
+      races: {}
+    alumni_profiles: {}
+    most_recent_ef_by_student: {}
+  terms:
+    term_sorting_v2: {}
+  student_first_terms: {}
+
+views:
+  student_attendance_rates:
+    dimensions:
+      is_deep_dive:
+        sql: ${student_attendance_rates.full_course_name}
+        groups:
+          - filter:
+              contains: Deep Dive
+            name: Deep Dive
+        else: Not Deep Dive
+        label: Is Deep Dive
+
+ai_context: "One row per student per course (qualifying: ≥3 days attended). Use
+  for retention and attendance rate analysis by term, course type, and student
+  demographics. Default filters exclude legacy terms (2020, Multi-Term,
+  Fall/Winter 21/22, 2021-2022) and non-primary course groups (Open Studio,
+  Other). Retention = % of students with attendance rate ≥ threshold
+  (70/75/80%). Use is_first_term to compare new vs returning students."

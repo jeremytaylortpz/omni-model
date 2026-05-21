@@ -1,0 +1,46 @@
+# Reference this view as people
+schema: knowledge_management
+
+dimensions:
+  first_name: {}
+  middle_name: {}
+  last_name: {}
+  preferred_name: {}
+  created_at: {}
+  updated_at: {}
+
+  date_of_birth:
+    timeframes: [ raw, date, week, month, quarter, year, month_name ]
+
+  id:
+    format: ID
+    primary_key: true
+
+  full_name:
+    sql: CONCAT(${people.first_name}, ' ', ${people.last_name})
+    label: Full Name
+    ai_context: Student full name (first + last). Use this as the canonical name
+      field. Do not expose in aggregate reporting per model rules.
+
+  calculation:
+    sql: CONCAT(COALESCE(CONCAT(COALESCE(${people.first_name}, ''), ' '), ''),
+      COALESCE(${people.last_name}, ''))
+    label: Calculation
+    hidden: true
+
+  student_name:
+    sql: CONCAT(COALESCE(CONCAT(COALESCE(${people.first_name}, ''), ' '), ''),
+      COALESCE(${people.last_name}, ''))
+    label: Student Name
+    format: ""
+    hidden: true
+
+measures:
+  count:
+    aggregate_type: count
+
+  id_count_distinct:
+    sql: ${people.id}
+    aggregate_type: count_distinct
+    ai_context: Distinct student count. Prefer this over people.count for unique
+      student counts when joins may cause duplicates.

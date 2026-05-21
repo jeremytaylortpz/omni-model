@@ -1,0 +1,9 @@
+# Reference this view as schema_migrations
+schema: knowledge_management
+
+dimensions:
+  version: {}
+
+measures:
+  count:
+    aggregate_type: count

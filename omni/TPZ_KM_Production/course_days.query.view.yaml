@@ -1,0 +1,66 @@
+# Reference this view as course_days
+label: Course Days
+description: One row per course. Shows the total number of days each course ran,
+  based on distinct attendance dates in student_attendances.
+
+sql: |-
+  SELECT
+    sa.context_id AS course_id,
+    c.course_code,
+    c.friendly_name AS course_name,
+    t.id AS term_id,
+    t.name AS term_name,
+    COUNT(DISTINCT sa.date) AS total_course_days
+  FROM (
+    SELECT
+      context_id,
+      date
+    FROM student_attendances
+    WHERE active = 1
+      AND artificial = 0
+      AND context_type = 'Course'
+    GROUP BY context_id, date
+  ) sa
+  JOIN courses c ON c.id = sa.context_id
+  JOIN terms t ON t.id = c.term_id
+  GROUP BY sa.context_id, c.course_code, c.friendly_name, t.id, t.name
+
+dimensions:
+  course_id:
+    sql: course_id
+
+  course_code:
+    sql: course_code
+    label: Course Code
+
+  course_name:
+    sql: course_name
+    label: Course Name
+
+  term_id:
+    sql: term_id
+
+  term_name:
+    sql: term_name
+    label: Term
+
+  total_course_days:
+    sql: total_course_days
+    label: Total Course Days
+    description: Count of distinct attendance dates for this course. Represents the
+      total number of days the course actually ran.
+
+measures:
+  count:
+    label: Count of Courses
+    aggregate_type: count
+
+  total_course_days_sum:
+    sql: ${course_days.total_course_days}
+    label: Total Course Days (Sum)
+    aggregate_type: sum
+
+  average_course_days:
+    sql: ${course_days.total_course_days}
+    label: Average Course Days
+    aggregate_type: average

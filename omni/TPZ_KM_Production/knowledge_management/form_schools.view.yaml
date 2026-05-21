@@ -1,0 +1,20 @@
+# Reference this view as form_schools
+schema: knowledge_management
+
+dimensions:
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_id:
+    format: ID
+
+  school_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

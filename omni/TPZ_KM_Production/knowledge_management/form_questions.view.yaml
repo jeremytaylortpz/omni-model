@@ -1,0 +1,23 @@
+# Reference this view as form_questions
+schema: knowledge_management
+
+dimensions:
+  position: {}
+  question_type: {}
+  required: {}
+  validation_rules: {}
+  smart_check: {}
+  field_key: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_step_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,27 @@
+# Reference this view as surveys
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  survey_created: {}
+  survey_modified: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  sm_id:
+    format: ID
+    description: the id of the survey from the third party tool
+
+  survey_type_id:
+    format: ID
+    description: A link to the type of survey. This is currently not useful as all
+      surveys coming in through the qualtrics webhook are being marked as type
+      “General” but we would like this to change in the future
+
+measures:
+  count:
+    aggregate_type: count

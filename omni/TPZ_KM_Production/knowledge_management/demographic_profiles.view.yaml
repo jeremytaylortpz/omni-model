@@ -1,0 +1,19 @@
+# Reference this view as demographic_profiles
+schema: knowledge_management
+
+dimensions:
+  gender: {}
+  created_at: {}
+  updated_at: {}
+  ethnicity: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

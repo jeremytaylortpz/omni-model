@@ -1,0 +1,20 @@
+# Reference this view as teams
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  asana_permalink_url: {}
+  created_at: {}
+  updated_at: {}
+  asana_gid: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  organization_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

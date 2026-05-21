@@ -1,0 +1,27 @@
+# Reference this view as pathways_profiles
+schema: knowledge_management
+
+dimensions:
+  postsecondary_schools: {}
+  postsecondary_plans: {}
+  confirmed_postsecondary_school: {}
+  general_career_interests: {}
+  intended_major: {}
+  post_graduation_support: {}
+  tpz_advisor: {}
+  notes: {}
+  internships_interested: {}
+  internships_started: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  person_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

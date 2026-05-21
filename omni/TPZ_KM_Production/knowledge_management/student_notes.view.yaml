@@ -1,0 +1,23 @@
+# Reference this view as student_notes
+schema: knowledge_management
+
+dimensions:
+  note: {}
+  date: {}
+  private: {}
+  team: {}
+  author: {}
+  created_at: {}
+  updated_at: {}
+  active: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  student_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

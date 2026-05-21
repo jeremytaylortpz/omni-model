@@ -1,0 +1,24 @@
+# Reference this view as recruitment_summaries
+schema: knowledge_management
+
+dimensions:
+  block_name: {}
+  optimal_class_size: {}
+  max_class_size: {}
+  total_spots_available: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  recruitment_term_id:
+    format: ID
+
+  course_type_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

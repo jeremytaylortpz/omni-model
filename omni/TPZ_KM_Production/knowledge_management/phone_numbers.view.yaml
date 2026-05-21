@@ -1,0 +1,19 @@
+# Reference this view as phone_numbers
+schema: knowledge_management
+
+dimensions:
+  phone_number: {}
+  allow_sms: {}
+  created_at: {}
+  updated_at: {}
+  phone_type: {}
+  extension: {}
+  preferred: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

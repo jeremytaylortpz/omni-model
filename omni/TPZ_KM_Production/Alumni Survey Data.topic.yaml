@@ -1,0 +1,72 @@
+base_view: survey_responses
+label: Alumni Survey Responses
+description: Raw survey response data for TPZ alumni surveys. Each row
+  represents one answer to one question by one respondent. Use
+  survey_responses.sm_id as the unique respondent identifier — person_id is not
+  populated for alumni surveys. Filter by surveys.name to isolate a specific
+  survey.
+
+joins:
+  surveys: {}
+  survey_collectors: {}
+  alumni_profiles: {}
+  survey_response_answers:
+    survey_answers: {}
+    survey_questions:
+      survey_sections: {}
+
+relationships:
+  - join_from_view: survey_responses
+    join_to_view: surveys
+    join_type: always_left
+    on_sql: ${survey_responses.survey_id} = ${surveys.id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_response_answers
+    join_to_view: survey_questions
+    join_type: always_left
+    on_sql: ${survey_response_answers.survey_question_id} = ${survey_questions.id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_responses
+    join_to_view: alumni_profiles
+    join_type: always_left
+    on_sql: ${survey_responses.person_id} = ${alumni_profiles.person_id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_responses
+    join_to_view: surveys
+    join_to_view_as: alumni_surveys
+    join_type: always_left
+    on_sql: ${survey_responses.survey_id} = ${alumni_surveys.id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_responses
+    join_to_view: survey_collectors
+    join_type: always_left
+    on_sql: ${survey_responses.survey_collector_id} = ${survey_collectors.id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_responses
+    join_to_view: survey_answers
+    join_type: always_left
+    on_sql: ${survey_responses.sm_id} = ${survey_answers.sm_id}
+    relationship_type: one_to_many
+
+  - join_from_view: survey_answers
+    join_to_view: survey_questions
+    join_to_view_as: alumni_survey_questions
+    join_type: always_left
+    on_sql: ${survey_answers.survey_question_id} = ${alumni_survey_questions.id}
+    relationship_type: many_to_one
+
+  - join_from_view: survey_questions
+    join_to_view: survey_sections
+    join_type: always_left
+    on_sql: ${survey_questions.survey_section_id} = ${survey_sections.id}
+    relationship_type: many_to_one
+
+ai_context: |-
+  Use this topic to analyze alumni survey data. The base view is survey_responses, joined to survey_response_answers via survey_responses.id = survey_response_answers.survey_response_id (the bridge table). survey_response_answers then joins to survey_questions (for question text) via survey_question_id, and to survey_answers (for answer values) via survey_answer_id. survey_questions joins to survey_sections for section grouping via survey_section_id. Filter on surveys.name = '2024 TPZ Alumni Survey' to isolate that cohort.
+
+  Note: For alumni surveys, survey_responses.person_id is typically null, so the alumni_profiles join will return no rows for those respondents. Use survey_responses.sm_id as the unique respondent identifier for alumni surveys.

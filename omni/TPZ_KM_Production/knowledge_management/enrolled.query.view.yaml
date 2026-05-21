@@ -1,0 +1,38 @@
+# Reference this view as enrolled
+label: Enrolled
+
+schema: knowledge_management
+sql: |-
+  select p.id as student_id, t.id as term_id, t.name as term_name, p.first_name, p.last_name, sp.current_grade, sc.name as school_name, sct.name as school_tier, sc.is_target_school, sc.is_bps_school, sp.iep, sp.esl, dp.gender, dp.ethnicity, rc.race, sp.school
+    from people as p
+    left outer join student_profiles as sp on p.id = sp.person_id
+    left outer join schools sc on sp.school_id = sc.id
+    left outer join school_tiers sct on sc.school_tier_id = sct.id
+    left outer join demographic_profiles as dp on p.id = dp.person_id
+    left outer join races as rc on rc.demographic_profile_id = dp.id
+    left outer join student_attendances as sa on sa.person_id = p.id  
+    left outer join courses as c on sa.context_id = c.id and sa.context_type = 'Course'
+    left outer join course_types as ct on c.course_type_id = ct.id
+    left outer join terms as t on c.term_id = t.id
+
+dimensions:
+  student_id: {}
+  term_id: {}
+  term_name: {}
+  first_name: {}
+  last_name: {}
+  current_grade: {}
+  school_name: {}
+  school_tier: {}
+  is_target_school: {}
+  is_bps_school: {}
+  iep: {}
+  esl: {}
+  gender: {}
+  ethnicity: {}
+  race: {}
+  school: {}
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,12 @@
+# Reference this view as ar_internal_metadata
+schema: knowledge_management
+
+dimensions:
+  key: {}
+  value: {}
+  created_at: {}
+  updated_at: {}
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,47 @@
+# Reference this view as terms
+schema: knowledge_management
+
+dimensions:
+  end_date: {}
+  created_at: {}
+  updated_at: {}
+
+  year:
+    sql: CAST (year AS INT)
+
+  name:
+    sql: terms.name
+    label: Term Name
+    order_by_field: start_date
+
+  id:
+    format: ID
+    primary_key: true
+
+  start_date:
+    sql: start_date
+    format: "%Y-%m-%d"
+    timeframe_metadata:
+      date:
+        label: Date
+        format: "%Y-%m-%d"
+        group_label: Start Date
+
+  test_term_groups:
+    sql: ${terms.name}
+    groups:
+      - filter:
+          is: Winter 2025
+        name: Winter 2025
+    else: Winter 2026
+    label: Test Term Groups
+
+  current_term_label:
+    sql: CASE WHEN CAST(DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d') AS DATE) >=
+      ${terms.start_date} AND CAST(DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d') AS
+      DATE) <= ${terms.end_date} THEN 'Current Term' ELSE ${terms.name} END
+    label: Current Term Label
+
+measures:
+  count:
+    aggregate_type: count

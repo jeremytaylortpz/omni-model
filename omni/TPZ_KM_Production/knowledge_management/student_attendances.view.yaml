@@ -1,0 +1,110 @@
+# Reference this view as student_attendances
+schema: knowledge_management
+
+dimensions:
+  date: {}
+  bonus_reason: {}
+  additional_info: {}
+  context_type: {}
+  created_at: {}
+  updated_at: {}
+  artificial: {}
+  person_id: {}
+
+  active:
+    description: This flag becomes a 0 when an educator accidentally marks an
+      attendance record in the interface that needs to be deleted. We keep the
+      record and mark it as inactive
+
+  att_pct:
+    description: A number between 0 and 1 indicating how much credit the student
+      should get for attending. For example, historically educators have
+      sometimes marked students who were present but asleep for the whole class
+      or students who came in more than 30 minutes late with a 0.5 to indicate
+      that they were in the building but missed key elements of class.
+    ai_context: "Single-day attendance credit: 1=present, 0.5=half-day/tardy, 0=absent."
+
+  stipend_pct:
+    description: A number between 0 and 1 indicating what percentage of their
+      stipend a student should receive for this day.
+
+  id:
+    format: ID
+    primary_key: true
+
+  context_id:
+    format: ID
+
+  att_pct_level_of_detail:
+    sql: ${student_attendances.att_pct}
+    label: Att Pct Level of Detail
+    description: A number between 0 and 1 indicating how much credit the student
+      should get for attending. For example, historically educators have
+      sometimes marked students who were present but asleep for the whole class
+      or students who came in more than 30 minutes late with a 0.5 to indicate
+      that they were in the building but missed key elements of class.
+    level_of_detail:
+      aggregate_type: sum
+      fixed: [ student_attendances.person_id, student_attendances.context_id ]
+
+  att_pct_level_of_detail_1:
+    sql: ${student_attendances.att_pct}
+    label: Att Pct Level of Detail
+    description: A number between 0 and 1 indicating how much credit the student
+      should get for attending. For example, historically educators have
+      sometimes marked students who were present but asleep for the whole class
+      or students who came in more than 30 minutes late with a 0.5 to indicate
+      that they were in the building but missed key elements of class.
+    hidden: true
+    level_of_detail:
+      aggregate_type: sum
+      fixed: [ student_attendances.person_id, student_attendances.context_id ]
+
+  person_id_if_attendance_3:
+    sql: CASE WHEN ${student_attendances.att_pct_level_of_detail} >= 3 THEN
+      ${student_attendances.person_id} ELSE NULL END
+    label: Person ID if Attendance >= 3
+
+measures:
+  count:
+    aggregate_type: count
+
+  att_pct_sum:
+    sql: ${student_attendances.att_pct}
+    label: Attendance Total
+    description: "(Sum) Att Pct: A number between 0 and 1 indicating how much credit
+      the student should get for attending. For example, historically educators
+      have sometimes marked students who were present but asleep for the whole
+      class or students who came in more than 30 minutes late with a 0.5 to
+      indicate that they were in the building but missed key elements of class."
+    aggregate_type: sum
+
+  has_1_attendance:
+    sql: CASE WHEN ${student_attendances.att_pct_sum} >= 1 THEN 1 ELSE 0 END
+    label: has_1_attendance
+    format: ""
+
+  has_3_attendance:
+    sql: CASE WHEN ${student_attendances.att_pct_sum} >= 3 THEN 1 ELSE 0 END
+    label: has_3_attendance
+    format: ""
+
+  has_3_v2:
+    sql: CASE WHEN ${student_attendances.att_pct_sum} >= 3 THEN 1 ELSE 0 END
+    label: has_3_v2
+    format: ""
+    hidden: true
+
+  person_id_count_distinct:
+    sql: ${student_attendances.person_id}
+    aggregate_type: count_distinct
+
+  person_id_if_attendance_3_count_distinct:
+    sql: ${student_attendances.person_id_if_attendance_3}
+    label: Person ID if Attendance >= 3 Count Distinct
+    aggregate_type: count_distinct
+
+ai_context: Raw attendance records (before deduplication). Prefer
+  omni__clean_attendance_query_view for analysis — it deduplicates to one row
+  per student/course/date. Use this view only when you need raw un-deduplicated
+  records or the stipend_pct field.

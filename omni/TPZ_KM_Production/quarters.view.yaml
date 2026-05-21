@@ -1,0 +1,12 @@
+# Reference this view as quarters
+uploaded_table_name: Quarters::d6ef3f92-b120-4c49-a3fb-381a4f3d0cd6
+
+dimensions:
+  quarter:
+    sql: "`Quarter`"
+    display_order: 0
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

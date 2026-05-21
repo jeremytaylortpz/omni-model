@@ -1,0 +1,26 @@
+# Reference this view as ec_es_mapping_with_matchkey
+label: ec_es_mapping_with_matchkey (Deprecated)
+description: Deprecated. This view has been fully superseded by the
+  question_taxonomy PDT. Please use question_taxonomy instead.
+hidden: true
+
+schema: knowledge_management
+query:
+  fields:
+    question_taxonomy.competency_name: competency_name
+    question_taxonomy.competency_level: competency_level
+    question_taxonomy.revised_question: revised_question
+    question_taxonomy.sub_scale: sub_scale
+    question_taxonomy.competency_tree: competency_tree
+    question_taxonomy.competency_type: competency_type
+    question_taxonomy.question_match_key: question_match_key
+    question_text_variants.survey_source: survey_source
+    omni__all_survey_data_with_demos.question_text: question_text
+  base_view: omni__all_survey_data_with_demos
+  sorts:
+    - field: omni__all_survey_data_with_demos.question_text
+  topic: omni__all_survey_data_with_demos
+
+measures:
+  count:
+    aggregate_type: count

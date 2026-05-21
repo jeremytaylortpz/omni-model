@@ -1,0 +1,21 @@
+# Reference this view as form_question_option_translations
+schema: knowledge_management
+
+dimensions:
+  label: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_question_option_id:
+    format: ID
+
+  language_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,25 @@
+# Reference this view as survey_sections
+schema: knowledge_management
+
+dimensions:
+  title: {}
+  description: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  sm_id:
+    format: ID
+
+  sub_sm_id:
+    format: ID
+
+  survey_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

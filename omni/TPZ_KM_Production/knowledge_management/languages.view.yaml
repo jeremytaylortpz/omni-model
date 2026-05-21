@@ -1,0 +1,19 @@
+# Reference this view as languages
+schema: knowledge_management
+
+dimensions:
+  native_name: {}
+  english_name: {}
+  created_at: {}
+  updated_at: {}
+  code: {}
+  active: {}
+  ui_strings: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

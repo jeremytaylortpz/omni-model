@@ -1,0 +1,134 @@
+# Reference this view as student_drop_patterns_by_term_data
+label: Student Drop Patterns by Term Data
+
+sql: |-
+  WITH
+  assigned AS (
+  SELECT DISTINCT
+  t.id AS term_id,
+
+  t.name AS term_name,
+  t.start_date AS term_start_date,
+  r.person_id
+  FROM registrations r
+  JOIN courses c
+  ON c.id = r.context_id
+  JOIN terms t
+  ON t.id = c.term_id
+  WHERE c.term_id IS NOT NULL
+  AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+  AND YEAR(t.start_date) BETWEEN 2023 AND 2026
+  ),
+  attendance_by_term AS (
+  SELECT
+  t.id AS term_id,
+  sa.person_id,
+  SUM(sa.att_pct) AS attended_session_equivalents
+  FROM student_attendances sa
+  JOIN courses c
+  ON c.id = sa.context_id
+  JOIN terms t
+  ON t.id = c.term_id
+  WHERE c.term_id IS NOT NULL
+  AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+  AND YEAR(t.start_date) BETWEEN 2023 AND 2026
+  GROUP BY t.id, sa.person_id
+  )
+  SELECT
+  a.term_id,
+  a.term_name,
+  a.term_start_date,
+  COUNT(DISTINCT a.person_id) AS assigned_students,
+  COUNT(DISTINCT CASE
+  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 1 THEN a.person_id
+  END) AS attended_1plus_students,
+  COUNT(DISTINCT CASE
+  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 3 THEN a.person_id
+  END) AS attended_3plus_students,
+  COUNT(DISTINCT CASE
+  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 10 THEN a.person_id
+  END) AS attended_10plus_students,
+  COUNT(DISTINCT CASE
+  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 20 THEN a.person_id
+  END) AS attended_20plus_students
+  FROM assigned a
+  LEFT JOIN attendance_by_term abt
+  ON abt.term_id = a.term_id
+  AND abt.person_id = a.person_id
+  GROUP BY
+  a.term_id, a.term_name, a.term_start_date
+  ORDER BY
+  a.term_start_date
+
+dimensions:
+  term_id: {}
+  term_name: {}
+  term_start_date: {}
+  assigned_students: {}
+  attended_1plus_students: {}
+  attended_3plus_students: {}
+  attended_10plus_students: {}
+
+  attended_20plus_students:
+    label: Attended 20+ Days
+
+  attended_10_to_19_days:
+    sql: COALESCE(${student_drop_patterns_by_term_data.attended_10plus_students}, 0)
+      - COALESCE(${student_drop_patterns_by_term_data.attended_20plus_students},
+      0)
+    label: Attended 10 to 19 Days
+    format: NUMBER_0
+
+  attended_3_to_9_days:
+    sql: COALESCE(${student_drop_patterns_by_term_data.attended_3plus_students}, 0)
+      - COALESCE(${student_drop_patterns_by_term_data.attended_10plus_students},
+      0)
+    label: Attended 3 to 9 Days
+    format: NUMBER_0
+
+  attended_1_to_2_days:
+    sql: COALESCE(${student_drop_patterns_by_term_data.attended_1plus_students}, 0)
+      - COALESCE(${student_drop_patterns_by_term_data.attended_3plus_students},
+      0)
+    label: Attended 1 or 2 Days
+    format: NUMBER_0
+
+  attended_0_days:
+    sql: COALESCE(${student_drop_patterns_by_term_data.assigned_students}, 0) -
+      COALESCE(${student_drop_patterns_by_term_data.attended_1plus_students}, 0)
+    label: Attended 0 Days
+    format: NUMBER_0
+
+  drop_before_10_days:
+    sql: CASE WHEN ${student_drop_patterns_by_term_data.assigned_students} = 0 THEN
+      NULL ELSE
+      COALESCE(COALESCE(${student_drop_patterns_by_term_data.assigned_students},
+      0) -
+      COALESCE(${student_drop_patterns_by_term_data.attended_10plus_students},
+      0), 0) / ${student_drop_patterns_by_term_data.assigned_students} END
+    label: Drop before 10 Days
+    format: PERCENT_2
+
+  drop_before_3_days:
+    sql: CASE WHEN ${student_drop_patterns_by_term_data.assigned_students} = 0 THEN
+      NULL ELSE
+      COALESCE(COALESCE(${student_drop_patterns_by_term_data.assigned_students},
+      0) -
+      COALESCE(${student_drop_patterns_by_term_data.attended_3plus_students},
+      0), 0) / ${student_drop_patterns_by_term_data.assigned_students} END
+    label: Drop before 3 Days
+    format: PERCENT_2
+
+  drop_before_1_day:
+    sql: CASE WHEN ${student_drop_patterns_by_term_data.assigned_students} = 0 THEN
+      NULL ELSE
+      COALESCE(COALESCE(${student_drop_patterns_by_term_data.assigned_students},
+      0) -
+      COALESCE(${student_drop_patterns_by_term_data.attended_1plus_students},
+      0), 0) / ${student_drop_patterns_by_term_data.assigned_students} END
+    label: Drop before 1 Day
+    format: PERCENT_2
+
+measures:
+  count:
+    aggregate_type: count

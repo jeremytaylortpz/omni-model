@@ -1,0 +1,21 @@
+# Reference this view as fablab_training_requirements
+schema: knowledge_management
+
+dimensions:
+  level: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  fablab_equipment_type_id:
+    format: ID
+
+  fablab_training_course_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

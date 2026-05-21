@@ -1,0 +1,23 @@
+# Reference this view as schedules
+schema: knowledge_management
+
+dimensions:
+  name: {}
+  start_date: {}
+  end_date: {}
+  created_at: {}
+  updated_at: {}
+  block_name: {}
+  monday: {}
+  tuesday: {}
+  wednesday: {}
+  thursday: {}
+  friday: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

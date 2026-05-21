@@ -1,0 +1,17 @@
+# Reference this view as dashboard_teams_dashboard_users
+schema: knowledge_management
+
+dimensions:
+  id:
+    format: ID
+    primary_key: true
+
+  dashboard_team_id:
+    format: ID
+
+  dashboard_user_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

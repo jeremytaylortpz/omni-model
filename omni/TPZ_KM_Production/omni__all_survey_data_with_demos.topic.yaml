@@ -1,0 +1,57 @@
+base_view: omni__all_survey_data_with_demos
+label: Student Survey Data
+description: All survey data combined with demographic information about
+  respondents, enabling analysis of survey results segmented by respondent
+  characteristics and attributes.
+
+fields: [ all_views.*, -omni__all_survey_data_with_demos.category ]
+
+joins:
+  surveys: {}
+  people:
+    student_profiles: {}
+    languages_people:
+      languages: {}
+  term_sorting_v2: {}
+  dap_mappings_full: {}
+  question_taxonomy: {}
+  question_text_variants: {}
+  terms: {}
+
+relationships:
+  - join_from_view: omni__all_survey_data_with_demos
+    join_to_view: question_taxonomy
+    join_type: always_left
+    on_sql: ${omni__all_survey_data_with_demos.question_match_key} =
+      ${question_taxonomy.question_match_key}
+    relationship_type: many_to_one
+
+  - join_from_view: omni__all_survey_data_with_demos
+    join_to_view: question_text_variants
+    join_type: always_left
+    on_sql: ${omni__all_survey_data_with_demos.question_match_key} =
+      ${question_text_variants.question_match_key}
+    relationship_type: many_to_many
+
+  - join_from_view: omni__all_survey_data_with_demos
+    join_to_view: ec_es_subscale_mapping
+    join_type: always_left
+    on_sql: ${omni__all_survey_data_with_demos.question_match_key} =
+      ${ec_es_subscale_mapping.question_match_key}
+    relationship_type: many_to_one
+
+ai_context: "Base view: one row per student × question × response. Three survey
+  types:\\n- ES (Entrepreneurial Spirit): Self-assessment, terms 1 & 3. Filter:
+  survey_name contains 'Entrepreneurial Spirit' or source_survey='ES'.
+  Competencies in question_taxonomy.competency_name. Domains: I COULD, I CAN, I
+  AM.\\n- EC (Entrepreneurial Culture): TPZ environment perception, term 2.
+  Filter: source_survey='EC'. Elements in question_taxonomy.competency_name.
+  Domains: INSPIRE, IGNITE, THRIVE.\\n- DAP (Developmental Assets Profile):
+  Baseline assessment, orientation. Filter: survey_name='Developmental Assets
+  Profile'. Uses dap_mappings_full for scoring.\\n\\nKey scoring: numeric_value
+  (0–3 Likert), numeric_value_weighted (reverse-scored). Competency/element
+  names in question_taxonomy.competency_name. question_taxonomy.eces_level for
+  domain grouping. DAP sub-scales in dap_mappings_full.sub_scale. No subscale
+  scores in base data — must aggregate from items.\\n\\nDAP score labels and
+  sort measures are AGGREGATE_EXPRESSION measures — cannot be used in GROUP BY
+  or as dimensions."

@@ -1,0 +1,27 @@
+# Reference this view as form_invitations
+schema: knowledge_management
+
+dimensions:
+  token: {}
+  sent_at: {}
+  opened_at: {}
+  submitted_at: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  form_id:
+    format: ID
+
+  person_id:
+    format: ID
+
+  form_submission_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

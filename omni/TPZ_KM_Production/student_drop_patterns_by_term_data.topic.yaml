@@ -1,0 +1,6 @@
+base_view: student_drop_patterns_by_term_data
+label: Student Drop Patterns by Term Data
+
+joins:
+  term_sorting_v2: {}
+  terms: {}

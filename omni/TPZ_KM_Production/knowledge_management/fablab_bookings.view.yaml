@@ -1,0 +1,36 @@
+# Reference this view as fablab_bookings
+schema: knowledge_management
+
+dimensions:
+  fabman_lock: {}
+  booking_start: {}
+  booking_end: {}
+  status: {}
+  created_at: {}
+  updated_at: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+  fablab_equipment_id:
+    format: ID
+
+  fablab_profile_id:
+    format: ID
+
+  fabman_id:
+    format: ID
+
+  supersaas_id:
+    format: ID
+
+  fablab_trainer_id:
+    format: ID
+
+  turn_off_job_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
