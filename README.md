@@ -4,7 +4,7 @@ Omni semantic model for **The Possible Zone (TPZ)** analytics environment.
 
 ## What is in this repository
 
-This repository contains a single Omni model under `/home/runner/work/omni-model/omni-model/omni/TPZ_KM_Production` with:
+This repository contains a single Omni model under `omni/TPZ_KM_Production` with:
 
 - `model.yaml` — top-level model configuration, cache policy, ignored views, and global AI context
 - `relationships.yaml` — cross-view join definitions
@@ -37,7 +37,7 @@ Important global rules already encoded in `model.yaml`:
 There is no application build/test harness in this repository. A simple validation pass is to parse the YAML files:
 
 ```bash
-cd /home/runner/work/omni-model/omni-model
+cd "$(git rev-parse --show-toplevel)"
 ruby -e 'require "yaml"; require "date"; files = Dir["**/*.{yaml,yml}"].sort; files.each { |f| YAML.load_file(f, permitted_classes: [Date, Time, Symbol], aliases: true) }; puts "Parsed #{files.length} YAML files successfully"'
 ```
 
