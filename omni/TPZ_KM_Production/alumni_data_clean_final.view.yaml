@@ -8,21 +8,26 @@ dimensions:
   full_name_x:
     sql: "`full_name.x`"
     display_order: 1
+    hidden: true
 
   first_name:
     display_order: 2
+    hidden: true
 
   last_name:
     display_order: 3
+    hidden: true
 
   graduation_year:
     display_order: 4
 
   student_phone:
     display_order: 5
+    hidden: true
 
   student_email:
     display_order: 6
+    hidden: true
 
   group:
     display_order: 7
@@ -30,9 +35,11 @@ dimensions:
   full_name_std_x:
     sql: "`full_name_std.x`"
     display_order: 8
+    hidden: true
 
   email_std:
     display_order: 9
+    hidden: true
 
   response_id:
     sql: "`Response.ID`"
@@ -50,6 +57,7 @@ dimensions:
   ip_address:
     sql: "`IP.Address`"
     display_order: 13
+    hidden: true
 
   duration:
     sql: "`Duration`"
@@ -62,14 +70,17 @@ dimensions:
   email:
     sql: "`Email`"
     display_order: 16
+    hidden: true
 
   first_name___18:
     sql: "`First.Name...18`"
     display_order: 17
+    hidden: true
 
   last_name___19:
     sql: "`Last.Name...19`"
     display_order: 18
+    hidden: true
 
   collector_id:
     sql: "`Collector.ID`"
@@ -86,32 +97,41 @@ dimensions:
   first_name___23:
     sql: "`First.Name...23`"
     display_order: 22
+    hidden: true
 
   last_name___24:
     sql: "`Last.Name...24`"
     display_order: 23
+    hidden: true
 
   email_address:
     display_order: 24
+    hidden: true
 
   primary_phone:
     sql: "`Primary.phone`"
     display_order: 25
+    hidden: true
 
   street_address:
     display_order: 26
+    hidden: true
 
   street_address_2:
     display_order: 27
+    hidden: true
 
   city:
     display_order: 28
+    hidden: true
 
   state:
     display_order: 29
+    hidden: true
 
   zip_code:
     display_order: 30
+    hidden: true
 
   high_school:
     display_order: 31
@@ -468,27 +488,34 @@ dimensions:
   full_name_y:
     sql: "`full_name.y`"
     display_order: 145
+    hidden: true
 
   full_address:
     display_order: 146
+    hidden: true
 
   latitude:
     display_order: 147
+    hidden: true
 
   longitude:
     display_order: 148
+    hidden: true
 
   full_name_std_y:
     sql: "`full_name_std.y`"
     display_order: 149
+    hidden: true
 
   email_std_x:
     sql: "`email_std.x`"
     display_order: 150
+    hidden: true
 
   email_std_y:
     sql: "`email_std.y`"
     display_order: 151
+    hidden: true
 
 measures:
   count:
