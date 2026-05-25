@@ -28,6 +28,7 @@ dimensions:
   updated_at: {}
   submitted_at: {}
   rn: {}
+  site_id: {}
 
   release_basb:
     sql: "`release_BASB`"

@@ -1,17 +1,18 @@
-# Reference this view as departments
+# Reference this view as sites
 schema: knowledge_management
 
 dimensions:
   name: {}
+  active: {}
+  metadata: {}
   created_at: {}
   updated_at: {}
+  code: {}
+  sender_email: {}
 
   id:
     format: ID
     primary_key: true
-
-  site_id:
-    format: ID
 
 measures:
   count:

@@ -1,10 +1,8 @@
-# Reference this view as form_submissions
+# Reference this view as student_site_assignments
 schema: knowledge_management
 
 dimensions:
-  status: {}
-  smart_check_warnings: {}
-  submitted_at: {}
+  assigned_at: {}
   created_at: {}
   updated_at: {}
 
@@ -12,13 +10,7 @@ dimensions:
     format: ID
     primary_key: true
 
-  form_id:
-    format: ID
-
-  student_id:
-    format: ID
-
-  language_id:
+  person_id:
     format: ID
 
   site_id:

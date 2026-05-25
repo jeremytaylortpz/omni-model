@@ -212,6 +212,9 @@ dimensions:
   release_basb:
     sql: "`release_BASB`"
 
+  site_id:
+    format: ID
+
   has_enrollment_form:
     sql: NOT COALESCE(${enrollment_forms.person_id} IS NULL, FALSE)
     label: has_enrollment_form

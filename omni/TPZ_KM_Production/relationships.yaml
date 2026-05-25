@@ -26,6 +26,60 @@
   relationship_type: assumed_many_to_one
   reversible: true
 
+- join_from_view: courses
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${courses.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: departments
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${departments.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: enrollment_forms
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${enrollment_forms.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: form_submissions
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${form_submissions.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: forms
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${forms.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: interest_forms
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${interest_forms.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: roles
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${roles.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: student_profiles
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${student_profiles.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: student_site_assignments
+  join_to_view: sites
+  join_type: always_left
+  on_sql: ${student_site_assignments.site_id} = ${sites.id}
+  relationship_type: assumed_many_to_one
+
 - join_from_view: student_drop_patterns_by_term_data
   join_to_view: terms
   join_type: always_left

@@ -24,6 +24,9 @@ dimensions:
   schedule_id:
     format: ID
 
+  site_id:
+    format: ID
+
 measures:
   count:
     aggregate_type: count

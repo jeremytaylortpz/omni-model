@@ -48,6 +48,9 @@ dimensions:
     format: ""
     hidden: true
 
+  site_id:
+    format: ID
+
 measures:
   count:
     aggregate_type: count
