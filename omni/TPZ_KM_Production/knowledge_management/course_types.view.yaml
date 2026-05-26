@@ -25,3 +25,7 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+  name_list:
+    sql: ${course_types.name}
+    aggregate_type: list

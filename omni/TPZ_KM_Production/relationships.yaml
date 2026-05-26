@@ -396,6 +396,7 @@
   join_type: always_left
   on_sql: ${course_types.id} = ${courses.course_type_id}
   relationship_type: one_to_many
+  reversible: true
 
 - join_from_view: course_types
   join_to_view: departments
