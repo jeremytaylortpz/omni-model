@@ -5,60 +5,59 @@ sql: |-
   WITH
   assigned AS (
   SELECT DISTINCT
-  t.id AS term_id,
-
-  t.name AS term_name,
-  t.start_date AS term_start_date,
-  r.person_id
+    t.id AS term_id,
+    t.name AS term_name,
+    t.start_date AS term_start_date,
+    r.person_id
   FROM registrations r
   JOIN courses c
-  ON c.id = r.context_id
+    ON c.id = r.context_id
   JOIN terms t
-  ON t.id = c.term_id
+    ON t.id = c.term_id
   WHERE c.term_id IS NOT NULL
-  AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
-  AND YEAR(t.start_date) BETWEEN 2023 AND 2026
+    AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+    AND YEAR(t.start_date) BETWEEN 2023 AND 2026
   ),
   attendance_by_term AS (
   SELECT
-  t.id AS term_id,
-  sa.person_id,
-  SUM(sa.att_pct) AS attended_session_equivalents
-  FROM student_attendances sa
+    ca.term_id,
+    ca.person_id,
+    SUM(ca.att_pct) AS attended_session_equivalents
+  FROM ${omni__clean_attendance_query_view} ca
   JOIN courses c
-  ON c.id = sa.context_id
+    ON c.course_code = ca.course_code
   JOIN terms t
-  ON t.id = c.term_id
+    ON t.id = ca.term_id
   WHERE c.term_id IS NOT NULL
-  AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
-  AND YEAR(t.start_date) BETWEEN 2023 AND 2026
-  GROUP BY t.id, sa.person_id
+    AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+    AND YEAR(t.start_date) BETWEEN 2023 AND 2026
+  GROUP BY ca.term_id, ca.person_id
   )
   SELECT
-  a.term_id,
-  a.term_name,
-  a.term_start_date,
-  COUNT(DISTINCT a.person_id) AS assigned_students,
-  COUNT(DISTINCT CASE
-  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 1 THEN a.person_id
-  END) AS attended_1plus_students,
-  COUNT(DISTINCT CASE
-  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 3 THEN a.person_id
-  END) AS attended_3plus_students,
-  COUNT(DISTINCT CASE
-  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 10 THEN a.person_id
-  END) AS attended_10plus_students,
-  COUNT(DISTINCT CASE
-  WHEN COALESCE(abt.attended_session_equivalents, 0) >= 20 THEN a.person_id
-  END) AS attended_20plus_students
+    a.term_id,
+    a.term_name,
+    a.term_start_date,
+    COUNT(DISTINCT a.person_id) AS assigned_students,
+    COUNT(DISTINCT CASE
+      WHEN COALESCE(abt.attended_session_equivalents, 0) >= 1 THEN a.person_id
+    END) AS attended_1plus_students,
+    COUNT(DISTINCT CASE
+      WHEN COALESCE(abt.attended_session_equivalents, 0) >= 3 THEN a.person_id
+    END) AS attended_3plus_students,
+    COUNT(DISTINCT CASE
+      WHEN COALESCE(abt.attended_session_equivalents, 0) >= 10 THEN a.person_id
+    END) AS attended_10plus_students,
+    COUNT(DISTINCT CASE
+      WHEN COALESCE(abt.attended_session_equivalents, 0) >= 20 THEN a.person_id
+    END) AS attended_20plus_students
   FROM assigned a
   LEFT JOIN attendance_by_term abt
-  ON abt.term_id = a.term_id
-  AND abt.person_id = a.person_id
+    ON abt.term_id = a.term_id
+    AND abt.person_id = a.person_id
   GROUP BY
-  a.term_id, a.term_name, a.term_start_date
+    a.term_id, a.term_name, a.term_start_date
   ORDER BY
-  a.term_start_date
+    a.term_start_date
 
 dimensions:
   term_id: {}
