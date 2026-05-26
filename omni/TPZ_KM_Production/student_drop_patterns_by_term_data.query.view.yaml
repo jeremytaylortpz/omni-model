@@ -16,6 +16,7 @@ sql: |-
     ON t.id = c.term_id
   WHERE c.term_id IS NOT NULL
     AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+      AND c.course_code NOT LIKE '%DD%'
     AND YEAR(t.start_date) BETWEEN 2023 AND 2026
   ),
   attendance_by_term AS (
@@ -30,6 +31,7 @@ sql: |-
     ON t.id = ca.term_id
   WHERE c.term_id IS NOT NULL
     AND (c.exclude_course <> 1 OR c.exclude_course IS NULL)
+      AND ca.course_code NOT LIKE '%DD%'
     AND YEAR(t.start_date) BETWEEN 2023 AND 2026
   GROUP BY ca.term_id, ca.person_id
   )
