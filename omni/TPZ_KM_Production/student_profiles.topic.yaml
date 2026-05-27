@@ -17,7 +17,6 @@ fields:
     -demographic_profiles.updated_at,
     -demographic_profiles.count,
     -people.calculation,
-    -people.student_name,
     -people.id_count_distinct,
     -people.count,
     -races.race_list,
@@ -33,16 +32,17 @@ fields:
 
 joins:
   schools: {}
-  sites:
-    courses:
-      schedules: {}
-      terms: {}
-    form_submissions:
-      languages: {}
   people:
-    registrations: {}
+    registrations:
+      courses:
+        schedules: {}
+        terms: {}
+        course_types: {}
     demographic_profiles:
       races: {}
     omni__clean_attendance_query_view: {}
     omni__all_survey_data_with_demos:
       term_sorting_v2: {}
+  sites:
+    form_submissions:
+      languages: {}
