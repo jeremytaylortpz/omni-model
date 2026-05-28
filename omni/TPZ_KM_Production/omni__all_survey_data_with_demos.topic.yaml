@@ -15,8 +15,6 @@ fields:
     -terms.test_term_groups
   ]
 always_where_filters:
-  student_profiles.school_release_consent:
-    is: "true"
   omni__all_survey_data_with_demos.survey_name:
     or:
       - contains: Entrepreneurial Spirit
