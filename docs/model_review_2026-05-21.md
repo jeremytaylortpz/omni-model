@@ -1,3 +1,4 @@
+-- Active: 1776473653729@@kmappprodread.c4xsp663lj2z.us-east-1.rds.amazonaws.com@3306@knowledge_management
 # Omni Model Review & Recommendations
 
 **Date:** 2026-05-21
@@ -40,9 +41,13 @@ These affect both performance and AI accuracy and should be addressed before bro
 ## 3. AI-context recommendations
 
 1. **View-level `ai_context` is missing on most views.** `people.view.yaml`, `student_profiles.view.yaml`, `terms.view.yaml`, `courses.view.yaml`, `registrations.view.yaml`, and almost all `*_types.view.yaml` files have no view-level description. Add a 1–2 sentence purpose statement to each — these are the views the AI joins to most often.
+    - DONE
 2. **Use `ai_fields` on every topic.** Only `omni__clean_attendance_query_view.topic.yaml` uses it. `ai_fields` is the strongest lever for narrowing AI exploration — apply it to all topics, especially `omni__all_survey_data_with_demos` and `student_attendance_rates`.
+    - DONE
 3. **Hide PII consistently.** Across the model, set `hidden: true` on `first_name`, `last_name`, `email`, `phone`, IP, address, and DOB unless explicitly required. `people.full_name` currently violates the `model.yaml` rule.
+    - DONE
 4. **Add `format: ID` to every `_id` column.** Several `_id` fields in `student_profiles`, `enrollment_forms`, etc., lack `format: ID`, causing the AI to treat them as numeric measures.
+    - DONE
 5. **Add `synonyms`** for business vocabulary: "drop"/"withdrawal", "EShip"/"entrepreneurship", "Pathways", "WBL", "DAP", "ES", "EC", "term"/"quarter"/"semester", "stipend", "alumni".
 6. **Add `sample_values`** to enum-like dimensions (`enrollment_form_most_recent_status`, `current_grade`, `school_tier`, `course_name_groups`, `gender`, `ethnicity`, `category`). This is done well on `omni__all_survey_data_with_demos.survey_name` — propagate the pattern.
 7. **Encode model rules as `default_filters` on topics.** `model.yaml` says "filter out `active=FALSE` or `deleted=TRUE`" and "exclude when `school_release_consent` is FALSE". Put these in topic-level `default_filters` so the AI doesn't have to remember.
@@ -51,6 +56,7 @@ These affect both performance and AI accuracy and should be addressed before bro
 10. **Consolidate duplicate topics.** Delete the "Copy" file; keep either `omni__clean_attendance_query_view.topic.yaml` or `student_attendance_rates.topic.yaml` as the primary attendance topic and have the other reference subset fields via `ai_fields`.
 11. **Glossary in `model.yaml`.** Extend `ai_context` with concrete definitions: "student" (a `people` row joined to `student_profiles`), "active student in term X" (`registrations.active=TRUE` + `courses.term_id`), "drop" (true-drop logic), "EShip courses" (`course_name_groups='EShip'`). This block is loaded into every AI request.
 12. **Per-topic `ai_context` everywhere.** Most topics lack one. `omni__all_survey_data_with_demos` is a strong template (grain + survey types + scoring rules + AGGREGATE_EXPRESSION warnings). Add at minimum a grain + intended-use sentence to every topic.
+    - DONE
 13. **Don't expose both `dap_context_category` (dimension) and `dap_context_score_label` (measure)** to the AI — duplicates confuse it.
 14. **Replace generic field labels.** `people.calculation` (already hidden) and similar auto-generated names should be removed or aliased. Anything not hidden becomes part of the AI surface.
 
