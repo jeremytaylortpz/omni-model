@@ -10,3 +10,6 @@ relationships:
     join_type: always_left
     on_sql: ${dap_mappings_full.question_map} = ${question_taxonomy.question_match_key}
     relationship_type: many_to_one
+
+ai_context: |
+  Reference topic for the Developmental Assets Profile (DAP) instrument. Grain: one row per DAP question, joined to `question_taxonomy` for competency / domain / scoring metadata. Use this topic to inspect DAP item metadata (asset, context, sub-scale, weight, reverse-scoring flag). For actual student DAP responses and scores, use the `Student Survey Data` topic, which joins `dap_mappings_full` in automatically.

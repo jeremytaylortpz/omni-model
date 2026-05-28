@@ -27,3 +27,6 @@ joins:
         terms: {}
     student_profiles:
       schools: {}
+
+ai_context: |
+  One row per student × most-recent enrollment form (the latest EF submitted for each student across all terms). Use for current-roster questions: latest contact / consent / school / parent-guardian info, and current registration status. Do NOT use for historical per-term EF analysis — that requires the underlying `enrollment_forms` view, which has one row per student × term enrolled.

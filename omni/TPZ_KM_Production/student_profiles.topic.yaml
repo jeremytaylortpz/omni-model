@@ -46,3 +46,6 @@ joins:
   sites:
     form_submissions:
       languages: {}
+
+ai_context: |
+  Student-centric topic with the full student attribute surface. Grain: one row per student (`student_profiles.id`, joined to `people` on `person_id`). Joined out to schools, demographics, races, languages, registrations, courses, attendance, and surveys. Use for student rosters, current-grade / school / consent breakdowns, and joining demographics to outcomes. Apply `student_profiles.school_release_consent=TRUE` when reporting externally per the model.yaml PII rule.

@@ -58,3 +58,6 @@ relationships:
       ${latest_enrollment_forms.term_name} =
       ${omni__clean_attendance_query_view.term_name}
     relationship_type: many_to_one
+
+ai_context: |
+  Deduplicated attendance joined to the full student-demographic surface. Grain: one row per student × course × date (use this rather than raw `student_attendances` for analysis). Joined to people, student_profiles, schools, school_tiers, demographic_profiles, races, languages, alumni_profiles, person_actions, enrollment_forms, and more — use for demographic breakdowns of attendance, retention, enrollment, and drop metrics. Aggregate carefully when joining 1:many fields (languages_people, person_actions) to avoid row inflation. `latest_enrollment_forms` is joined many_to_one on (person_id, term_name). See the `Cleaned Student Attendances` topic for the AI-focused variant of this surface.
