@@ -1,4 +1,7 @@
 # Reference this view as fablab_certifications
+ai_context: |
+  Per-student equipment-use certifications (which student is cleared to operate which equipment).
+
 schema: knowledge_management
 
 dimensions:

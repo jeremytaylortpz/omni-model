@@ -1,4 +1,7 @@
 # Reference this view as teams
+ai_context: |
+  Internal TPZ staff teams.
+
 schema: knowledge_management
 
 dimensions:

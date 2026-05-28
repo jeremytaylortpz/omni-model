@@ -1,4 +1,7 @@
 # Reference this view as school_tiers
+ai_context: |
+  Strategic recruitment-tier lookup for schools (priority tiers used by the recruitment team).
+
 schema: knowledge_management
 
 dimensions:

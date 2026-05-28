@@ -1,4 +1,7 @@
 # Reference this view as schema_migrations
+ai_context: |
+  Rails migration tracker. Not useful for analysis — exclude from AI surface.
+
 schema: knowledge_management
 
 dimensions:

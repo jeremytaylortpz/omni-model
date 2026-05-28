@@ -1,4 +1,7 @@
 # Reference this view as form_submission_answers
+ai_context: |
+  Per-question answers for a `form_submissions` row (long format).
+
 schema: knowledge_management
 
 dimensions:

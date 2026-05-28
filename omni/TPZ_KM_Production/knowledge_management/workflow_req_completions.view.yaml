@@ -1,4 +1,7 @@
 # Reference this view as workflow_req_completions
+ai_context: |
+  Records of a student completing a workflow requirement (e.g., a FabLab certification step).
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as permission_configs
+ai_context: |
+  Permission configuration metadata for the dashboard application.
+
 schema: knowledge_management
 
 dimensions:

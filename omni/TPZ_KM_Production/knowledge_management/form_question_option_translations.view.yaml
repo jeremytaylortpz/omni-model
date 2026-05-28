@@ -1,4 +1,7 @@
 # Reference this view as form_question_option_translations
+ai_context: |
+  Localized labels for form question options. Typically excluded from AI analysis (UI metadata).
+
 schema: knowledge_management
 
 dimensions:

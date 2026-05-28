@@ -1,4 +1,7 @@
 # Reference this view as registrations
+ai_context: |
+  One row per person × context (a course section or event) representing an enrollment record. `active=FALSE` indicates the student has been dropped from that section — used by drop/withdrawal logic. Filter `context_type='Course'` for course analyses, `'Event'` for events.
+
 schema: knowledge_management
 
 dimensions:

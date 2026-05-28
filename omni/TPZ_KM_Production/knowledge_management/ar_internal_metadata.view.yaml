@@ -1,4 +1,7 @@
 # Reference this view as ar_internal_metadata
+ai_context: |
+  Rails ActiveRecord internal metadata. Not useful for analysis — exclude from AI surface.
+
 schema: knowledge_management
 
 dimensions:

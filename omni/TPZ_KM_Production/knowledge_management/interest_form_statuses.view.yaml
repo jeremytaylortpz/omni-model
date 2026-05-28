@@ -1,4 +1,7 @@
 # Reference this view as interest_form_statuses
+ai_context: |
+  Per-person status tracking for the interest-form / recruitment pipeline (e.g., new, screening, accepted).
+
 schema: knowledge_management
 
 dimensions:

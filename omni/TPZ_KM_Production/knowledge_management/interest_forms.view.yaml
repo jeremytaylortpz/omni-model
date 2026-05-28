@@ -1,4 +1,7 @@
 # Reference this view as interest_forms
+ai_context: |
+  Flattened student interest-form submissions — one row per person. Interest-form submission is what creates the `people` row and starts the TPZ pipeline. Filled out by the prospective student; `has_interest_form` flags pipeline entry.
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as dashboard_teams
+ai_context: |
+  Teams within the dashboard application. Operational metadata.
+
 schema: knowledge_management
 
 dimensions:

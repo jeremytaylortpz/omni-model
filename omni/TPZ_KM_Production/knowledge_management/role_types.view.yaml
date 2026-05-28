@@ -1,4 +1,7 @@
 # Reference this view as role_types
+ai_context: |
+  Lookup of staff role types (Educator, Coach, Recruiter, etc.).
+
 schema: knowledge_management
 
 dimensions:

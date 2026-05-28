@@ -1,4 +1,7 @@
 # Reference this view as enrollment_form_status_types
+ai_context: |
+  Lookup of valid enrollment-form status values (e.g., started, submitted, approved, withdrawn).
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as course_types
+ai_context: |
+  Lookup of course categorical types (EShip vs. Tech vs. Pathways vs. WBL, etc.). Drives the `course_name_groups` segmentation.
+
 schema: knowledge_management
 
 dimensions:

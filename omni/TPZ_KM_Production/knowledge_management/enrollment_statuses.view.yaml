@@ -1,4 +1,7 @@
 # Reference this view as enrollment_statuses
+ai_context: |
+  Per-student enrollment status tracking by term (e.g., enrolled, waitlisted, dropped).
+
 schema: knowledge_management
 
 dimensions:

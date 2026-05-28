@@ -1,4 +1,7 @@
 # Reference this view as schedules
+ai_context: |
+  Schedule header for a course/section, linking to its `schedule_days`. Joined from `courses.schedule_id`.
+
 schema: knowledge_management
 
 dimensions:

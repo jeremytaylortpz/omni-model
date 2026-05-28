@@ -1,4 +1,7 @@
 # Reference this view as phone_numbers
+ai_context: |
+  Phone contact records linked to a person; a person may have multiple. Hide raw numbers in aggregate reporting (PII).
+
 schema: knowledge_management
 
 dimensions:

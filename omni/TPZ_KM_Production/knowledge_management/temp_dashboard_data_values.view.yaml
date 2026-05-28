@@ -1,4 +1,7 @@
 # Reference this view as temp_dashboard_data_values
+ai_context: |
+  Temporary/scratch dashboard data values. Not for production analysis.
+
 schema: knowledge_management
 
 dimensions:

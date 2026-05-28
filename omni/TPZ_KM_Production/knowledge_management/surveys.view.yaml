@@ -1,4 +1,7 @@
 # Reference this view as surveys
+ai_context: |
+  Survey definitions (TPZ-administered instruments tracked in KM; historically SurveyMonkey, now Qualtrics). Parent of survey_sections → survey_questions → survey_answers; responses live in `survey_responses`.
+
 schema: knowledge_management
 
 dimensions:

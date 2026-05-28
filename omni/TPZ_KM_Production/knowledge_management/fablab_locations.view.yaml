@@ -1,4 +1,7 @@
 # Reference this view as fablab_locations
+ai_context: |
+  FabLab room/zone lookup within the Innovation Center.
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as fake_fundraising
+ai_context: |
+  Synthetic/demo fundraising data for prototyping dashboards. Do not use for real reporting.
+
 uploaded_table_name: Fake Fundraising::62820706-017f-44e3-a0ce-d1ebefeea6e5
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as roles
+ai_context: |
+  Staff role assignments (which person holds which role).
+
 schema: knowledge_management
 
 dimensions:

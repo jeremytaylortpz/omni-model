@@ -1,4 +1,7 @@
 # Reference this view as temp_dashboard_datasets
+ai_context: |
+  Temporary/scratch dashboard dataset definitions. Not for production analysis.
+
 schema: knowledge_management
 
 dimensions:

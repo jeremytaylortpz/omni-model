@@ -1,4 +1,7 @@
 # Reference this view as fablab_equipment_types
+ai_context: |
+  Lookup of FabLab equipment categories (laser cutter, 3D printer, CNC, etc.).
+
 schema: knowledge_management
 
 dimensions:

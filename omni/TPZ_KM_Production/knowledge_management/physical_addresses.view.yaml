@@ -1,4 +1,7 @@
 # Reference this view as physical_addresses
+ai_context: |
+  Mailing/home addresses linked to a person. Treat as PII; hide street/zip from aggregate reporting.
+
 schema: knowledge_management
 
 dimensions:

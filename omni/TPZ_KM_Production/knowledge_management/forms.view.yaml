@@ -1,4 +1,7 @@
 # Reference this view as forms
+ai_context: |
+  Form definitions in the TPZ form engine (interest forms, enrollment forms, surveys, FabLab waivers, etc.). Parent of form_steps → form_questions → form_question_options.
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as fablab_training_courses
+ai_context: |
+  FabLab training-course definitions (the curricula students complete to earn certifications).
+
 schema: knowledge_management
 
 dimensions:

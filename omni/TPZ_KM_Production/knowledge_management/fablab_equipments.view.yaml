@@ -1,4 +1,7 @@
 # Reference this view as fablab_equipments
+ai_context: |
+  Specific FabLab equipment units (individual machines / tools).
+
 schema: knowledge_management
 
 dimensions:

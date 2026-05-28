@@ -1,4 +1,7 @@
 # Reference this view as enrollment_questions
+ai_context: |
+  Free-form question/answer pairs collected on enrollment forms beyond the standard schema.
+
 schema: knowledge_management
 
 dimensions:

@@ -1,4 +1,7 @@
 # Reference this view as student_types
+ai_context: |
+  Lookup of student categorical types (e.g., active student, alumni, prospect, recruit).
+
 schema: knowledge_management
 
 dimensions:

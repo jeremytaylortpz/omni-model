@@ -1,4 +1,7 @@
 # Reference this view as schedule_days
+ai_context: |
+  Specific weekdays/dates a course or schedule meets. Joined to `schedules`.
+
 schema: knowledge_management
 
 dimensions:

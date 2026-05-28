@@ -1,4 +1,7 @@
 # Reference this view as development_categories
+ai_context: |
+  Categories for staff/student development goals.
+
 schema: knowledge_management
 
 dimensions:

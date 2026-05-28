@@ -1,4 +1,7 @@
 # Reference this view as alumni_data_clean_final
+ai_context: |
+  Uploaded CSV — cleaned alumni outcomes survey results (post-program tracking). PII-heavy (names, emails, phones, addresses, IP); do not expose these in shared reporting.
+
 uploaded_table_name: alumni_data_clean_final.csv::2937e47f-4587-48a1-97f7-dd3976664f37
 
 dimensions:

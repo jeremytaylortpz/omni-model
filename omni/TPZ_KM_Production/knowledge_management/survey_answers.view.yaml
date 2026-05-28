@@ -1,4 +1,7 @@
 # Reference this view as survey_answers
+ai_context: |
+  Answer-choice definitions per survey question (the allowed response options and their decoded text values).
+
 schema: knowledge_management
 
 dimensions:

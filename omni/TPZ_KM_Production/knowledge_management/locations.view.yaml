@@ -1,4 +1,7 @@
 # Reference this view as locations
+ai_context: |
+  Generic location reference table (rooms, partner buildings). Less specific than `sites` — prefer `sites` for program/course analysis.
+
 schema: knowledge_management
 
 dimensions:

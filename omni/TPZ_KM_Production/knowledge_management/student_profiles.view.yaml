@@ -1,4 +1,7 @@
 # Reference this view as student_profiles
+ai_context: |
+  One row per `people` row that is a student, holding student-specific attributes (grade, school, consents, latest term) populated from interest and enrollment forms. Join to `people` on person_id. Exclude rows where `school_release_consent=FALSE` from external reporting.
+
 schema: knowledge_management
 
 dimensions:

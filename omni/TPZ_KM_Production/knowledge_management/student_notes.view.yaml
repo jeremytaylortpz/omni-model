@@ -1,4 +1,7 @@
 # Reference this view as student_notes
+ai_context: |
+  Free-text staff notes about a student. Sensitive — do not expose in shared reporting.
+
 schema: knowledge_management
 
 dimensions:

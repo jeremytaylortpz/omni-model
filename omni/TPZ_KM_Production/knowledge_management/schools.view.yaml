@@ -1,4 +1,7 @@
 # Reference this view as schools
+ai_context: |
+  Reference lookup of schools TPZ recruits from (primarily Boston-area high schools).
+
 schema: knowledge_management
 
 dimensions:

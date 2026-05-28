@@ -1,4 +1,7 @@
 # Reference this view as course_interest_offered_types
+ai_context: |
+  Lookup of delivery modes a course can be offered in (e.g., in-person, virtual, hybrid) on a course-interest record.
+
 schema: knowledge_management
 
 dimensions:

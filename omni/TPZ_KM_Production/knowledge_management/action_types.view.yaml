@@ -1,4 +1,7 @@
 # Reference this view as action_types
+ai_context: |
+  Lookup of action categories referenced by `person_actions`.
+
 schema: knowledge_management
 
 dimensions:

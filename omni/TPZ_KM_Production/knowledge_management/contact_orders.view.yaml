@@ -1,4 +1,7 @@
 # Reference this view as contact_orders
+ai_context: |
+  Per-person ordering/preference of contact methods (which email/phone to use first). Operational — rarely needed for analysis.
+
 schema: knowledge_management
 
 dimensions:

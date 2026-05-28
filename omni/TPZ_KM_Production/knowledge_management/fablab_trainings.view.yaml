@@ -1,4 +1,7 @@
 # Reference this view as fablab_trainings
+ai_context: |
+  FabLab training-session instances — actual training events students attend.
+
 schema: knowledge_management
 
 dimensions:

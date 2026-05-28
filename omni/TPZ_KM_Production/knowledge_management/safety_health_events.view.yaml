@@ -1,4 +1,7 @@
 # Reference this view as safety_health_events
+ai_context: |
+  Logged safety/health incidents (injuries, behavioral incidents, medical events). Sensitive — restrict access.
+
 schema: knowledge_management
 
 dimensions:

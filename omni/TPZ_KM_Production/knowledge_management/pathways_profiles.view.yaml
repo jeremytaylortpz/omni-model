@@ -1,4 +1,7 @@
 # Reference this view as pathways_profiles
+ai_context: |
+  Pathways-program-specific student profile attributes (one row per Pathways-enrolled person). Join to `people` on person_id.
+
 schema: knowledge_management
 
 dimensions:

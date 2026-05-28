@@ -1,4 +1,7 @@
 # Reference this view as measurement_items
+ai_context: |
+  Item-level rows within a measurement (one row per question/item within an assessment administration).
+
 schema: knowledge_management
 
 dimensions:

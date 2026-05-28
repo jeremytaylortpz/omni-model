@@ -1,4 +1,7 @@
 # Reference this view as demographic_profiles
+ai_context: |
+  Self-reported demographic attributes (gender, ethnicity, free/reduced lunch, etc.) per person. One row per person; join to `people` on person_id.
+
 schema: knowledge_management
 
 dimensions:

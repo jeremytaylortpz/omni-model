@@ -1,4 +1,7 @@
 # Reference this view as school_acronyms
+ai_context: |
+  Lookup mapping full school names to short acronyms used in reporting.
+
 schema: knowledge_management
 
 dimensions:

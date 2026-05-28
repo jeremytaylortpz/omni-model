@@ -1,4 +1,7 @@
 # Reference this view as student_site_assignments
+ai_context: |
+  Maps students to sites for a given period (which Innovation Center cohort/site a student is assigned to).
+
 schema: knowledge_management
 
 dimensions:

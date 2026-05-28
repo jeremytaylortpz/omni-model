@@ -1,4 +1,7 @@
 # Reference this view as survey_responses
+ai_context: |
+  One row per respondent × survey × collector (a single survey response submission). Joined to people via `person_id` and to terms via `term_id`. Pair with `survey_response_answers` for per-question detail.
+
 schema: knowledge_management
 
 dimensions:

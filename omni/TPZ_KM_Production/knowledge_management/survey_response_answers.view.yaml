@@ -1,4 +1,7 @@
 # Reference this view as survey_response_answers
+ai_context: |
+  Per-question responses within a `survey_responses` row (long format: one row per question per response). Free-text answers are stored as ASCII codes in `text`; use the `text_decoded` field for human-readable strings.
+
 schema: knowledge_management
 
 dimensions:
