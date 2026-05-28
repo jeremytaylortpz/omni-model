@@ -5,3 +5,8 @@ joins: {}
 
 ai_context: |
   Survey-question metadata topic. Grain: one row per canonical survey question, with competency, domain, ECES level (ES / EC), scoring weight (including reverse-scoring), and `question_match_key`. Use this topic to inventory survey items and check competency / domain coverage across instruments. For actual student responses, use the `Student Survey Data` topic, which joins this taxonomy in via `question_match_key`.
+
+ai_fields:
+  [
+    question_taxonomy.*
+  ]

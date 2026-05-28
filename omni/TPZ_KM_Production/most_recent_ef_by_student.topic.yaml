@@ -30,3 +30,43 @@ joins:
 
 ai_context: |
   One row per student × most-recent enrollment form (the latest EF submitted for each student across all terms). Use for current-roster questions: latest contact / consent / school / parent-guardian info, and current registration status. Do NOT use for historical per-term EF analysis — that requires the underlying `enrollment_forms` view, which has one row per student × term enrolled.
+
+ai_fields:
+  [
+    most_recent_ef_by_student.release_media_groups,
+    most_recent_ef_by_student.term_name,
+    most_recent_ef_by_student.person_id,
+    most_recent_ef_by_student.submitted_at,
+    most_recent_ef_by_student.student_grade,
+    most_recent_ef_by_student.student_school,
+    people.id,
+    people.date_of_birth,
+    -people.first_name,
+    -people.last_name,
+    -people.full_name,
+    -people.middle_name,
+    -people.preferred_name,
+    -people.calculation,
+    -people.student_name,
+    student_profiles.current_grade,
+    student_profiles.school,
+    student_profiles.iep,
+    student_profiles.first_gen_college,
+    student_profiles.pronouns,
+    student_profiles.dismissed,
+    student_profiles.school_release_consent,
+    student_profiles.enrollment_form_most_recent_status,
+    student_profiles.interest_form_most_recent_status,
+    student_profiles.latest_term,
+    registrations.active,
+    registrations.context_type,
+    courses.friendly_name,
+    courses.course_code,
+    courses.exclude_course,
+    terms.name,
+    terms.start_date,
+    terms.year,
+    terms.current_term_label,
+    schools.name,
+    schools.name_groups
+  ]
