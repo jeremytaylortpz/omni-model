@@ -6,6 +6,7 @@ uploaded_table_name: alumni_data_clean_final.csv::2937e47f-4587-48a1-97f7-dd3976
 
 dimensions:
   id:
+    format: ID
     display_order: 0
 
   full_name_x:
@@ -86,6 +87,7 @@ dimensions:
     display_order: 18
 
   collector_id:
+    format: ID
     sql: "`Collector.ID`"
     display_order: 19
 

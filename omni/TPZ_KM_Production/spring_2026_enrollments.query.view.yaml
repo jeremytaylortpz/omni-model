@@ -17,6 +17,7 @@ query:
   topic: omni__clean_attendance_query_view Copy
 
 dimensions:
-  id: {}
+  id:
+    format: ID
   course_code: {}
   friendly_name: {}

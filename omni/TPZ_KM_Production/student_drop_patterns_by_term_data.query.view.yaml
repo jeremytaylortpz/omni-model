@@ -62,7 +62,8 @@ sql: |-
     a.term_start_date
 
 dimensions:
-  term_id: {}
+  term_id:
+    format: ID
   term_name: {}
   term_start_date: {}
   assigned_students: {}

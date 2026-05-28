@@ -50,7 +50,8 @@ sql: |-
     left outer join survey_answers as a on a.id = ra.survey_answer_id
 
 dimensions:
-  term_id: {}
+  term_id:
+    format: ID
   current_grade: {}
   school_name: {}
   school_tier: {}
@@ -64,8 +65,10 @@ dimensions:
   category: {}
   completed_at: {}
   start_date: {}
-  survey_id: {}
-  survey_questions_id: {}
+  survey_id:
+    format: ID
+  survey_questions_id:
+    format: ID
 
   first_name:
     hidden: true

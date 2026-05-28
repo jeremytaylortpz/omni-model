@@ -148,7 +148,8 @@ dimensions:
   release_transportation_private: {}
   agree_general_release: {}
   consent_signature: {}
-  school_student_id: {}
+  school_student_id:
+    format: ID
   release_media: {}
   release_survey: {}
   release_student_info: {}
@@ -169,7 +170,8 @@ dimensions:
   student_first_name: {}
   student_gender: {}
   student_grade: {}
-  student_id: {}
+  student_id:
+    format: ID
   student_insurance: {}
   student_insurance_company: {}
   student_language_at_home: {}

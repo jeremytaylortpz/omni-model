@@ -52,12 +52,15 @@ sql: |-
 
 dimensions:
   full_course_name: {}
-  course_type_id: {}
+  course_type_id:
+    format: ID
 
   person_id:
+    format: ID
     sql: person_id
 
   course_id:
+    format: ID
     sql: course_id
 
   course_code:

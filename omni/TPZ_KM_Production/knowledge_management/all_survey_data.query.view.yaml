@@ -25,7 +25,8 @@ sql: |-
     ORDER BY r.id, sq.id
 
 dimensions:
-  survey_id: {}
+  survey_id:
+    format: ID
   first_name:
     hidden: true
   last_name:

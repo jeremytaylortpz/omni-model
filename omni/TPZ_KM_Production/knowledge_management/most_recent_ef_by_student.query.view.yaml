@@ -16,8 +16,10 @@ sql: |-
   WHERE x.rn = 1
 
 dimensions:
-  id: {}
-  person_id: {}
+  id:
+    format: ID
+  person_id:
+    format: ID
   term_name: {}
   term_year: {}
   release_media: {}
@@ -28,7 +30,8 @@ dimensions:
   updated_at: {}
   submitted_at: {}
   rn: {}
-  site_id: {}
+  site_id:
+    format: ID
 
   release_basb:
     sql: "`release_BASB`"

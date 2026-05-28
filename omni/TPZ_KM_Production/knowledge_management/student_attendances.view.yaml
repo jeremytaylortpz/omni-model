@@ -12,7 +12,8 @@ dimensions:
   created_at: {}
   updated_at: {}
   artificial: {}
-  person_id: {}
+  person_id:
+    format: ID
 
   active:
     description: This flag becomes a 0 when an educator accidentally marks an

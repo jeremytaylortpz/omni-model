@@ -16,8 +16,10 @@ sql: |-
     left outer join terms as t on c.term_id = t.id
 
 dimensions:
-  student_id: {}
-  term_id: {}
+  student_id:
+    format: ID
+  term_id:
+    format: ID
   term_name: {}
   first_name:
     hidden: true
