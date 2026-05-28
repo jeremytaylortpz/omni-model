@@ -19,8 +19,10 @@ dimensions:
   student_id: {}
   term_id: {}
   term_name: {}
-  first_name: {}
-  last_name: {}
+  first_name:
+    hidden: true
+  last_name:
+    hidden: true
   current_grade: {}
   school_name: {}
   school_tier: {}

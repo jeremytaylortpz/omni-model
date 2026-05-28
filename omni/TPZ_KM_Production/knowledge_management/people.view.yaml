@@ -5,14 +5,19 @@ ai_context: |
 schema: knowledge_management
 
 dimensions:
-  first_name: {}
-  middle_name: {}
-  last_name: {}
-  preferred_name: {}
+  first_name:
+    hidden: true
+  middle_name:
+    hidden: true
+  last_name:
+    hidden: true
+  preferred_name:
+    hidden: true
   created_at: {}
   updated_at: {}
 
   date_of_birth:
+    hidden: true
     timeframes: [ raw, date, week, month, quarter, year, month_name ]
 
   id:
@@ -20,6 +25,7 @@ dimensions:
     primary_key: true
 
   full_name:
+    hidden: true
     sql: CONCAT(${people.first_name}, ' ', ${people.last_name})
     label: Full Name
     ai_context: Student full name (first + last). Use this as the canonical name

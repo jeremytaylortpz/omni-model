@@ -6,8 +6,10 @@ schema: knowledge_management
 
 dimensions:
   username: {}
-  email: {}
-  password_digest: {}
+  email:
+    hidden: true
+  password_digest:
+    hidden: true
   created_at: {}
   updated_at: {}
 

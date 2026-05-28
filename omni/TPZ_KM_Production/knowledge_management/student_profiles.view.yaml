@@ -5,7 +5,8 @@ ai_context: |
 schema: knowledge_management
 
 dimensions:
-  date_of_birth: {}
+  date_of_birth:
+    hidden: true
   current_grade: {}
   school: {}
   iep: {}
@@ -17,17 +18,24 @@ dimensions:
   school_release_consent: {}
   referral: {}
   community_org_referral: {}
-  notes: {}
+  notes:
+    hidden: true
   interest_form_most_recent_submitted: {}
   enrollment_form_most_recent_submitted: {}
   enrollment_form_most_recent_status: {}
   interest_form_most_recent_status: {}
-  student_phone: {}
-  student_primary_contact_phone: {}
-  student_email: {}
-  student_primary_contact_email: {}
-  student_primary_contact_email_full_name: {}
-  student_primary_contact_phone_full_name: {}
+  student_phone:
+    hidden: true
+  student_primary_contact_phone:
+    hidden: true
+  student_email:
+    hidden: true
+  student_primary_contact_email:
+    hidden: true
+  student_primary_contact_email_full_name:
+    hidden: true
+  student_primary_contact_phone_full_name:
+    hidden: true
   latest_term: {}
   dismissed: {}
   citywide_release_consent: {}

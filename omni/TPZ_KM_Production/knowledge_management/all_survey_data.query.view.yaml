@@ -26,9 +26,12 @@ sql: |-
 
 dimensions:
   survey_id: {}
-  first_name: {}
-  last_name: {}
-  full_name: {}
+  first_name:
+    hidden: true
+  last_name:
+    hidden: true
+  full_name:
+    hidden: true
   completed_at: {}
   question_text: {}
   choice_value: {}

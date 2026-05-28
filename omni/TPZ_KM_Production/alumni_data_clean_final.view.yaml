@@ -9,32 +9,39 @@ dimensions:
     display_order: 0
 
   full_name_x:
+    hidden: true
     sql: "`full_name.x`"
     display_order: 1
 
   first_name:
+    hidden: true
     display_order: 2
 
   last_name:
+    hidden: true
     display_order: 3
 
   graduation_year:
     display_order: 4
 
   student_phone:
+    hidden: true
     display_order: 5
 
   student_email:
+    hidden: true
     display_order: 6
 
   group:
     display_order: 7
 
   full_name_std_x:
+    hidden: true
     sql: "`full_name_std.x`"
     display_order: 8
 
   email_std:
+    hidden: true
     display_order: 9
 
   response_id:
@@ -51,6 +58,7 @@ dimensions:
     display_order: 12
 
   ip_address:
+    hidden: true
     sql: "`IP.Address`"
     display_order: 13
 
@@ -63,14 +71,17 @@ dimensions:
     display_order: 15
 
   email:
+    hidden: true
     sql: "`Email`"
     display_order: 16
 
   first_name___18:
+    hidden: true
     sql: "`First.Name...18`"
     display_order: 17
 
   last_name___19:
+    hidden: true
     sql: "`Last.Name...19`"
     display_order: 18
 
@@ -87,24 +98,30 @@ dimensions:
     display_order: 21
 
   first_name___23:
+    hidden: true
     sql: "`First.Name...23`"
     display_order: 22
 
   last_name___24:
+    hidden: true
     sql: "`Last.Name...24`"
     display_order: 23
 
   email_address:
+    hidden: true
     display_order: 24
 
   primary_phone:
+    hidden: true
     sql: "`Primary.phone`"
     display_order: 25
 
   street_address:
+    hidden: true
     display_order: 26
 
   street_address_2:
+    hidden: true
     display_order: 27
 
   city:
@@ -114,6 +131,7 @@ dimensions:
     display_order: 29
 
   zip_code:
+    hidden: true
     display_order: 30
 
   high_school:

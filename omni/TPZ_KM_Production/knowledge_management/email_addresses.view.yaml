@@ -5,7 +5,8 @@ ai_context: |
 schema: knowledge_management
 
 dimensions:
-  email_address: {}
+  email_address:
+    hidden: true
   created_at: {}
   updated_at: {}
 
