@@ -4,12 +4,23 @@ description: All survey data combined with demographic information about
   respondents, enabling analysis of survey results segmented by respondent
   characteristics and attributes.
 
-fields: [ all_views.*, -omni__all_survey_data_with_demos.category ]
+fields:
+  [
+    all_views.*,
+    -omni__all_survey_data_with_demos.category,
+    -schools.name_groups,
+    -terms.*,
+    terms.name,
+    terms.year,
+    -terms.test_term_groups
+  ]
 
 joins:
   surveys: {}
   people:
-    student_profiles: {}
+    student_profiles:
+      schools: {}
+      sites: {}
     languages_people:
       languages: {}
   term_sorting_v2: {}
