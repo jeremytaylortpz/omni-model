@@ -97,6 +97,15 @@ dimensions:
     format: percent
 
   full_course_name_groups:
+    sample_values:
+      [
+      Eship,
+      Deep Dive,
+      Open Studio,
+      Launch Lab,
+      Pathways & WBL,
+      Other
+      ]
     sql: ${student_attendance_rates.full_course_name}
     groups:
       - filter:

@@ -5,10 +5,24 @@ ai_context: |
 schema: knowledge_management
 
 dimensions:
-  gender: {}
+  gender:
+    sample_values:
+      [
+      Male,
+      Female,
+      Non-Binary,
+      Other,
+      Prefer not to say
+      ]
   created_at: {}
   updated_at: {}
-  ethnicity: {}
+  ethnicity:
+    sample_values:
+      [
+      Hispanic or Latino,
+      Not Hispanic or Latino,
+      Unknown
+      ]
 
   id:
     format: ID

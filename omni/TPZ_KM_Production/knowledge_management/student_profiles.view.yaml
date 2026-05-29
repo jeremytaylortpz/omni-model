@@ -7,7 +7,17 @@ schema: knowledge_management
 dimensions:
   date_of_birth:
     hidden: true
-  current_grade: {}
+  current_grade:
+    sample_values:
+      [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12"
+      ]
   school: {}
   iep: {}
   first_gen_college: {}
@@ -22,7 +32,14 @@ dimensions:
     hidden: true
   interest_form_most_recent_submitted: {}
   enrollment_form_most_recent_submitted: {}
-  enrollment_form_most_recent_status: {}
+  enrollment_form_most_recent_status:
+    sample_values:
+      [
+      Started,
+      Submitted,
+      Approved,
+      Withdrawn
+      ]
   interest_form_most_recent_status: {}
   student_phone:
     hidden: true

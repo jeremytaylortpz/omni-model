@@ -52,15 +52,45 @@ sql: |-
 dimensions:
   term_id:
     format: ID
-  current_grade: {}
+  current_grade:
+    sample_values:
+      [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12"
+      ]
   school_name: {}
-  school_tier: {}
+  school_tier:
+    sample_values:
+      [
+      Tier 1,
+      Tier 2,
+      Tier 3
+      ]
   is_target_school: {}
   is_bps_school: {}
   iep: {}
   esl: {}
-  gender: {}
-  ethnicity: {}
+  gender:
+    sample_values:
+      [
+      Male,
+      Female,
+      Non-Binary,
+      Other,
+      Prefer not to say
+      ]
+  ethnicity:
+    sample_values:
+      [
+      Hispanic or Latino,
+      Not Hispanic or Latino,
+      Unknown
+      ]
   race: {}
   category: {}
   completed_at: {}
