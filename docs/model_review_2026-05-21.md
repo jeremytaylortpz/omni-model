@@ -50,6 +50,7 @@ These affect both performance and AI accuracy and should be addressed before bro
     - DONE
 5. **Add `synonyms`** for business vocabulary: "drop"/"withdrawal", "EShip"/"entrepreneurship", "Pathways", "WBL", "DAP", "ES", "EC", "term"/"quarter"/"semester", "stipend", "alumni".
 6. **Add `sample_values`** to enum-like dimensions (`enrollment_form_most_recent_status`, `current_grade`, `school_tier`, `course_name_groups`, `gender`, `ethnicity`, `category`). This is done well on `omni__all_survey_data_with_demos.survey_name` — propagate the pattern.
+    - DONE
 7. **Encode model rules as `default_filters` on topics.** `model.yaml` says "filter out `active=FALSE` or `deleted=TRUE`" and "exclude when `school_release_consent` is FALSE". Put these in topic-level `default_filters` so the AI doesn't have to remember.
 8. **Exclude noise from the AI surface.** Add to `ignored_views`: `fake_*`, `temp_*`, `*_translations` (unless needed), `ar_internal_metadata`, `schema_migrations`, `queued_emails`, `ahoy_*` (if not used for AI questions). CSV uploads like `alumni_data_clean_final` should also be hidden unless intentionally queryable.
 9. **Mark AGGREGATE_EXPRESSION measures clearly.** You do this on `dap_context_score`, `dap_asset_score`, `dap_context_score_label`. Apply the same `ai_context` note to every measure that cannot appear in `GROUP BY` / cannot be used as a dimension. The AI mis-uses these frequently.
