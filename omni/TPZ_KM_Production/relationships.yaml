@@ -84,13 +84,13 @@
   join_to_view: terms
   join_type: always_left
   on_sql: ${student_drop_patterns_by_term_data.term_id} = ${terms.id}
-  relationship_type: one_to_one
+  relationship_type: many_to_one
 
 - join_from_view: student_drop_patterns_by_term_data
   join_to_view: term_sorting_v2
   join_type: always_left
   on_sql: ${student_drop_patterns_by_term_data.term_id} = ${term_sorting_v2.id}
-  relationship_type: one_to_one
+  relationship_type: many_to_one
 
 - join_from_view: fablab_equipments
   join_to_view: fablab_equipment_types
@@ -545,7 +545,7 @@
 - join_from_view: person_relationships
   join_to_view: relationship_types
   join_type: always_left
-  on_sql: ${peson_relationships.relationship_type_id} = ${relationship_types.id}
+  on_sql: ${person_relationships.relationship_type_id} = ${relationship_types.id}
   relationship_type: many_to_one
 
 - join_from_view: people
