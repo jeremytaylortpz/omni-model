@@ -25,14 +25,10 @@ sql: |-
     ORDER BY r.id, sq.id
 
 dimensions:
-  survey_id:
-    format: ID
-  first_name:
-    hidden: true
-  last_name:
-    hidden: true
-  full_name:
-    hidden: true
+  survey_id: {}
+  first_name: {}
+  last_name: {}
+  full_name: {}
   completed_at: {}
   question_text: {}
   choice_value: {}

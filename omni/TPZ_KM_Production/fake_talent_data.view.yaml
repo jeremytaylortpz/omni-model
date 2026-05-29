@@ -1,7 +1,4 @@
 # Reference this view as fake_talent_data
-ai_context: |
-  Synthetic/demo talent / HR data for prototyping dashboards. Do not use for real reporting.
-
 uploaded_table_name: Fake talent data::3f38d3b4-389c-4342-ae29-d19eb69972c4
 
 dimensions:

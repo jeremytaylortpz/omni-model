@@ -1,7 +1,4 @@
 # Reference this view as interest_form_status_types
-ai_context: |
-  Lookup of valid interest-form status values used by `interest_form_statuses`.
-
 schema: knowledge_management
 
 dimensions:

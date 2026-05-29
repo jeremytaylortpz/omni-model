@@ -1,7 +1,4 @@
 # Reference this view as dashboard_permission_types
-ai_context: |
-  Lookup of dashboard permission types.
-
 schema: knowledge_management
 
 dimensions:

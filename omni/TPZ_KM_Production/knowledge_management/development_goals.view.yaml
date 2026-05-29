@@ -1,7 +1,4 @@
 # Reference this view as development_goals
-ai_context: |
-  Individual development goals attached to a person.
-
 schema: knowledge_management
 
 dimensions:

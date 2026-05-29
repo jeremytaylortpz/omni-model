@@ -17,7 +17,6 @@ sql: |-
 
 dimensions:
   person_id:
-    format: ID
     sql: person_id
     hidden: true
     primary_key: true

@@ -1,7 +1,4 @@
 # Reference this view as courses
-ai_context: |
-  Course/section offerings — one row per course section per term. Joined to `terms`, `schedules`, `sites`, and `course_types`. Use `friendly_name` for human-readable course names and respect `exclude_course=TRUE` to drop non-program offerings.
-
 schema: knowledge_management
 
 dimensions:

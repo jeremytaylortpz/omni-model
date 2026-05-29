@@ -1,7 +1,4 @@
 # Reference this view as question_types
-ai_context: |
-  Lookup of survey question types (single-select, multi-select, free-text, Likert, etc.).
-
 schema: knowledge_management
 
 dimensions:

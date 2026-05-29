@@ -1,7 +1,4 @@
 # Reference this view as dashboard_permissions
-ai_context: |
-  Permission grants on dashboard entities. Operational metadata.
-
 schema: knowledge_management
 
 dimensions:

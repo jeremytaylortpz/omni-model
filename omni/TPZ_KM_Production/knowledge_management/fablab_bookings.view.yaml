@@ -1,7 +1,4 @@
 # Reference this view as fablab_bookings
-ai_context: |
-  Reservations of FabLab equipment / rooms by students or staff.
-
 schema: knowledge_management
 
 dimensions:

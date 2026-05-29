@@ -1,7 +1,4 @@
 # Reference this view as queued_emails
-ai_context: |
-  Outbound email queue from the app. Operational only — not for program analysis.
-
 schema: knowledge_management
 
 dimensions:

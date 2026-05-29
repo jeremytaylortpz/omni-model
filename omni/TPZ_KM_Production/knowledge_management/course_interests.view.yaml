@@ -1,7 +1,4 @@
 # Reference this view as course_interests
-ai_context: |
-  Student-submitted expressions of interest in upcoming course offerings. Joined to people via person_id and to the course_interest_*_types lookups.
-
 schema: knowledge_management
 
 dimensions:

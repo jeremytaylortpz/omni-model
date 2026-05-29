@@ -27,7 +27,6 @@ sql: |-
 
 dimensions:
   course_id:
-    format: ID
     sql: course_id
 
   course_code:
@@ -39,7 +38,6 @@ dimensions:
     label: Course Name
 
   term_id:
-    format: ID
     sql: term_id
 
   term_name:

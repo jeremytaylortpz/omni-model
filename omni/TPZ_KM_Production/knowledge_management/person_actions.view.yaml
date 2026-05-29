@@ -1,7 +1,4 @@
 # Reference this view as person_actions
-ai_context: |
-  Audit log of actions taken on a person record (status changes, communications, manual updates). Use for activity timelines, not for counting students.
-
 description: This table was intended to capture every action a person took
   during their time with us at TPZ. The ideal would be that you could pull all
   of a person’s actions and get a timeline of everything that happened to them

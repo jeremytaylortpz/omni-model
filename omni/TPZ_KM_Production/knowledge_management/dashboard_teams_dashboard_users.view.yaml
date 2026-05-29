@@ -1,7 +1,4 @@
 # Reference this view as dashboard_teams_dashboard_users
-ai_context: |
-  Join table between dashboard users and dashboard teams.
-
 schema: knowledge_management
 
 dimensions:

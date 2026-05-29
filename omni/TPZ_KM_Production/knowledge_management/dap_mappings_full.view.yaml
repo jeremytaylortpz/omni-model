@@ -1,8 +1,4 @@
 # Reference this view as dap_mappings_full
-ai_context: |
-  Reference table mapping DAP (Developmental Assets Profile) survey items to their assets, contexts, sub-scales, and weights.
-  Joined to survey question rows via `question_text` / question-match-key; used to compute DAP scores in survey topics.
-
 schema: knowledge_management
 
 dimensions:

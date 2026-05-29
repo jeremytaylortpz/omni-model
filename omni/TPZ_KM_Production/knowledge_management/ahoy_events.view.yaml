@@ -1,7 +1,4 @@
 # Reference this view as ahoy_events
-ai_context: |
-  Application web-analytics event log (Ahoy gem) — page actions in the TPZ KM web app. Operational/product analytics; usually excluded from program-outcome analysis.
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as fablab_training_requirements
-ai_context: |
-  Prerequisite requirements for FabLab training courses.
-
 schema: knowledge_management
 
 dimensions:

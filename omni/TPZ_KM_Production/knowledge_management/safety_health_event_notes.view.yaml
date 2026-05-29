@@ -1,7 +1,4 @@
 # Reference this view as safety_health_event_notes
-ai_context: |
-  Per-incident narrative notes attached to `safety_health_events`. Sensitive — restrict access.
-
 schema: knowledge_management
 
 dimensions:

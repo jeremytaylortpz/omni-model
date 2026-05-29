@@ -50,8 +50,7 @@ dimensions:
   course_name: {}
   attendance_date: {}
   attendance_created_at: {}
-  term_id:
-    format: ID
+  term_id: {}
 
   att_pct:
     ai_context: "Single-day attendance value: 1=present, 0.5=half-day/tardy,

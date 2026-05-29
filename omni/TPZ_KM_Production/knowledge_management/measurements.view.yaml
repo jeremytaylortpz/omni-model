@@ -1,7 +1,4 @@
 # Reference this view as measurements
-ai_context: |
-  Measurement instrument record — one row per assessment instance taken by a person (e.g., a DAP administration).
-
 schema: knowledge_management
 
 dimensions:

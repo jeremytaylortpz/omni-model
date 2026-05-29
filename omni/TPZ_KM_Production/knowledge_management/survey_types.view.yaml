@@ -1,7 +1,4 @@
 # Reference this view as survey_types
-ai_context: |
-  Legacy lookup of survey type / category metadata (SurveyMonkey-era). Currently unused — TPZ has migrated to Qualtrics; retained for future re-use.
-
 description: This table currently isnt being used since we switched from
   collected surveys in Qualtrics instead of Survey Monkey. We would like to be
   able to use this again in the future to track the type of survey over

@@ -17,8 +17,7 @@ query:
     - field: terms.id
 
 dimensions:
-  id:
-    format: ID
+  id: {}
   start_date: {}
   term_status: {}
 

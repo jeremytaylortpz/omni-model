@@ -1,7 +1,4 @@
 # Reference this view as form_invitations
-ai_context: |
-  Outbound invitations sent to people to fill out a form (e.g., enrollment-form links sent to parents).
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as languages
-ai_context: |
-  Reference lookup of languages (code and display name) used elsewhere for language preferences.
-
 schema: knowledge_management
 
 dimensions:

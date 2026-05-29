@@ -1,7 +1,4 @@
 # Reference this view as survey_questions
-ai_context: |
-  Question bank for surveys, keyed by `id`. Joined to `question_taxonomy` for competency/domain/scoring metadata.
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as student_attendances
-ai_context: |
-  Raw daily attendance records — one row per student × course × date — before deduplication. `att_pct` is presence credit (1=present, 0.5=half/tardy, 0=absent); `stipend_pct` drives student stipend payout. Prefer `omni__clean_attendance_query_view` for analytic queries.
-
 schema: knowledge_management
 
 dimensions:
@@ -12,8 +9,7 @@ dimensions:
   created_at: {}
   updated_at: {}
   artificial: {}
-  person_id:
-    format: ID
+  person_id: {}
 
   active:
     description: This flag becomes a 0 when an educator accidentally marks an

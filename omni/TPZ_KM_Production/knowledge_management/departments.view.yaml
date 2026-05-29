@@ -1,7 +1,4 @@
 # Reference this view as departments
-ai_context: |
-  TPZ organizational departments.
-
 schema: knowledge_management
 
 dimensions:

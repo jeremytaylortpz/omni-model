@@ -1,7 +1,4 @@
 # Reference this view as form_question_options
-ai_context: |
-  Choice options for select / multi-select form questions.
-
 schema: knowledge_management
 
 dimensions:

@@ -52,15 +52,12 @@ sql: |-
 
 dimensions:
   full_course_name: {}
-  course_type_id:
-    format: ID
+  course_type_id: {}
 
   person_id:
-    format: ID
     sql: person_id
 
   course_id:
-    format: ID
     sql: course_id
 
   course_code:
@@ -97,15 +94,6 @@ dimensions:
     format: percent
 
   full_course_name_groups:
-    sample_values:
-      [
-      Eship,
-      Deep Dive,
-      Open Studio,
-      Launch Lab,
-      Pathways & WBL,
-      Other
-      ]
     sql: ${student_attendance_rates.full_course_name}
     groups:
       - filter:

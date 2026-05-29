@@ -1,7 +1,4 @@
 # Reference this view as relationship_types
-ai_context: |
-  Lookup of person-relationship categories (Parent, Guardian, Sibling, Emergency Contact, etc.). Joined from `person_relationships.relationship_type_id`.
-
 schema: knowledge_management
 
 dimensions:

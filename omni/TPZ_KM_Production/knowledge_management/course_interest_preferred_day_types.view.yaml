@@ -1,7 +1,4 @@
 # Reference this view as course_interest_preferred_day_types
-ai_context: |
-  Lookup of preferred-day options (e.g., weekday, weekend) on a course-interest record.
-
 schema: knowledge_management
 
 dimensions:

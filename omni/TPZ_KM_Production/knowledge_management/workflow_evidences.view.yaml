@@ -1,7 +1,4 @@
 # Reference this view as workflow_evidences
-ai_context: |
-  Evidence artifacts (uploads, attestations) attached to workflow requirement completions.
-
 schema: knowledge_management
 
 dimensions:

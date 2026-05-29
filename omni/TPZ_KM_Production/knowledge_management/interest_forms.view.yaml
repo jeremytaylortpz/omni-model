@@ -1,36 +1,23 @@
 # Reference this view as interest_forms
-ai_context: |
-  Flattened student interest-form submissions — one row per person. Interest-form submission is what creates the `people` row and starts the TPZ pipeline. Filled out by the prospective student; `has_interest_form` flags pipeline entry.
-
 schema: knowledge_management
 
 dimensions:
   term_name: {}
   term_year: {}
-  contact_email:
-    hidden: true
-  contact_first_name:
-    hidden: true
-  contact_last_name:
-    hidden: true
-  contact_phone:
-    hidden: true
+  contact_email: {}
+  contact_first_name: {}
+  contact_last_name: {}
+  contact_phone: {}
   contact_language: {}
   contact_relationship: {}
-  student_phone:
-    hidden: true
+  student_phone: {}
   student_grade: {}
   student_school_raw: {}
-  student_dob:
-    hidden: true
-  student_email:
-    hidden: true
-  extra_notes:
-    hidden: true
-  student_first_name:
-    hidden: true
-  student_last_name:
-    hidden: true
+  student_dob: {}
+  student_email: {}
+  extra_notes: {}
+  student_first_name: {}
+  student_last_name: {}
   student_gender: {}
   other_school: {}
   student_language: {}

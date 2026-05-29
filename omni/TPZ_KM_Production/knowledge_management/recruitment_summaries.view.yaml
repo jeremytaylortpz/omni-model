@@ -1,7 +1,4 @@
 # Reference this view as recruitment_summaries
-ai_context: |
-  Aggregated recruitment activity per person/term used by the recruitment team.
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as fablab_profiles
-ai_context: |
-  FabLab-program-specific profile attributes (waivers, badge id, training status) for users who access the FabLab. Join to `people` on person_id.
-
 schema: knowledge_management
 
 dimensions:

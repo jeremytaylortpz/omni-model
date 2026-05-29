@@ -1,7 +1,4 @@
 # Reference this view as person_relationships
-ai_context: |
-  Links between two `people` rows — typically parent/guardian → student. Carries `relationship_type_id` (note: `relationships.yaml` join to relationship_types is currently broken by a typo).
-
 schema: knowledge_management
 
 dimensions:

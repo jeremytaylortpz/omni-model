@@ -1,7 +1,4 @@
 # Reference this view as workflow_requirements
-ai_context: |
-  Requirement definitions within a workflow stage.
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as workflow_stages
-ai_context: |
-  Stage definitions for multi-step workflows (e.g., FabLab certification progressions).
-
 schema: knowledge_management
 
 dimensions:

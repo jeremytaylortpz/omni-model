@@ -1,7 +1,4 @@
 # Reference this view as ahoy_visits
-ai_context: |
-  Application web-analytics session/visit log (Ahoy gem). Operational/product analytics; usually excluded from program-outcome analysis.
-
 schema: knowledge_management
 
 dimensions:

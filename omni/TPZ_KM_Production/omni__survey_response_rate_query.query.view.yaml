@@ -300,21 +300,17 @@ sql: |-
   	course_name
 
 dimensions:
-  term_id:
-    format: ID
+  term_id: {}
   survey_name: {}
   eligible_students: {}
   responding_students: {}
   response_rate: {}
   term_start_date: {}
-  course_type_id:
-    format: ID
+  course_type_id: {}
   course_type_name: {}
-  course_id:
-    format: ID
+  course_id: {}
   course_name: {}
-  id:
-    format: ID
+  id: {}
 
   term_name:
     order_by_field: terms.start_date

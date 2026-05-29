@@ -1,7 +1,4 @@
 # Reference this view as measurement_types
-ai_context: |
-  Lookup of measurement instrument types (DAP, EC, ES, custom, etc.).
-
 schema: knowledge_management
 
 dimensions:

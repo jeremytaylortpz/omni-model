@@ -1,9 +1,4 @@
 # Reference this view as registrations
-ai_context: |
-  One row per person × context (a course section or event) representing an enrollment record. `active=FALSE` indicates the student has been dropped from that section — used by drop/withdrawal logic. Filter `context_type='Course'` for course analyses, `'Event'` for events. 
-  When a user asks for the number of students in a term, the agent should ask a follow-up question to the user to clarify their intent. The agent should ask if the user is looking for the count of the number of students EVER enrolled in that term (i.e., regardless of the number of classes), the number that attended at least three classes/days, or the number that completed the course (i.e., attended at least 80% of the days of the course). 
-  If the user is asking about the count for the current term, then the agent should ask if they want to know the number actively enrolled currently, in which case the registrations table/view can be used, or if they are wanting to know the number that was ever considered to be enrolled in the current term (i.e., the number that attended 3 ore more days of their course in the current term), in which case the clean student attendances table/view would need to be queried, because the value in the `active` column changes from `true` to `false` when a student is dropped from a course. Thus, if a user wants a count of total number of students ever considered enrolled, it will be an underestimate if the registration table is used and filtered to rows where active = true.
-
 schema: knowledge_management
 
 dimensions:
@@ -50,3 +45,8 @@ measures:
   person_id_count_distinct:
     sql: ${registrations.person_id}
     aggregate_type: count_distinct
+
+ai_context: |
+  One row per person × context (a course section or event) representing an enrollment record. `active=FALSE` indicates the student has been dropped from that section — used by drop/withdrawal logic. Filter `context_type='Course'` for course analyses, `'Event'` for events. 
+  When a user asks for the number of students in a term, the agent should ask a follow-up question to the user to clarify their intent. The agent should ask if the user is looking for the count of the number of students EVER enrolled in that term (i.e., regardless of the number of classes), the number that attended at least three classes/days, or the number that completed the course (i.e., attended at least 80% of the days of the course). 
+  If the user is asking about the count for the current term, then the agent should ask if they want to know the number actively enrolled currently, in which case the registrations table/view can be used, or if they are wanting to know the number that was ever considered to be enrolled in the current term (i.e., the number that attended 3 ore more days of their course in the current term), in which case the clean student attendances table/view would need to be queried, because the value in the `active` column changes from `true` to `false` when a student is dropped from a course. Thus, if a user wants a count of total number of students ever considered enrolled, it will be an underestimate if the registration table is used and filtered to rows where active = true.

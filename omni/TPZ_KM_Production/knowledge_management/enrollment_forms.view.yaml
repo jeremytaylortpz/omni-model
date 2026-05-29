@@ -1,7 +1,4 @@
 # Reference this view as enrollment_forms
-ai_context: |
-  Flattened enrollment-form submissions — one row per student per term they enroll in a course (filled out by parent/guardian, not the student). Carries contact_1/2/3 guardian information. Hide guardian PII (names, emails, phones) in aggregate reporting.
-
 schema: knowledge_management
 
 dimensions:
@@ -148,8 +145,7 @@ dimensions:
   release_transportation_private: {}
   agree_general_release: {}
   consent_signature: {}
-  school_student_id:
-    format: ID
+  school_student_id: {}
   release_media: {}
   release_survey: {}
   release_student_info: {}
@@ -170,8 +166,7 @@ dimensions:
   student_first_name: {}
   student_gender: {}
   student_grade: {}
-  student_id:
-    format: ID
+  student_id: {}
   student_insurance: {}
   student_insurance_company: {}
   student_language_at_home: {}

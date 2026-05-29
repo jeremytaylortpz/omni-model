@@ -1,12 +1,8 @@
 # Reference this view as email_addresses
-ai_context: |
-  Email contact records linked to a person; a person may have multiple over time. Hide raw email values in aggregate reporting (PII).
-
 schema: knowledge_management
 
 dimensions:
-  email_address:
-    hidden: true
+  email_address: {}
   created_at: {}
   updated_at: {}
 

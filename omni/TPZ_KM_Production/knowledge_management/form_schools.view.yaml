@@ -1,7 +1,4 @@
 # Reference this view as form_schools
-ai_context: |
-  Join table limiting which forms apply to which schools.
-
 schema: knowledge_management
 
 dimensions:

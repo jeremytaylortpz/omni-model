@@ -1,7 +1,4 @@
 # Reference this view as survey_collectors
-ai_context: |
-  Survey collector instance — one survey can have multiple collection channels/links. Joined from `survey_responses.survey_collector_id`.
-
 schema: knowledge_management
 
 dimensions:

@@ -1,7 +1,4 @@
 # Reference this view as languages_people
-ai_context: |
-  Many-to-many join between `people` and `languages` capturing the language(s) a person speaks.
-
 schema: knowledge_management
 
 dimensions:

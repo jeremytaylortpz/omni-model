@@ -1,7 +1,4 @@
 # Reference this view as survey_sections
-ai_context: |
-  Sections/pages within a survey definition.
-
 schema: knowledge_management
 
 dimensions:

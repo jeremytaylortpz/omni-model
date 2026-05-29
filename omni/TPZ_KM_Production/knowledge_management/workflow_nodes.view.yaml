@@ -1,7 +1,4 @@
 # Reference this view as workflow_nodes
-ai_context: |
-  Nodes in a workflow state graph used by the FabLab certification engine.
-
 schema: knowledge_management
 
 dimensions:

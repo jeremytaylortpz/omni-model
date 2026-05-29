@@ -1,7 +1,4 @@
 # Reference this view as form_questions
-ai_context: |
-  Question definitions within form steps.
-
 schema: knowledge_management
 
 dimensions:

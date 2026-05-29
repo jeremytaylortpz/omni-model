@@ -1,15 +1,10 @@
 # Reference this view as dashboard_users
-ai_context: |
-  Users of the internal TPZ KM dashboard application. Operational — not for student-level analysis.
-
 schema: knowledge_management
 
 dimensions:
   username: {}
-  email:
-    hidden: true
-  password_digest:
-    hidden: true
+  email: {}
+  password_digest: {}
   created_at: {}
   updated_at: {}
 

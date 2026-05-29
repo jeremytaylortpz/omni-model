@@ -1,29 +1,11 @@
 # Reference this view as demographic_profiles
-ai_context: |
-  Self-reported demographic attributes (gender, ethnicity, free/reduced lunch, etc.) per person. One row per person; join to `people` on person_id.
-
 schema: knowledge_management
 
 dimensions:
-  gender:
-    sample_values:
-      [
-      Female,
-      Male,
-      Non-Binary,
-      Other,
-      "Prefer not to answer"
-      ]
+  gender: {}
   created_at: {}
   updated_at: {}
-  ethnicity:
-    ai_context: |
-      Boolean stored as string: "1" = Hispanic or Latino, "0" = Not Hispanic or Latino.
-    sample_values:
-      [
-      "0",
-      "1"
-      ]
+  ethnicity: {}
 
   id:
     format: ID

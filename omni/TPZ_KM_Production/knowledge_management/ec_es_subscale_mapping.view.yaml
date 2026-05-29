@@ -1,7 +1,4 @@
 # Reference this view as ec_es_subscale_mapping
-ai_context: |
-  Reference mapping survey items to Entrepreneurial Competency (EC) and Entrepreneurial Spirit (ES) subscales. Used together with `question_taxonomy` to compute competency-level survey scores.
-
 schema: knowledge_management
 
 dimensions:

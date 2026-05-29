@@ -1,24 +1,9 @@
 # Reference this view as student_profiles
-ai_context: |
-  One row per `people` row that is a student, holding student-specific attributes (grade, school, consents, latest term) populated from interest and enrollment forms. Join to `people` on person_id. Exclude rows where `school_release_consent=FALSE` from external reporting.
-
 schema: knowledge_management
 
 dimensions:
-  date_of_birth:
-    hidden: true
-  current_grade:
-    sample_values:
-      [
-      "0",
-      "2",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13"
-      ]
+  date_of_birth: {}
+  current_grade: {}
   school: {}
   iep: {}
   first_gen_college: {}
@@ -29,30 +14,17 @@ dimensions:
   school_release_consent: {}
   referral: {}
   community_org_referral: {}
-  notes:
-    hidden: true
+  notes: {}
   interest_form_most_recent_submitted: {}
   enrollment_form_most_recent_submitted: {}
-  enrollment_form_most_recent_status:
-    ai_context: |
-      Misleadingly named: this is an INT foreign key to `enrollment_forms.id` (the student's most recent enrollment form), not a status string. The `enrollment_forms` table has no status column, so the actual workflow status cannot be derived from this field alone. Treat as an id and avoid filtering on it.
-    format: ID
-  interest_form_most_recent_status:
-    ai_context: |
-      Misleadingly named: this is an INT foreign key to `interest_forms.id` (the student's most recent interest form), not a status string. Treat as an id.
-    format: ID
-  student_phone:
-    hidden: true
-  student_primary_contact_phone:
-    hidden: true
-  student_email:
-    hidden: true
-  student_primary_contact_email:
-    hidden: true
-  student_primary_contact_email_full_name:
-    hidden: true
-  student_primary_contact_phone_full_name:
-    hidden: true
+  enrollment_form_most_recent_status: {}
+  interest_form_most_recent_status: {}
+  student_phone: {}
+  student_primary_contact_phone: {}
+  student_email: {}
+  student_primary_contact_email: {}
+  student_primary_contact_email_full_name: {}
+  student_primary_contact_phone_full_name: {}
   latest_term: {}
   dismissed: {}
   citywide_release_consent: {}

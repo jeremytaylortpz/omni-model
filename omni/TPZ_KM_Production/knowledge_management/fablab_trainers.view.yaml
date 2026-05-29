@@ -1,7 +1,4 @@
 # Reference this view as fablab_trainers
-ai_context: |
-  Trainers authorized to certify students on FabLab equipment.
-
 schema: knowledge_management
 
 dimensions:

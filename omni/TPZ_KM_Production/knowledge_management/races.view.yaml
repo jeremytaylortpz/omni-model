@@ -1,7 +1,4 @@
 # Reference this view as races
-ai_context: |
-  Reference lookup of race categories used by demographic_profiles and survey demographics.
-
 schema: knowledge_management
 
 dimensions:

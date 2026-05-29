@@ -1,7 +1,4 @@
 # Reference this view as organizations
-ai_context: |
-  External partner organizations (schools, community orgs, employers, referral partners).
-
 schema: knowledge_management
 
 dimensions:
