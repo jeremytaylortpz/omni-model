@@ -10,13 +10,14 @@ dimensions:
   current_grade:
     sample_values:
       [
-      "6",
-      "7",
+      "0",
+      "2",
       "8",
       "9",
       "10",
       "11",
-      "12"
+      "12",
+      "13"
       ]
   school: {}
   iep: {}
@@ -33,14 +34,13 @@ dimensions:
   interest_form_most_recent_submitted: {}
   enrollment_form_most_recent_submitted: {}
   enrollment_form_most_recent_status:
-    sample_values:
-      [
-      Started,
-      Submitted,
-      Approved,
-      Withdrawn
-      ]
-  interest_form_most_recent_status: {}
+    ai_context: |
+      Misleadingly named: this is an INT foreign key to `enrollment_forms.id` (the student's most recent enrollment form), not a status string. The `enrollment_forms` table has no status column, so the actual workflow status cannot be derived from this field alone. Treat as an id and avoid filtering on it.
+    format: ID
+  interest_form_most_recent_status:
+    ai_context: |
+      Misleadingly named: this is an INT foreign key to `interest_forms.id` (the student's most recent interest form), not a status string. Treat as an id.
+    format: ID
   student_phone:
     hidden: true
   student_primary_contact_phone:

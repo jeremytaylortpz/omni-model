@@ -8,20 +8,21 @@ dimensions:
   gender:
     sample_values:
       [
-      Male,
       Female,
+      Male,
       Non-Binary,
       Other,
-      Prefer not to say
+      "Prefer not to answer"
       ]
   created_at: {}
   updated_at: {}
   ethnicity:
+    ai_context: |
+      Boolean stored as string: "1" = Hispanic or Latino, "0" = Not Hispanic or Latino.
     sample_values:
       [
-      Hispanic or Latino,
-      Not Hispanic or Latino,
-      Unknown
+      "0",
+      "1"
       ]
 
   id:

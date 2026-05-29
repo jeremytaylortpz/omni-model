@@ -55,18 +55,20 @@ dimensions:
   current_grade:
     sample_values:
       [
-      "6",
-      "7",
+      "0",
+      "2",
       "8",
       "9",
       "10",
       "11",
-      "12"
+      "12",
+      "13"
       ]
   school_name: {}
   school_tier:
     sample_values:
       [
+      Not Aligned,
       Tier 1,
       Tier 2,
       Tier 3
@@ -78,18 +80,19 @@ dimensions:
   gender:
     sample_values:
       [
-      Male,
       Female,
+      Male,
       Non-Binary,
       Other,
-      Prefer not to say
+      "Prefer not to answer"
       ]
   ethnicity:
+    ai_context: |
+      Boolean stored as string: "1" = Hispanic or Latino, "0" = Not Hispanic or Latino. Sourced from `demographic_profiles.ethnicity`.
     sample_values:
       [
-      Hispanic or Latino,
-      Not Hispanic or Latino,
-      Unknown
+      "0",
+      "1"
       ]
   race: {}
   category: {}
