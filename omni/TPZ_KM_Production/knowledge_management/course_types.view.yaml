@@ -29,3 +29,54 @@ measures:
   name_list:
     sql: ${course_types.name}
     aggregate_type: list
+
+  core_course_count:
+    sql: ${course_types.name}
+    aggregate_type: count_distinct
+    filters:
+      name:
+        or:
+          - or:
+              - is: [ Discover, Discover - English, Discover - Green Academy, Ideate, Incubate ]
+              - starts_with: Launch Lab
+          - is: [ Explore - 2D Design, Explore - Electronics, Explore - Garment & Textile ]
+
+  advanced_course_count:
+    sql: ${course_types.name}
+    aggregate_type: count_distinct
+    filters:
+      name:
+        is:
+          [
+            Ambassadors,
+            Ambassadors - STEAM,
+            Pathways Internship,
+            Pathways Bootcamp,
+            Ventures,
+            Consult,
+            Future You,
+            Future You - Fenway 11th,
+            Future You - Fenway 12th,
+            Intern,
+            Pathways - Intern,
+            Pathways - Intern Prep,
+            TPP Intern
+          ]
+
+  courses_10th_11th:
+    sql: ${course_types.name}
+    aggregate_type: list
+    filters:
+      courses.term_id:
+        is: [ 34, 35, 36, 37, 50, 51, 52, 53 ]
+      name:
+        and:
+          - not: Alumni
+          - not: null
+
+  courses_12th:
+    sql: ${course_types.name}
+    aggregate_type: list
+    filters:
+      courses.term_id:
+        is: [ 54, 55, 56 ]

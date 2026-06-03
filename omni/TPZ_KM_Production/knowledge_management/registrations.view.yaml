@@ -45,3 +45,65 @@ measures:
   person_id_count_distinct:
     sql: ${registrations.person_id}
     aggregate_type: count_distinct
+
+  courses_11th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 50, 51, 52, 53 ]
+      course_types.name:
+        and:
+          - not: Alumni
+          - not: null
+
+  courses_10th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 34, 35, 36, 37 ]
+      course_types.name:
+        and:
+          - not: Alumni
+          - not: null
+
+  courses_12th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 54, 55, 56 ]
+
+  cnt_11th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 50, 51, 52, 53 ]
+      course_types.name:
+        and:
+          - not: Alumni
+          - not: null
+
+  cnt_10th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 34, 35, 36, 37 ]
+      course_types.name:
+        and:
+          - not: Alumni
+          - not: null
+
+  cnt_12th:
+    sql: ${registrations.context_id}
+    aggregate_type: count_distinct
+    filters:
+      courses.term_id:
+        is: [ 54, 55, 56 ]
+
+  person_id_count_distinct_1:
+    sql: ${registrations.person_id}
+    aggregate_type: count_distinct

@@ -44,3 +44,9 @@ measures:
     aggregate_type: count_distinct
     ai_context: Distinct student count. Prefer this over people.count for unique
       student counts when joins may cause duplicates.
+
+  id_count_distinct_1:
+    sql: ${people.id}
+    label: Count of Unique Juniors
+    format: NUMBER_0
+    aggregate_type: count_distinct

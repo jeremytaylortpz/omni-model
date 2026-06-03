@@ -1,0 +1,43 @@
+# Reference this view as student_course_data
+description: with lists of courses taken in 10th/11th grade and 12th grade
+
+query:
+  fields:
+    registrations.person_id: registrations_person_id
+    people.full_name: student_name
+    course_types.courses_10th_11th: courses_10th_11th
+    course_types.courses_12th: course_types_courses_12th
+    registrations.cnt_11th: registrations_cnt_11th
+    registrations.cnt_10th: registrations_cnt_10th
+    registrations.cnt_12th: registrations_cnt_12th
+  base_view: student_profiles
+  filters:
+    registrations.active:
+      is: true
+    registrations.context_type:
+      is: Course
+    student_profiles.current_grade:
+      is: 12
+  topic: student_profiles
+
+dimensions:
+  registrations_person_id: {}
+  student_name: {}
+  courses_10th_11th: {}
+  course_types_courses_12th: {}
+  registrations_cnt_11th: {}
+  registrations_cnt_10th: {}
+  registrations_cnt_12th: {}
+
+  total_10th_11th_courses:
+    sql: "`registrations.cnt_10th` + `registrations.cnt_11th`"
+
+  returned_senior_year:
+    sql: CASE WHEN `registrations.cnt_12th` > 0 THEN 'Yes' ELSE 'No' END
+
+  courses_12th_grade:
+    sql: CASE WHEN `registrations.cnt_12th` > 0 THEN `course_types.courses_12th`
+      ELSE NULL END
+
+  registrations_cnt_11th_plus_registrations_cnt_10th:
+    sql: "`registrations.cnt_11th` + `registrations.cnt_10th`"

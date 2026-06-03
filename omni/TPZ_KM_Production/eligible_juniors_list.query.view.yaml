@@ -1,0 +1,26 @@
+# Reference this view as eligible_juniors_list
+description: "Eligible juniors: 1+ non-Alumni course in 11th grade AND 3+
+  non-Alumni courses total in 10th+11th"
+
+query:
+  fields:
+    student_course_data.student_name: student_name
+    student_course_data.total_10th_11th_courses: total_10th_11th_courses
+    student_course_data.courses_10th_11th: courses_10th_11th
+    student_course_data.returned_senior_year: returned_senior_year
+    student_course_data.courses_12th_grade: courses_12th_grade
+  base_view: student_course_data
+  default_group_by: false
+  filters:
+    student_course_data.registrations_cnt_11th:
+      greater_than_or_equal_to: 1
+    student_course_data.registrations_cnt_11th_plus_registrations_cnt_10th:
+      greater_than_or_equal_to: 3
+  topic: student_course_data
+
+dimensions:
+  student_name: {}
+  total_10th_11th_courses: {}
+  courses_10th_11th: {}
+  returned_senior_year: {}
+  courses_12th_grade: {}

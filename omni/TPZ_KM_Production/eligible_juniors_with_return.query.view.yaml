@@ -1,0 +1,43 @@
+# Reference this view as eligible_juniors_with_return
+description: "Eligible juniors: 1+ non-Alumni course in 11th grade AND 3+
+  non-Alumni courses total in 10th+11th"
+
+query:
+  fields:
+    senior_course_counts_no_alumni.person_id: senior_course_counts_no_alumni_person_id
+    senior_course_counts_no_alumni.courses_11th: senior_course_counts_no_alumni_courses_11th
+    senior_course_counts_no_alumni.courses_10th: senior_course_counts_no_alumni_courses_10th
+    senior_course_counts_no_alumni.total_10th_11th: senior_course_counts_no_alumni_total_10th_11th
+    senior_course_counts_no_alumni.courses_12th: senior_course_counts_no_alumni_courses_12th
+    senior_course_counts_no_alumni.returned: senior_course_counts_no_alumni_returned
+  base_view: senior_course_counts_no_alumni
+  default_group_by: false
+  filters:
+    senior_course_counts_no_alumni.courses_11th:
+      greater_than_or_equal_to: 1
+    senior_course_counts_no_alumni.total_10th_11th:
+      greater_than_or_equal_to: 3
+  topic: senior_course_counts_no_alumni
+
+dimensions:
+  senior_course_counts_no_alumni_person_id: {}
+  senior_course_counts_no_alumni_courses_11th: {}
+  senior_course_counts_no_alumni_courses_10th: {}
+  senior_course_counts_no_alumni_total_10th_11th: {}
+  senior_course_counts_no_alumni_courses_12th: {}
+  senior_course_counts_no_alumni_returned: {}
+
+measures:
+  total_eligible_juniors:
+    sql: ${eligible_juniors_with_return.senior_course_counts_no_alumni_person_id}
+    aggregate_type: count_distinct
+
+  returned_for_senior_year:
+    sql: SUM(`senior_course_counts_no_alumni.returned`)
+
+  sum_senior_course_counts_no_alumni_returned:
+    sql: SUM(${eligible_juniors_with_return.senior_course_counts_no_alumni_returned})
+
+  count_senior_course_counts_no_alumni_person_id:
+    sql: ${eligible_juniors_with_return.senior_course_counts_no_alumni_person_id}
+    aggregate_type: count_distinct

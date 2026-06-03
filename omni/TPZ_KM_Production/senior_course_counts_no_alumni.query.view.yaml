@@ -1,0 +1,31 @@
+# Reference this view as senior_course_counts_no_alumni
+description: Current grade 12 students with non-Alumni course counts by grade
+  year, to calculate junior return rate
+
+query:
+  fields:
+    registrations.person_id: person_id
+    registrations.courses_11th: courses_11th
+    registrations.courses_10th: courses_10th
+    registrations.courses_12th: courses_12th
+  base_view: student_profiles
+  filters:
+    registrations.active:
+      is: true
+    registrations.context_type:
+      is: Course
+    student_profiles.current_grade:
+      is: 12
+  topic: student_profiles
+
+dimensions:
+  person_id: {}
+  courses_11th: {}
+  courses_10th: {}
+  courses_12th: {}
+
+  total_10th_11th:
+    sql: "`registrations.courses_11th` + `registrations.courses_10th`"
+
+  returned:
+    sql: CASE WHEN `registrations.courses_12th` > 0 THEN 1 ELSE 0 END

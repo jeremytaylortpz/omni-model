@@ -1,0 +1,27 @@
+# Reference this view as core_and_advanced_counts
+description: Students (current grade 12) with their distinct core and advanced
+  course type counts
+
+query:
+  fields:
+    registrations.person_id: person_id
+    course_types.core_course_count: core_course_count
+    course_types.advanced_course_count: advanced_course_count
+  base_view: student_profiles
+  filters:
+    registrations.active:
+      is: true
+    registrations.context_type:
+      is: Course
+    student_profiles.current_grade:
+      is: 12
+  topic: student_profiles
+
+dimensions:
+  person_id: {}
+  core_course_count: {}
+  advanced_course_count: {}
+
+  has_advanced_course:
+    sql: CASE WHEN `course_types.advanced_course_count` >= 1 THEN 'Yes' ELSE 'No'
+      END

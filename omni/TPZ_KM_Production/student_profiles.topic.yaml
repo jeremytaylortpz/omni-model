@@ -1,5 +1,5 @@
 base_view: student_profiles
-label: Beyond Possible Data
+label: Pathways Data
 
 fields:
   [
@@ -43,6 +43,7 @@ joins:
     omni__clean_attendance_query_view: {}
     omni__all_survey_data_with_demos:
       term_sorting_v2: {}
+  core_and_advanced_counts: {}
   sites:
     form_submissions:
       languages: {}
