@@ -10,14 +10,14 @@ query:
     senior_course_counts_no_alumni.total_10th_11th: senior_course_counts_no_alumni_total_10th_11th
     senior_course_counts_no_alumni.courses_12th: senior_course_counts_no_alumni_courses_12th
     senior_course_counts_no_alumni.returned: senior_course_counts_no_alumni_returned
-  base_view: senior_course_counts_no_alumni
+  base_view: student_profiles
   default_group_by: false
   filters:
     senior_course_counts_no_alumni.courses_11th:
       greater_than_or_equal_to: 1
     senior_course_counts_no_alumni.total_10th_11th:
       greater_than_or_equal_to: 3
-  topic: senior_course_counts_no_alumni
+  topic: pathways_data
 
 dimensions:
   senior_course_counts_no_alumni_person_id: {}
