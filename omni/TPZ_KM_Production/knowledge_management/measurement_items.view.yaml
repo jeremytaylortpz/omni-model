@@ -19,3 +19,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Item-level rows within a measurement (one row per question/item within an assessment administration).

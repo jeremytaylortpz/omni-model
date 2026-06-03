@@ -13,3 +13,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Lookup of valid interest-form status values used by `interest_form_statuses`.

@@ -33,3 +33,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Student-submitted expressions of interest in upcoming course offerings. Joined to people via person_id and to the course_interest_*_types lookups.

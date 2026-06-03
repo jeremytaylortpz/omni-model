@@ -73,3 +73,47 @@ ai_context: "Base view: one row per student × question × response. Three surve
   scores in base data — must aggregate from items.\\n\\nDAP score labels and
   sort measures are AGGREGATE_EXPRESSION measures — cannot be used in GROUP BY
   or as dimensions."
+
+ai_fields:
+  [
+    omni__all_survey_data_with_demos.*,
+    -omni__all_survey_data_with_demos.first_name,
+    -omni__all_survey_data_with_demos.last_name,
+    -omni__all_survey_data_with_demos.category,
+    question_taxonomy.*,
+    dap_mappings_full.*,
+    ec_es_subscale_mapping.*,
+    question_text_variants.*,
+    surveys.*,
+    -surveys.created_at,
+    -surveys.updated_at,
+    terms.name,
+    terms.start_date,
+    terms.end_date,
+    terms.year,
+    term_sorting_v2.*,
+    people.id,
+    people.date_of_birth,
+    -people.first_name,
+    -people.last_name,
+    -people.full_name,
+    -people.middle_name,
+    -people.preferred_name,
+    -people.calculation,
+    -people.student_name,
+    student_profiles.current_grade,
+    student_profiles.school,
+    student_profiles.iep,
+    student_profiles.first_gen_college,
+    student_profiles.pronouns,
+    student_profiles.dismissed,
+    student_profiles.school_release_consent,
+    student_profiles.enrollment_form_most_recent_status,
+    student_profiles.latest_term,
+    schools.name,
+    schools.is_target_school,
+    sites.*,
+    languages_people.*,
+    languages.name,
+    languages.id
+  ]

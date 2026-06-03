@@ -19,3 +19,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  One row per former TPZ student, with graduation year and Salesforce linkage. Use for post-program (alumni) outcome tracking; join to `people` on person_id.

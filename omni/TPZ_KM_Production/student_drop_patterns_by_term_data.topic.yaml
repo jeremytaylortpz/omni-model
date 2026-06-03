@@ -4,3 +4,15 @@ label: Student Drop Patterns by Term Data
 joins:
   term_sorting_v2: {}
   terms: {}
+
+ai_fields:
+  [
+    student_drop_patterns_by_term_data.*,
+    terms.*,
+    -terms.created_at,
+    -terms.updated_at,
+    term_sorting_v2.*
+  ]
+
+ai_context: |
+  Drop-analysis topic. Grain: one row per student × course-term, capturing drop status and timing across the program. Use for cohort-level drop / retention analyses by term, course type, and student tenure. For the day-by-day attendance signal that underpins drop detection, use `Cleaned Student Attendances`. Note: the `student_drop_patterns_by_term_data → terms` relationship is currently mis-declared as one_to_one — it should be many_to_one (one term has many student-drop rows).

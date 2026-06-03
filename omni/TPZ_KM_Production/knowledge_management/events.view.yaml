@@ -17,3 +17,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Standalone (non-course) events — workshops, info sessions, demo days. Joined to `registrations` via `context_type='Event'`.
