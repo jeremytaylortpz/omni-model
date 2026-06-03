@@ -25,3 +25,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Pathways-program-specific student profile attributes (one row per Pathways-enrolled person). Join to `people` on person_id.

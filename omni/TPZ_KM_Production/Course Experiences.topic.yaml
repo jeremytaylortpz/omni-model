@@ -3,3 +3,19 @@ base_view: courses
 joins:
   terms: {}
   schedules: {}
+
+ai_fields:
+  [
+    courses.*,
+    -courses.created_at,
+    -courses.updated_at,
+    terms.*,
+    -terms.created_at,
+    -terms.updated_at,
+    schedules.*,
+    -schedules.created_at,
+    -schedules.updated_at
+  ]
+
+ai_context: |
+  Course-catalog topic. Grain: one row per course offering (a course section in a term), joined to its term and schedule. Use for catalog-level questions — counts of courses by term, course type, schedule, or site. For student-level course experiences (who enrolled, attended, or dropped), use the `Student Demographics` or `Cleaned Student Attendances` topics instead.

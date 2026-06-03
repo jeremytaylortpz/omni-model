@@ -22,3 +22,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Aggregated recruitment activity per person/term used by the recruitment team.

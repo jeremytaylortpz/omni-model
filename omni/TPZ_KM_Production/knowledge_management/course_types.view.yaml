@@ -80,3 +80,6 @@ measures:
     filters:
       courses.term_id:
         is: [ 54, 55, 56 ]
+
+ai_context: |
+  Lookup of course categorical types (EShip vs. Tech vs. Pathways vs. WBL, etc.). Drives the `course_name_groups` segmentation.

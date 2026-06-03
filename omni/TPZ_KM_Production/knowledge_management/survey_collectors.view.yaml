@@ -19,3 +19,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Survey collector instance — one survey can have multiple collection channels/links. Joined from `survey_responses.survey_collector_id`.
