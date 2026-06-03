@@ -20,3 +20,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Legacy lookup of survey type / category metadata (SurveyMonkey-era). Currently unused — TPZ has migrated to Qualtrics; retained for future re-use.

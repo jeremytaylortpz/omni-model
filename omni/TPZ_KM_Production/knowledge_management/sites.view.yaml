@@ -17,3 +17,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Physical TPZ program sites (primarily the Jamaica Plain Innovation Center plus partner/school locations). Joined from `courses.site_id` and `student_site_assignments`.

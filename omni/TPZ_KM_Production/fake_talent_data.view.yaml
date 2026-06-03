@@ -14,3 +14,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Synthetic/demo talent / HR data for prototyping dashboards. Do not use for real reporting.
