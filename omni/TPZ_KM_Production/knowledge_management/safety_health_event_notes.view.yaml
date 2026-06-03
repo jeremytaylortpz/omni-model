@@ -13,3 +13,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Per-incident narrative notes attached to `safety_health_events`. Sensitive — restrict access.

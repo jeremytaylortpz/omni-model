@@ -50,3 +50,6 @@ measures:
     label: Count of Unique Juniors
     format: NUMBER_0
     aggregate_type: count_distinct
+
+ai_context: |
+  Canonical person registry: one row per individual TPZ interacts with (students, alumni, parents/guardians, contacts, staff). `id` (a.k.a. `person_id` on other views) is the universal student/person key across the model. PII fields (first_name, last_name, full_name) must be hidden in aggregate reporting per the model.yaml rule.

@@ -20,3 +20,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Requirement definitions within a workflow stage.

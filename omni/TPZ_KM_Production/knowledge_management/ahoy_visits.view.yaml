@@ -37,3 +37,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Application web-analytics session/visit log (Ahoy gem). Operational/product analytics; usually excluded from program-outcome analysis.

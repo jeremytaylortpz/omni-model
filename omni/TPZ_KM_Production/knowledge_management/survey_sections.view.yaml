@@ -23,3 +23,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Sections/pages within a survey definition.

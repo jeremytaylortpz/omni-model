@@ -49,3 +49,6 @@ measures:
     filters:
       is_target_school_copy:
         is: true
+
+ai_context: |
+  Reference lookup of schools TPZ recruits from (primarily Boston-area high schools).
