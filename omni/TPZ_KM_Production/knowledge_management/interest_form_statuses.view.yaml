@@ -18,6 +18,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Per-person status tracking for the interest-form / recruitment pipeline (e.g., new, screening, accepted).

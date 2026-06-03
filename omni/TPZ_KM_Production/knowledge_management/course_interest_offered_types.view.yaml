@@ -13,6 +13,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Lookup of delivery modes a course can be offered in (e.g., in-person, virtual, hybrid) on a course-interest record.

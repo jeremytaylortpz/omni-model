@@ -29,6 +29,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Stage definitions for multi-step workflows (e.g., FabLab certification progressions).

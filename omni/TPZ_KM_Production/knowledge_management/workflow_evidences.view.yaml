@@ -25,6 +25,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Evidence artifacts (uploads, attestations) attached to workflow requirement completions.

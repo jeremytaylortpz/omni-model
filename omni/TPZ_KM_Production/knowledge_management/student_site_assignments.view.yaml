@@ -19,6 +19,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Maps students to sites for a given period (which Innovation Center cohort/site a student is assigned to).

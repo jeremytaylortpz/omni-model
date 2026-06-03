@@ -27,6 +27,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Uploaded reference table tracking TPZ thought-leadership activity (publications, talks, media mentions). Used by the leadership/development team — not student-level data.

@@ -21,6 +21,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Permission configuration metadata for the dashboard application.

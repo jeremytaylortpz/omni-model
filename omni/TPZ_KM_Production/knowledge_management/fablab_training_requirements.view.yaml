@@ -19,6 +19,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Prerequisite requirements for FabLab training courses.

@@ -30,6 +30,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Links between two `people` rows — typically parent/guardian → student. Carries `relationship_type_id` (note: `relationships.yaml` join to relationship_types is currently broken by a typo).

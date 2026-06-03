@@ -70,33 +70,3 @@ ai_context: |-
   Use this topic to analyze alumni survey data. The base view is survey_responses, joined to survey_response_answers via survey_responses.id = survey_response_answers.survey_response_id (the bridge table). survey_response_answers then joins to survey_questions (for question text) via survey_question_id, and to survey_answers (for answer values) via survey_answer_id. survey_questions joins to survey_sections for section grouping via survey_section_id. Filter on surveys.name = '2024 TPZ Alumni Survey' to isolate that cohort.
 
   Note: For alumni surveys, survey_responses.person_id is typically null, so the alumni_profiles join will return no rows for those respondents. Use survey_responses.sm_id as the unique respondent identifier for alumni surveys.
-
-ai_fields:
-  [
-    survey_responses.*,
-    -survey_responses.created_at,
-    -survey_responses.updated_at,
-    survey_response_answers.*,
-    -survey_response_answers.created_at,
-    -survey_response_answers.updated_at,
-    survey_questions.*,
-    -survey_questions.created_at,
-    -survey_questions.updated_at,
-    survey_answers.*,
-    -survey_answers.created_at,
-    -survey_answers.updated_at,
-    survey_sections.*,
-    -survey_sections.created_at,
-    -survey_sections.updated_at,
-    surveys.*,
-    -surveys.created_at,
-    -surveys.updated_at,
-    alumni_surveys.name,
-    alumni_surveys.id,
-    survey_collectors.*,
-    -survey_collectors.created_at,
-    -survey_collectors.updated_at,
-    alumni_profiles.*,
-    -alumni_profiles.created_at,
-    -alumni_profiles.updated_at
-  ]

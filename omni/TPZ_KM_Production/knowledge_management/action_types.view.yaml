@@ -13,6 +13,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Lookup of action categories referenced by `person_actions`.

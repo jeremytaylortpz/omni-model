@@ -19,6 +19,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Specific weekdays/dates a course or schedule meets. Joined to `schedules`.

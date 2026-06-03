@@ -13,6 +13,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Lookup of status values for a course-interest record (e.g., new, contacted, converted).

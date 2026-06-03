@@ -10,6 +10,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Rails ActiveRecord internal metadata. Not useful for analysis — exclude from AI surface.

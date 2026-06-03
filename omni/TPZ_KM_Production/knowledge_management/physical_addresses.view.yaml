@@ -18,6 +18,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Mailing/home addresses linked to a person. Treat as PII; hide street/zip from aggregate reporting.
