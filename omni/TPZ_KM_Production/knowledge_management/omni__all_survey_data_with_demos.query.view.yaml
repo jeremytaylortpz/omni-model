@@ -50,58 +50,22 @@ sql: |-
     left outer join survey_answers as a on a.id = ra.survey_answer_id
 
 dimensions:
-  term_id:
-    format: ID
-  current_grade:
-    sample_values:
-      [
-      "0",
-      "2",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13"
-      ]
+  term_id: {}
+  current_grade: {}
   school_name: {}
-  school_tier:
-    sample_values:
-      [
-      Not Aligned,
-      Tier 1,
-      Tier 2,
-      Tier 3
-      ]
+  school_tier: {}
   is_target_school: {}
   is_bps_school: {}
   iep: {}
   esl: {}
-  gender:
-    sample_values:
-      [
-      Female,
-      Male,
-      Non-Binary,
-      Other,
-      "Prefer not to answer"
-      ]
-  ethnicity:
-    ai_context: |
-      Boolean stored as string: "1" = Hispanic or Latino, "0" = Not Hispanic or Latino. Sourced from `demographic_profiles.ethnicity`.
-    sample_values:
-      [
-      "0",
-      "1"
-      ]
+  gender: {}
+  ethnicity: {}
   race: {}
   category: {}
   completed_at: {}
   start_date: {}
-  survey_id:
-    format: ID
-  survey_questions_id:
-    format: ID
+  survey_id: {}
+  survey_questions_id: {}
 
   first_name:
     hidden: true

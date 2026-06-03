@@ -34,6 +34,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Reservations of FabLab equipment / rooms by students or staff.

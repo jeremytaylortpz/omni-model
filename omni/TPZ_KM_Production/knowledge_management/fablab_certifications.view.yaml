@@ -23,6 +23,3 @@ measures:
   certification_level_list:
     sql: ${fablab_certifications.certification_level}
     aggregate_type: list
-
-ai_context: |
-  Per-student equipment-use certifications (which student is cleared to operate which equipment).

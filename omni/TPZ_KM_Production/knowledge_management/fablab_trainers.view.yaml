@@ -18,6 +18,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Trainers authorized to certify students on FabLab equipment.

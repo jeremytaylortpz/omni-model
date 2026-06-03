@@ -17,6 +17,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Generic location reference table (rooms, partner buildings). Less specific than `sites` — prefer `sites` for program/course analysis.

@@ -24,6 +24,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Outbound email queue from the app. Operational only — not for program analysis.

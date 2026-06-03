@@ -13,6 +13,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Lookup of preferred-day options (e.g., weekday, weekend) on a course-interest record.

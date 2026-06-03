@@ -20,6 +20,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Localized labels for form definitions. Typically excluded from AI analysis (UI metadata).
