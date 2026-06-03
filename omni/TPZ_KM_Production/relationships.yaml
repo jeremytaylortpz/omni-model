@@ -1,21 +1,7 @@
 - join_from_view: student_profiles
   join_to_view: core_and_advanced_counts
-  id: student_profiles_core_and_advanced_counts_0
   join_type: inner
-  on_sql: ${core_and_advanced_counts.person_id} = ${student_profiles.person_id}
-  relationship_type: one_to_one
-
-- join_from_view: student_profiles
-  join_to_view: senior_course_counts_no_alumni
-  join_type: inner
-  on_sql: ${senior_course_counts_no_alumni.person_id} = ${student_profiles.person_id}
-  relationship_type: one_to_one
-
-- join_from_view: student_profiles
-  join_to_view: student_course_data
-  join_type: inner
-  on_sql: ${student_course_data.person_id} = ${student_profiles.person_id}
-  relationship_type: one_to_one
+  on_sql: ${core_and_advanced_counts.person_id} = ${registrations.person_id}
 
 - join_from_view: omni__clean_attendance_query_view
   join_to_view: terms

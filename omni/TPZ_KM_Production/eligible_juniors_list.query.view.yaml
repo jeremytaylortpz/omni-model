@@ -9,14 +9,14 @@ query:
     student_course_data.courses_10th_11th: courses_10th_11th
     student_course_data.returned_senior_year: returned_senior_year
     student_course_data.courses_12th_grade: courses_12th_grade
-  base_view: student_profiles
+  base_view: student_course_data
   default_group_by: false
   filters:
     student_course_data.registrations_cnt_11th:
       greater_than_or_equal_to: 1
     student_course_data.registrations_cnt_11th_plus_registrations_cnt_10th:
       greater_than_or_equal_to: 3
-  topic: pathways_data
+  topic: student_course_data
 
 dimensions:
   student_name: {}

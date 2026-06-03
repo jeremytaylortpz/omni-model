@@ -16,7 +16,7 @@ query:
       is: Course
     student_profiles.current_grade:
       is: 12
-  topic: pathways_data
+  topic: student_profiles
 
 dimensions:
   person_id: {}
