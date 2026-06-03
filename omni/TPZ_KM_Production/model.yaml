@@ -21,7 +21,7 @@ ai_context: |
   After this recruitment will perform some screening and if the student passes screening their parents are sent an enrollment form. 
   A student will have one enrollment form for every term they enroll in a course. 
   The parents are the one to fill out the enrollment form not the student. 
-  The interest and enrollment forms are what populates the student_profiles table.
+  The interest and enrollment forms are what populates the student_profiles table. Small change to cause sync. 
 
 default_cache_policy: cache_for_a_day
 
