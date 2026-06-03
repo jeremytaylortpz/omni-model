@@ -3,7 +3,7 @@ description: with lists of courses taken in 10th/11th grade and 12th grade
 
 query:
   fields:
-    registrations.person_id: registrations_person_id
+    registrations.person_id: person_id
     people.full_name: student_name
     course_types.courses_10th_11th: courses_10th_11th
     course_types.courses_12th: course_types_courses_12th
@@ -18,10 +18,10 @@ query:
       is: Course
     student_profiles.current_grade:
       is: 12
-  topic: student_profiles
+  topic: pathways_data
 
 dimensions:
-  registrations_person_id: {}
+  person_id: {}
   student_name: {}
   courses_10th_11th: {}
   course_types_courses_12th: {}

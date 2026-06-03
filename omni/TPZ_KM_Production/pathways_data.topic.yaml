@@ -1,1 +1,49 @@
+base_view: student_profiles
 label: Pathways Data
+
+fields:
+  [
+    all_views.*,
+    -courses.course_type_id,
+    -courses.created_at,
+    -courses.description,
+    -courses.class_length,
+    -languages.created_at,
+    -languages.code,
+    -languages.ui_strings,
+    -languages.updated_at,
+    -languages.count,
+    -demographic_profiles.created_at,
+    -demographic_profiles.updated_at,
+    -demographic_profiles.count,
+    -people.calculation,
+    -people.id_count_distinct,
+    -people.count,
+    -races.race_list,
+    -races.count,
+    -races.updated_at,
+    -races.created_at,
+    -registrations.active_count_false,
+    -registrations.person_id_count_distinct,
+    -registrations.count,
+    -registrations.updated_at,
+    -term_sorting_v2.*
+  ]
+
+joins:
+  schools: {}
+  people:
+    registrations:
+      courses:
+        schedules: {}
+        terms: {}
+        course_types: {}
+    demographic_profiles:
+      races: {}
+    omni__clean_attendance_query_view: {}
+  core_and_advanced_counts: {}
+  sites:
+    form_submissions:
+      languages: {}
+  student_course_data: {}
+  senior_course_counts_no_alumni: {}
