@@ -33,6 +33,3 @@ measures:
   survey_response_id_count_distinct:
     sql: ${survey_response_answers.survey_response_id}
     aggregate_type: count_distinct
-
-ai_context: |
-  Per-question responses within a `survey_responses` row (long format: one row per question per response). Free-text answers are stored as ASCII codes in `text`; use the `text_decoded` field for human-readable strings.

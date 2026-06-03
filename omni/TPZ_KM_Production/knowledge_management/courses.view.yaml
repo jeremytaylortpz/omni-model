@@ -34,6 +34,3 @@ measures:
   course_code_list:
     sql: ${courses.course_code}
     aggregate_type: list
-
-ai_context: |
-  Course/section offerings — one row per course section per term. Joined to `terms`, `schedules`, `sites`, and `course_types`. Use `friendly_name` for human-readable course names and respect `exclude_course=TRUE` to drop non-program offerings.

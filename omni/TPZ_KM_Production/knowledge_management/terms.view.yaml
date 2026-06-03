@@ -45,6 +45,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Academic term/quarter reference (TPZ runs four terms per year: Summer, Fall, Winter, Spring). `start_date` is the canonical sort field — always use `order_by_field: start_date` when displaying `name`. TPZ fiscal year runs July–June.
