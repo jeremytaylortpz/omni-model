@@ -16,3 +16,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Lookup mapping full school names to short acronyms used in reporting.

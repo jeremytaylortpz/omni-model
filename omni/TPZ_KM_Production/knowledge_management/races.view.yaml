@@ -20,3 +20,6 @@ measures:
   race_list:
     sql: ${races.race}
     aggregate_type: list
+
+ai_context: |
+  Reference lookup of race categories used by demographic_profiles and survey demographics.

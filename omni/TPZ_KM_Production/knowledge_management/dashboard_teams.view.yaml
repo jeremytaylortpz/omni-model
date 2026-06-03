@@ -14,3 +14,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Teams within the dashboard application. Operational metadata.

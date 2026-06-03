@@ -27,3 +27,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  One row per completed form submission (interest, enrollment, FabLab waiver, etc.). Joined to `people` via person_id; pair with `form_submission_answers` for per-question detail.

@@ -24,3 +24,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Logged safety/health incidents (injuries, behavioral incidents, medical events). Sensitive — restrict access.
