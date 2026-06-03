@@ -67,3 +67,6 @@ measures:
       lettered prefixes, all punctuation, spaces, and lowercases the result. Use
       this field to join question text across different survey tables."
     aggregate_type: count_distinct
+
+ai_context: |
+  Reference mapping survey items to Entrepreneurial Competency (EC) and Entrepreneurial Spirit (ES) subscales. Used together with `question_taxonomy` to compute competency-level survey scores.

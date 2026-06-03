@@ -2,3 +2,11 @@ base_view: quarters
 label: Org Dashboard
 
 joins: {}
+
+ai_fields:
+  [
+    quarters.*
+  ]
+
+ai_context: |
+  TPZ fiscal-quarter dimension topic (TPZ fiscal year runs July–June). Use as a date-spine when building org-level dashboards that need a complete quarterly axis even where no events exist in a given quarter. For program-term analyses (Summer / Fall / Winter / Spring), use the `terms` view instead — TPZ terms do not align with fiscal quarters.
