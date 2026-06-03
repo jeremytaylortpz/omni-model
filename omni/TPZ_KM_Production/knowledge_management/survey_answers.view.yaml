@@ -36,6 +36,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Answer-choice definitions per survey question (the allowed response options and their decoded text values).

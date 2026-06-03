@@ -26,6 +26,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Specific FabLab equipment units (individual machines / tools).

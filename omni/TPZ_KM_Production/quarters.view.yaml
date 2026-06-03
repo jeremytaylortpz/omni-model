@@ -10,6 +10,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Reference table for TPZ fiscal quarters (TPZ fiscal year runs July–June).

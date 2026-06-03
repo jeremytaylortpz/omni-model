@@ -26,6 +26,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Staff role assignments (which person holds which role).

@@ -493,6 +493,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Uploaded CSV — cleaned alumni outcomes survey results (post-program tracking). PII-heavy (names, emails, phones, addresses, IP); do not expose these in shared reporting.

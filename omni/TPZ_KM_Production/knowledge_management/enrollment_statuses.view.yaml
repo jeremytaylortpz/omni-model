@@ -20,6 +20,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Per-student enrollment status tracking by term (e.g., enrolled, waitlisted, dropped).

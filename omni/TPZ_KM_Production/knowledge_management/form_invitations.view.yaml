@@ -25,6 +25,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Outbound invitations sent to people to fill out a form (e.g., enrollment-form links sent to parents).

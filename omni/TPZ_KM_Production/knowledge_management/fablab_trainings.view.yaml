@@ -22,6 +22,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  FabLab training-session instances — actual training events students attend.

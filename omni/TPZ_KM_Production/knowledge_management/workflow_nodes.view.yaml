@@ -17,6 +17,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Nodes in a workflow state graph used by the FabLab certification engine.

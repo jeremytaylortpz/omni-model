@@ -14,6 +14,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Free-form question/answer pairs collected on enrollment forms beyond the standard schema.

@@ -17,6 +17,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Choice options for select / multi-select form questions.

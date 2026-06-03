@@ -44,6 +44,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Audit log of actions taken on a person record (status changes, communications, manual updates). Use for activity timelines, not for counting students.

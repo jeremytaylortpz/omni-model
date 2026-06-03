@@ -18,6 +18,3 @@ dimensions:
 measures:
   count:
     aggregate_type: count
-
-ai_context: |
-  Lookup of FabLab equipment categories (laser cutter, 3D printer, CNC, etc.).
