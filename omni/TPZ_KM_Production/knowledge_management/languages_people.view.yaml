@@ -15,3 +15,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Many-to-many join between `people` and `languages` capturing the language(s) a person speaks.

@@ -21,3 +21,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Per-person ordering/preference of contact methods (which email/phone to use first). Operational — rarely needed for analysis.

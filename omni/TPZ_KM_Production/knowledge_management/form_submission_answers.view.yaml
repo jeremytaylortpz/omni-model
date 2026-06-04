@@ -19,3 +19,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Per-question answers for a `form_submissions` row (long format).

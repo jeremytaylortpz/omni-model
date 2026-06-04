@@ -16,22 +16,40 @@ sql: |-
     left outer join terms as t on c.term_id = t.id
 
 dimensions:
-  student_id: {}
-  term_id: {}
   term_name: {}
-  first_name: {}
-  last_name: {}
-  current_grade: {}
   school_name: {}
-  school_tier: {}
   is_target_school: {}
   is_bps_school: {}
   iep: {}
   esl: {}
-  gender: {}
-  ethnicity: {}
   race: {}
   school: {}
+
+  student_id:
+    format: ID
+
+  term_id:
+    format: ID
+
+  first_name:
+    hidden: true
+
+  last_name:
+    hidden: true
+
+  current_grade:
+    sample_values: [ "0", "2", "8", "9", "10", "11", "12", "13" ]
+
+  school_tier:
+    sample_values: [ Not Aligned, Tier 1, Tier 2, Tier 3 ]
+
+  gender:
+    sample_values: [ Female, Male, Non-Binary, Other, Prefer not to answer ]
+
+  ethnicity:
+    sample_values: [ "0", "1" ]
+    ai_context: |
+      Boolean stored as string: "1" = Hispanic or Latino, "0" = Not Hispanic or Latino. Sourced from `demographic_profiles.ethnicity`.
 
 measures:
   count:

@@ -235,3 +235,6 @@ measures:
     filters:
       has_enrollment_form:
         is: true
+
+ai_context: |
+  Flattened enrollment-form submissions — one row per student per term they enroll in a course (filled out by parent/guardian, not the student). Carries contact_1/2/3 guardian information. Hide guardian PII (names, emails, phones) in aggregate reporting.

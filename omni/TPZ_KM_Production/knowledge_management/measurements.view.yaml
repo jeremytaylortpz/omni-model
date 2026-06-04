@@ -16,3 +16,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Measurement instrument record — one row per assessment instance taken by a person (e.g., a DAP administration).

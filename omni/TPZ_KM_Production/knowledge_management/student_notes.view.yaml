@@ -21,3 +21,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Free-text staff notes about a student. Sensitive — do not expose in shared reporting.

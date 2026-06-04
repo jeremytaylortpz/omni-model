@@ -13,3 +13,6 @@ dimensions:
 measures:
   count:
     aggregate_type: count
+
+ai_context: |
+  Email contact records linked to a person; a person may have multiple over time. Hide raw email values in aggregate reporting (PII).
