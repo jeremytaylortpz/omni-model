@@ -272,86 +272,10 @@ dimensions:
 
   numeric_value_weighted:
     sql: |-
-      CASE 
-        WHEN ${question_taxonomy.weight} = -1 
-        THEN 4 - CASE 
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Disagree' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A little like adults at TPZ' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like My Educator(s)' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little True' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Rarely' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like Me' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'No' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Not At All or Rarely' THEN 0       
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Disagree' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat like adults at TPZ' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like My Educator(s)' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat True' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Sometimes' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like Me' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly No' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat or Sometimes' THEN 1            
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Disagree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly True' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Often' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like Me' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly like adults at TPZ' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like My Educator(s)' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Disagree; Somewhat Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Yes' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Very or Often' THEN 2         
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Agree' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Almost Always' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like Me' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Completely True' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like My Educator(s)' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely like adults at TPZ' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Agree' THEN 4
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Yes' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely or Almost Always' THEN 3            
-          ELSE NULL
-        END
-        ELSE CASE 
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Disagree' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A little like adults at TPZ' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like My Educator(s)' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little True' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Rarely' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'A Little Like Me' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'No' THEN 0
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Not At All or Rarely' THEN 0       
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Disagree' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat like adults at TPZ' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like My Educator(s)' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat True' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Sometimes' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Like Me' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly No' THEN 1
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat or Sometimes' THEN 1            
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Disagree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly True' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Often' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like Me' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly like adults at TPZ' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Like My Educator(s)' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Disagree; Somewhat Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Somewhat Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Agree' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Mostly Yes' THEN 2
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Very or Often' THEN 2         
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Agree' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Almost Always' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like Me' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Completely True' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely Like My Educator(s)' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely like adults at TPZ' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Strongly Agree' THEN 4
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Yes' THEN 3
-          WHEN ${omni__all_survey_data_with_demos.answer_value_clean} = 'Extremely or Almost Always' THEN 3            
-          ELSE NULL
-        END
+      CASE
+        WHEN ${question_taxonomy.weight} = -1 THEN 4 -
+          ${omni__all_survey_data_with_demos.numeric_value}
+        ELSE ${omni__all_survey_data_with_demos.numeric_value}
       END
     label: Numeric Value (Weighted)
     description: Numeric value with reverse scoring applied for negatively-worded
@@ -360,19 +284,6 @@ dimensions:
     ai_context: Reverse-scored Likert value for negatively-worded items (weight=-1).
       Identical to numeric_value when weight=1. Prefer this for ES/EC analysis
       that includes negatively-worded items.
-
-  dap_context_category:
-    sql: |-
-      CASE
-        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 15 THEN 'Challenged'
-        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 21 THEN 'Vulnerable'
-        WHEN AVG(${omni__all_survey_data_with_demos.numeric_value}) * 10 < 26 THEN 'Adequate'
-        ELSE 'Thriving'
-      END
-    label: DAP Context Category
-    description: "Categorizes the DAP Context Score (0–30) into four levels:
-      Challenged (0–14), Vulnerable (15–20), Adequate (21–25), Thriving (26–30).
-      Based on Search Institute DAP scoring benchmarks."
 
 measures:
   count:
