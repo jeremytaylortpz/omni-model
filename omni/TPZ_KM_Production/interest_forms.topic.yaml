@@ -60,6 +60,7 @@ joins:
     enrollment_forms: {}
     omni__all_survey_data_with_demos:
       term_sorting_v2: {}
+      question_taxonomy: {}
 
 ai_context: |
   Recruitment-pipeline topic. Grain: one row per person who has submitted an interest form (interest-form submission is what creates the `people` row in TPZ KM — one interest form per person). Use for funnel analyses across the student journey: interest → screening → enrollment → registration → attendance → survey. Joined out to `student_profiles`, `registrations`, `enrollment_forms`, attendance, and surveys via `people.id`.
