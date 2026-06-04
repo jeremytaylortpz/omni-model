@@ -15,6 +15,13 @@ fields:
     terms.current_term_label,
     -terms.test_term_groups
   ]
+ai_fields:
+  [
+    omni__all_survey_data_with_demos.*,
+    -omni__all_survey_data_with_demos.first_name,
+    -omni__all_survey_data_with_demos.last_name,
+    -omni__all_survey_data_with_demos.category
+  ]
 
 joins:
   surveys: {}
