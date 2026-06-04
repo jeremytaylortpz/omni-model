@@ -27,8 +27,6 @@ ai_fields:
     terms.start_date,
     terms.end_date,
     terms.year,
-    term_sorting_v2.name,
-    term_sorting_v2.term_status,
     schools.name,
     schools.is_target_school,
     schools.name_groups,
@@ -71,8 +69,7 @@ joins:
     spring_2026_enrollments: {}
   courses:
     schedules: {}
-    terms:
-      term_sorting_v2: {}
+    terms: {}
 
 views:
   omni__clean_attendance_query_view:

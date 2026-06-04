@@ -42,6 +42,18 @@ dimensions:
       DATE) <= ${terms.end_date} THEN 'Current Term' ELSE ${terms.name} END
     label: Current Term Label
 
+  season:
+    sql: |-
+      CASE
+            WHEN ${terms.name} ILIKE 'Summer%' THEN 'Summer'
+            WHEN ${terms.name} ILIKE 'Fall%'   THEN 'Fall'
+            WHEN ${terms.name} ILIKE 'Winter%' THEN 'Winter'
+            WHEN ${terms.name} ILIKE 'Spring%' THEN 'Spring'
+          END
+
+  term_year:
+    sql: CAST(SUBSTRING(${terms.name}, LENGTH(${terms.name}) - 3, 4) AS INTEGER)
+
 measures:
   count:
     aggregate_type: count

@@ -1,0 +1,44 @@
+# Reference this view as student_retention
+description: For each student, did they attend any term on or after their retention cutoff?
+
+query:
+  fields:
+    first_term_per_student.person_id: first_term_per_student_person_id
+    first_term_per_student.first_term_name: first_enrollment_term
+    first_term_per_student.first_season: first_term_per_student_first_season
+    first_term_per_student.first_term_year: first_term_per_student_first_term_year
+    first_term_per_student.first_term_start: term_start_date
+    first_term_per_student.retention_cutoff_date: first_term_per_student_retention_cutoff_date
+    first_term_per_student.retained: first_term_per_student_retained
+  base_view: first_term_per_student
+  join_via_map:
+    all_student_terms: []
+
+dimensions:
+  first_term_per_student_person_id: {}
+  first_enrollment_term: {}
+  first_term_per_student_first_season: {}
+  first_term_per_student_first_term_year: {}
+  term_start_date: {}
+  first_term_per_student_retention_cutoff_date: {}
+  first_term_per_student_retained: {}
+
+  custom_field_0:
+    sql: NOT (`first_term_per_student.first_season` IN ('Summer', 'Fall') AND
+      `first_term_per_student.first_term_year` = 2025)
+
+  custom_field_1:
+    sql: NOT (`first_term_per_student.first_season` IN ('Winter', 'Spring') AND
+      `first_term_per_student.first_term_year` = 2026)
+
+measures:
+  students_first_enrolled:
+    sql: ${student_retention.first_term_per_student_person_id}
+    aggregate_type: count_distinct
+
+  re_enrolled_fall_or_later:
+    sql: ${student_retention.first_term_per_student_person_id}
+    aggregate_type: count_distinct
+    filters:
+      first_term_per_student_retained:
+        is: 1

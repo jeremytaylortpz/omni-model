@@ -1,0 +1,36 @@
+# Reference this view as es_per_respondent_means
+label: ES Per Respondent Means
+
+schema: knowledge_management
+query:
+  fields:
+    question_taxonomy.new_eces_competencies: new_eces_competencies
+    omni__all_survey_data_with_demos.response_id: response_id
+    omni__all_survey_data_with_demos.es_respondent_mean: es_respondent_mean
+  base_view: omni__all_survey_data_with_demos
+  filters:
+    question_taxonomy.competency_type:
+      is: entrepreneurial_spirit
+    question_taxonomy.new_eces_competencies:
+      not: null
+    omni__all_survey_data_with_demos.survey_name:
+      is: Entrepreneurial Spirit Survey
+    omni__all_survey_data_with_demos.completed_at:
+      time_for_duration: [ 2 years ago, 2 years ]
+  sorts:
+    - field: question_taxonomy.new_eces_competencies
+  topic: student_survey_data
+
+dimensions:
+  new_eces_competencies: {}
+  response_id: {}
+  es_respondent_mean: {}
+
+measures:
+  es_mean_score_variance:
+    sql: VARIANCE(${es_per_respondent_means.es_respondent_mean})
+    label: Total Score Variance
+
+  es_n_respondents:
+    sql: COUNT(DISTINCT ${es_per_respondent_means.response_id})
+    label: N Respondents

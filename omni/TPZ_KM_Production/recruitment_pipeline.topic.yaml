@@ -1,0 +1,14 @@
+base_view: interest_forms
+label: Recruitment Pipeline
+
+joins:
+  student_attendances:
+    courses:
+      terms: {}
+  people:
+    student_profiles:
+      schools: {}
+    registrations: {}
+    enrollment_forms: {}
+    omni__all_survey_data_with_demos:
+      question_taxonomy: {}

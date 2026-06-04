@@ -1,0 +1,44 @@
+# Reference this view as ec_respondent_totals
+label: EC Respondent Totals
+
+schema: knowledge_management
+renamed_from: ec_respondant_totals
+query:
+  fields:
+    omni__all_survey_data_with_demos.response_id: response_id
+    question_taxonomy.new_eces_competencies: new_eces_competencies
+    omni__all_survey_data_with_demos.ec_respondent_total: ec_respondent_total
+    omni__all_survey_data_with_demos.ec_respondent_item_count: ec_respondent_item_count
+  base_view: omni__all_survey_data_with_demos
+  filters:
+    question_taxonomy.new_eces_competencies:
+      not: null
+    omni__all_survey_data_with_demos.survey_name:
+      is:
+        [
+          Entrepreneurial Culture Survey (Launch Lab Version),
+          Spring 2025 - Entrepreneurial Culture Survey
+        ]
+    omni__all_survey_data_with_demos.completed_at:
+      time_for_duration: [ 2 years ago, 2 years ]
+    omni__all_survey_data_with_demos.numeric_value_weighted:
+      not: null
+  sorts:
+    - field: question_taxonomy.new_eces_competencies
+    - field: omni__all_survey_data_with_demos.response_id
+  topic: student_survey_data
+
+dimensions:
+  response_id: {}
+  new_eces_competencies: {}
+  ec_respondent_total: {}
+  ec_respondent_item_count: {}
+
+measures:
+  total_score_variance:
+    sql: VAR_SAMP(${ec_respondent_totals.ec_respondent_total})
+    label: Total Score Variance (Sample)
+
+  n_respondents:
+    sql: COUNT(DISTINCT ${ec_respondent_totals.response_id})
+    label: N Respondents
