@@ -62,8 +62,9 @@ always_where_filters:
     or:
       - contains: Entrepreneurial Spirit
       - contains: Entrepreneurial Culture
-      - contains: Developmental Assets Profile
-      - contains: Developmental Relationships
+      - contains: Developmental
+      - contains: SAYO
+      - contains: SCALE
 
 joins:
   surveys: {}
