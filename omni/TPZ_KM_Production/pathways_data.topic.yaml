@@ -26,8 +26,7 @@ fields:
     -registrations.active_count_false,
     -registrations.person_id_count_distinct,
     -registrations.count,
-    -registrations.updated_at,
-    -term_sorting_v2.*
+    -registrations.updated_at
   ]
 
 joins:
@@ -41,9 +40,9 @@ joins:
     demographic_profiles:
       races: {}
     omni__clean_attendance_query_view: {}
-  core_and_advanced_counts: {}
-  sites:
-    form_submissions:
+    languages_people:
       languages: {}
+  core_and_advanced_counts: {}
+  sites: {}
   student_course_data: {}
   senior_course_counts_no_alumni: {}

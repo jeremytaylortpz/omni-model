@@ -1,0 +1,62 @@
+base_view: omni__clean_attendance_query_view
+label: Student Information
+
+fields:
+  [
+    all_views.*,
+    alumni_profiles.*,
+    -contact_orders.*,
+    action_types.*,
+    -omni__clean_attendance_query_view.att_P,
+    -omni__clean_attendance_query_view.att_H,
+    -omni__clean_attendance_query_view.att_A,
+    terms.season,
+    terms.term_year
+  ]
+
+joins:
+  people:
+    interest_forms: {}
+    spring_2026_enrollments: {}
+    student_profiles:
+      student_retention:
+        first_term_per_student:
+          all_student_terms: {}
+      schools:
+        school_tiers: {}
+    registrations: {}
+    demographic_profiles:
+      races: {}
+    languages_people:
+      languages: {}
+    person_actions:
+      action_types: {}
+      roles:
+        contact_orders: {}
+    pathways_profiles: {}
+    alumni_profiles: {}
+    enrollment_forms: {}
+    most_recent_ef_by_student: {}
+  courses:
+    schedules: {}
+    terms: {}
+
+views:
+  omni__clean_attendance_query_view:
+    dimensions:
+      att_pct_level_of_detail:
+        sql: ${omni__clean_attendance_query_view.att_pct}
+        label: Att Pct Level of Detail
+        level_of_detail:
+          aggregate_type: sum
+          fixed: [ omni__clean_attendance_query_view.course_code ]
+
+relationships:
+  - join_from_view: omni__clean_attendance_query_view
+    join_to_view: latest_enrollment_forms
+    join_type: always_left
+    on_sql: ${latest_enrollment_forms.person_id} =
+      ${omni__clean_attendance_query_view.person_id} AND
+      ${latest_enrollment_forms.term_name} =
+      ${omni__clean_attendance_query_view.term_name}
+    relationship_type: many_to_one

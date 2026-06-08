@@ -2,46 +2,6 @@ base_view: student_attendance_rates
 label: Comparing Retention by Threshold and Term
 
 fields: [ all_views.* ]
-ai_fields:
-  [
-    student_attendance_rates.*,
-    courses.*,
-    -courses.created_at,
-    -courses.updated_at,
-    terms.name,
-    terms.start_date,
-    terms.end_date,
-    terms.year,
-    term_sorting_v2.*,
-    people.id,
-    people.date_of_birth,
-    -people.first_name,
-    -people.last_name,
-    -people.full_name,
-    -people.middle_name,
-    -people.preferred_name,
-    -people.calculation,
-    -people.student_name,
-    student_profiles.current_grade,
-    student_profiles.school,
-    student_profiles.iep,
-    student_profiles.first_gen_college,
-    student_profiles.pronouns,
-    student_profiles.dismissed,
-    student_profiles.school_release_consent,
-    student_profiles.enrollment_form_most_recent_status,
-    student_profiles.latest_term,
-    schools.name,
-    schools.name_groups,
-    schools.is_target_school,
-    school_tiers.name,
-    demographic_profiles.*,
-    races.*,
-    alumni_profiles.*,
-    most_recent_ef_by_student.release_media_groups,
-    most_recent_ef_by_student.term_name,
-    student_first_terms.*
-  ]
 always_where_filters:
   terms.name:
     not: [ "2020", Multi-Term, Fall/Winter 21/22, 2021-2022 ]
@@ -58,8 +18,9 @@ joins:
       races: {}
     alumni_profiles: {}
     most_recent_ef_by_student: {}
-  terms:
-    term_sorting_v2: {}
+    student_retention: {}
+    all_student_terms: {}
+  terms: {}
   student_first_terms: {}
 
 views:

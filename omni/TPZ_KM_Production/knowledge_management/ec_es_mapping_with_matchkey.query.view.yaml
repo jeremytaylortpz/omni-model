@@ -19,7 +19,7 @@ query:
   base_view: omni__all_survey_data_with_demos
   sorts:
     - field: omni__all_survey_data_with_demos.question_text
-  topic: omni__all_survey_data_with_demos
+  topic: student_survey_data
 
 measures:
   count:

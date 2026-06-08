@@ -6,36 +6,6 @@ description: Raw survey response data for TPZ alumni surveys. Each row
   populated for alumni surveys. Filter by surveys.name to isolate a specific
   survey.
 
-ai_fields:
-  [
-    survey_responses.*,
-    -survey_responses.created_at,
-    -survey_responses.updated_at,
-    survey_response_answers.*,
-    -survey_response_answers.created_at,
-    -survey_response_answers.updated_at,
-    survey_questions.*,
-    -survey_questions.created_at,
-    -survey_questions.updated_at,
-    survey_answers.*,
-    -survey_answers.created_at,
-    -survey_answers.updated_at,
-    survey_sections.*,
-    -survey_sections.created_at,
-    -survey_sections.updated_at,
-    surveys.*,
-    -surveys.created_at,
-    -surveys.updated_at,
-    alumni_surveys.name,
-    alumni_surveys.id,
-    survey_collectors.*,
-    -survey_collectors.created_at,
-    -survey_collectors.updated_at,
-    alumni_profiles.*,
-    -alumni_profiles.created_at,
-    -alumni_profiles.updated_at
-  ]
-
 joins:
   surveys: {}
   survey_collectors: {}

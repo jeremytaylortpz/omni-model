@@ -14,7 +14,7 @@ query:
       is: true
   sorts:
     - field: people.id
-  topic: omni__clean_attendance_query_view Copy
+  topic: cleaned_student_attendance_data
 
 dimensions:
   id: {}
