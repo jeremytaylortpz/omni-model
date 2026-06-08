@@ -175,7 +175,8 @@ measures:
     aggregate_type: count_distinct
 
   effective_course_days:
-    sql: COUNT(DISTINCT attendance_date) END
+    sql: CASE WHEN ${courses.max_days} NOT NULL THEN ${courses.max_days} ELSE
+      COUNT(DISTINCT attendance_date) END
     description: Returns courses.max_days when populated, otherwise counts unique
       attendance dates
 
@@ -188,15 +189,10 @@ measures:
     aggregate_type: list
 
   count_drops:
-    sql: "COUNT(DISTINCT CONCAT(person_id, course_name)) FROM (SELECT
-      registrations.person_id, course_types.name AS course_name,
-      registrations.active, MAX(CASE WHEN registrations.active = 1 THEN 1 ELSE 0
-      END) OVER (PARTITION BY registrations.person_id, course_types.name) AS
-      has_active_enrollment FROM registrations LEFT OUTER JOIN courses ON
-      registrations.context_id = courses.id LEFT OUTER JOIN course_types ON
-      courses.course_type_id = course_types.id WHERE registrations.context_type
-      = 'Course') AS RegistrationStatus WHERE active = 0 AND
-      has_active_enrollment = 0 -- "
+    sql: CASE WHEN ${omni__clean_attendance_query_view.is_true_drop} = 1 THEN
+      CONCAT(${omni__clean_attendance_query_view.person_id}, '::',
+      ${omni__clean_attendance_query_view.course_name}) ELSE NULL END
+    aggregate_type: count_distinct
 
   rounded_att_pct_sum:
     sql: ${omni__clean_attendance_query_view.rounded_att_pct}

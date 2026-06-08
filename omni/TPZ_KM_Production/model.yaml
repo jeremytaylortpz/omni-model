@@ -6,22 +6,56 @@ ai_context: |
   For the semantic layer of Omni Analytics, this history provides essential context for tracking longitudinal student outcomes, program engagement metrics, and the intersectional impact of STEAM education on career readiness.
   Here is the organization's website: https://possiblezone.org/
 
-
   Key rules:
   - Use people.person_id (or student_profiles.person_id) as the student identifier for counting/joining.
   - Never expose first_name/last_name in aggregate reporting.
   - Filter out active=FALSE or deleted=TRUE records.
   - If student_profiles.school_release_consent is FALSE, exclude from external reporting.
-  - TPZ fiscal year runs July–June.
+  - TPZ fiscal year runs July–June. This means the term order is Summer, Fall, Winter, Spring. 
+  - The current term is always the term with the current_term_label as Current Term in the terms table.
 
+  Key Terminology:
+  - Retention: This is calculated by determining how many students in a course attended at least 80% of the course days. To be counted, a student needs to attend at least 3 days. This can be calculated per course or averaged across courses in a term. Calculating this should use the max_days field from the courses table and a count of unique days where att_pct > 0 from the student_attendances table.
+  - Advancement: This is calculated by determining how many students enrolled in a term enroll again in one of the two following terms. To be counted, a student needs to attend at least 3 days. To check for re-enrollment, use the registrations table. To ensure they attended at least 3 days in a term, count unique days where att_pct > 0 from the student_attendances table.
+  - Enrolled: This refers to students who registered for a course and attended at least 3 days of that course. This is not dependent on having an active registration for that course. If someone asks for "Currently Enrolled" they are referring to active registrations, but asking for enrolled in a term or course should only require 3 attendance days.
+  - Registered: This refers to anyone who has a registration for a course. Asking for "currently registered" would mean checking registrations.active is true.
+  - Course Experiences: This is referring to the number of seats offered for a term. This acconts for students who register in multiple courses at once.
+  - Student Experiences: This is referring to the number of unique students who registered for a course in a term.
 
-  Student Journey
+  Student Journey:
   When a student first expresses interest in TPZ or the recruitment team identifies a student that would be a good fit this student fills out an interest form. 
-  The submission of this form is what creates the student id number since it creates an entry in the poeple table. A student will only have one interest form. 
+  The submission of this form is what creates the student id number since it creates an entry in the people table. A student will only have one interest form. 
   After this recruitment will perform some screening and if the student passes screening their parents are sent an enrollment form. 
-  A student will have one enrollment form for every term they enroll in a course. 
+  A student will have one enrollment form for every year they enroll in a course. They must resubmit an enrollment for once a year.
   The parents are the one to fill out the enrollment form not the student. 
   The interest and enrollment forms are what populates the student_profiles table.
+  Students register for courses and can register for more than one. If they drop out of a course their active column in the registration table gets set to 0/false. 
+  Students may switch sections of a course without it being considered a drop, this can be verified by checking for a registration with the same course_type_id.
+
+  Program Iteration:
+  There have been a few versions of the program which have changed the logic for course naming and progression. During some phases of the program we ran school day programming instead of after schoo. When a course has DY in the course code it was a school day course.
+    1. From Winter 2022 through Summer 2024 we ran a 4 stage version of the program. We had Discover, Ideate, Incubate, and Consult. These were more entrepreneurial focused where students would come up with a business idea and develop it over the course of the program. These courses had an attendance requirement so if a student took Discover twice it would mean they didn't attend enough days to move on to the next class.
+    2. From Fall 2024 through Summer 2025 we offered a 3 stage version of the program. We had a Discover course followed by a more focused Explore course which has a specific type followed by Create. You were supposed to take Explore twice. Create never got taken because this program era ended before anyone made it to that course. There were a few pathways classes that could be taken Future You, Intern, Apply, Decide. Students needed to attend a certain number of days to move from Discover to Explore, Explore to Intern, etc. 
+    3. From Fall 2025 to Present we have offered Launch Labs with different focuses. The focuses are defined using the friendly_name column in the courses table or by the name in the course_types table. Students can take a launch lab as many times as they want and the program is not intended to be sequential. 
+
+  Topic Hierarchy:
+  The topics are all intended to be used for a specific type of question so even when a topic has the right tables for a question it shouldn't be used unless the question and the topic match.
+  Don't use the pathways_data topic unless someone specifically asks for Pathways data or mentions wanting junior and senior data for advising specifically.
+  Use the cleaned_student_attendance_data topic for questions related to student attendance.
+  Use the student_attendance_rates_data topic for questions about historical term retention but add a note to the user that data for the current term isn't available in this topic. Never use this topic when someone is asking about the current term.
+  The student_information_data topic can be used when someone is asking for information about a student such as their race or language spoken at home as well as general information about where they went to school or what courses they're in.
+  The recruitment_pipeline topic should not be used unless someone is specifically asking for information about the recruitment process.
+
+  Table Hierarchy:
+  Student information should always be pulled from the student profile when available. For schools, we no longer use the school_name column in the student profile and instead use the school_id column which connects to the schools table.
+  contact_orders is used for getting contact mode types like physical addresses for students. Contact_orders needs to be connected to through roles and then joined with different ables to get the actual contact info.
+  The sites table should be used to detemine what site a student or course is tied to.
+  The entries in alumni_profiles are currently not acurate. Dont use this information unless instructed otherwise.
+
+  Clarifications and Follow-ups:
+  When a user asks for the number of students in a term, BEFORE giving the user an answer, the agent should ask a follow-up question to the user to clarify their intent. The agent should ask if the user is looking for the count of the number of students EVER enrolled in that term (i.e., regardless of the number of classes), the number that attended at least three days of that class, or the number that completed the course (i.e., attended at least 80% of the days of the course). 
+  If the user is asking about the count for the current term, then the agent should ask if they want to know the number actively attending classes currently, in which case the registrations table or view can be used, or if they are wanting to know the number that was ever considered to be enrolled in the current term (i.e., the number that attended 3 ore more days of their course in the current term, even if they've already dropped-out), in which case the clean student attendances table/view would need to be queried, because the value in the `active` column of the registrations view changes from `true` to `false` when a student is dropped from a course. 
+  Thus, if a user wants a count of total number of students ever considered enrolled in a term (even if they dropped-out), it will be an underestimate if the registration table is used and filtered to rows where active = true.
 
 default_cache_policy: cache_for_a_day
 
@@ -32,11 +66,25 @@ cache_policies:
 
 ignored_views:
   [
+    course_interest*,
+    ahoy*,
+    dashboard*,
+    workflow*,
+    form*,
     asana_*,
     data_migrations,
     inbound_request_logs,
     outbound_request_logs,
     sf_*,
-    virtual_addresses,
-    workflows*
+    virtual_addresses
+  ]
+
+ai_chat_topics:
+  [
+    alumni_survey_data,
+    pathways_data,
+    cleaned_student_attendance_data,
+    student_information_data,
+    student_survey_data,
+    student_attendance_rates_data
   ]

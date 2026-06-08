@@ -1,0 +1,23 @@
+# Reference this view as all_student_terms
+query:
+  fields:
+    omni__clean_attendance_query_view.person_id: person_id
+    terms.start_date: term_start_date
+    terms.season: season
+    terms.term_year: term_year
+    terms.name: term_name
+  base_view: omni__clean_attendance_query_view
+  filters:
+    omni__clean_attendance_query_view.course_code:
+      and:
+        - not_contains: DY
+          case_insensitive: true
+        - not: null
+  topic: cleaned_student_attendance_data
+
+dimensions:
+  person_id: {}
+  season: {}
+  term_year: {}
+  term_start_date: {}
+  term_name: {}
