@@ -15,10 +15,10 @@ ai_context: |
   - The current term is always the term with the current_term_label as Current Term in the terms table.
 
   Key Terminology:
-  - Retention: This is calculated by detemining how many students in a course attended at least 80% of the course days. For a student to be counted they needed to attend at least 3 days. This can be calculated per course or averaged across courses in a term. Calculating this should use the max_days field from the courses table and a count of unique days where att_pct is greater than 0 from the student_attendances table. 
-  - Advancement: This is calculated by detemining how many students enolled in a term, enroll again in one of the two following terms. For a student to be counted they needed to attend at least 3 days. To check for re-enrollment, the registrations table should be used. To make sure they attended at least 3 days in a term a count of unique days where att_pct > 0 from the student_attendances table should be used. 
-  - Enrolled: This is referreing to students who registered for a course and attended at least 3 days of that course. This is not dependent on having an active registration for that course. If they attended at least 3 days they are counted towards enrolled. If someone asks for Currenly Enrolled then they are referring to active registations but just asking for enrolled in a term or course should only have a requirement of 3 attendance days. 
-  - Registered: This is referring to anyone who has a registeration for a course. Asking for currently registrered would mean checking for the active column is true.
+  - Retention: This is calculated by determining how many students in a course attended at least 80% of the course days. To be counted, a student needs to attend at least 3 days. This can be calculated per course or averaged across courses in a term. Calculating this should use the max_days field from the courses table and a count of unique days where att_pct > 0 from the student_attendances table.
+  - Advancement: This is calculated by determining how many students enrolled in a term enroll again in one of the two following terms. To be counted, a student needs to attend at least 3 days. To check for re-enrollment, use the registrations table. To ensure they attended at least 3 days in a term, count unique days where att_pct > 0 from the student_attendances table.
+  - Enrolled: This refers to students who registered for a course and attended at least 3 days of that course. This is not dependent on having an active registration for that course. If someone asks for "Currently Enrolled" they are referring to active registrations, but asking for enrolled in a term or course should only require 3 attendance days.
+  - Registered: This refers to anyone who has a registration for a course. Asking for "currently registered" would mean checking registrations.active is true.
   - Course Experiences: This is referring to the number of seats offered for a term. This acconts for students who register in multiple courses at once.
   - Student Experiences: This is referring to the number of unique students who registered for a course in a term.
 
@@ -42,12 +42,12 @@ ai_context: |
   The topics are all intended to be used for a specific type of question so even when a topic has the right tables for a question it shouldn't be used unless the question and the topic match.
   Don't use the pathways_data topic unless someone specifically asks for Pathways data or mentions wanting junior and senior data for advising specifically.
   Use the cleaned_student_attendance_data topic for questions related to student attendance.
-  Use the student_attendance_rates_data topic for questions about historical term retention but add a note to the user that data for the current term isn't availble in this topic. Never use this topic when someone is asking about the current term.
-  The student_informtion_data topic can be used when someone is asking for information about a student such as their race or language spoken at home as well as general information about where they went to school or what courses they're in.
+  Use the student_attendance_rates_data topic for questions about historical term retention but add a note to the user that data for the current term isn't available in this topic. Never use this topic when someone is asking about the current term.
+  The student_information_data topic can be used when someone is asking for information about a student such as their race or language spoken at home as well as general information about where they went to school or what courses they're in.
   The recruitment_pipeline topic should not be used unless someone is specifically asking for information about the recruitment process.
 
   Table Hierarchy:
-  Student information should always be pulled from the student profile when available. For schools, we no longer use the school_name column in the student profile and instead use the schools_id column which connects to the schools table.
+  Student information should always be pulled from the student profile when available. For schools, we no longer use the school_name column in the student profile and instead use the school_id column which connects to the schools table.
   contact_orders is used for getting contact mode types like physical addresses for students. Contact_orders needs to be connected to through roles and then joined with different ables to get the actual contact info.
   The sites table should be used to detemine what site a student or course is tied to.
   The entries in alumni_profiles are currently not acurate. Dont use this information unless instructed otherwise.

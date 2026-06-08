@@ -115,7 +115,8 @@ dimensions:
   term_name:
     order_by_field: start_date
     ai_context: Term name from the base SQL view. Equivalent to terms.name. Use
-      terms.current_term_label for sorted term display.
+      terms.current_term_label to get the current term and terms.start_date for
+      ordering.
 
   student_id:
     sql: student_id

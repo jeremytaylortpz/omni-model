@@ -6,8 +6,7 @@ ai_fields:
     student_drop_patterns_by_term_data.*,
     terms.*,
     -terms.created_at,
-    -terms.updated_at,
-    term_sorting_v2.*
+    -terms.updated_at
   ]
 
 joins:

@@ -9,25 +9,25 @@
   join_type: inner
   on_sql: ${student_retention.first_term_per_student_person_id} =
     ${first_term_per_student.person_id}
-  relationship_type: one_to_many
+  relationship_type: many_to_one
 
 - join_from_view: student_profiles
   join_to_view: student_retention
   join_type: always_left
   on_sql: ${student_profiles.person_id} =
     ${student_retention.first_term_per_student_person_id}
-  relationship_type: one_to_many
+  relationship_type: one_to_one
 
 - join_from_view: people
   join_to_view: student_retention
   join_type: always_left
   on_sql: ${people.id} = ${student_retention.first_term_per_student_person_id}
-  relationship_type: one_to_many
+  relationship_type: one_to_one
 
 - join_from_view: people
   join_to_view: all_student_terms
   join_type: always_left
-  on_sql: ${people.id} = ${student_retention.first_term_per_student_person_id}
+  on_sql: ${people.id} = ${all_student_terms.person_id}
   relationship_type: one_to_many
 
 - join_from_view: student_profiles
@@ -187,7 +187,7 @@
   join_to_view: es_per_respondent_means
   join_type: always_left
   on_sql: ${omni__all_survey_data_with_demos.response_id} =
-    ${ec_respondent_totals.response_id}
+    ${es_per_respondent_means.response_id}
   relationship_type: many_to_one
   reversible: false
 
@@ -484,8 +484,8 @@
 - join_from_view: student_profiles
   join_to_view: schools
   join_type: always_left
-  on_sql: ${student_profiles.school} = ${schools.name}
-  relationship_type: many_to_many
+  on_sql: ${student_profiles.school_id} = ${schools.id}
+  relationship_type: one_to_one
 
 - join_from_view: schools
   join_to_view: school_tiers

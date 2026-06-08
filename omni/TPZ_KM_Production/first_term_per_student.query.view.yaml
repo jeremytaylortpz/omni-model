@@ -4,11 +4,11 @@ description: Winter and Spring are mid-year, so their cutoff is Fall of the SAME
 query:
   fields:
     all_student_terms.person_id: person_id
-    first_term_name: ""
-    first_season: ""
-    first_term_year: ""
-    first_term_start: ""
-    retention_cutoff_date: ""
+    first_term_name: first_term_name
+    first_season: first_season
+    first_term_year: first_term_year
+    first_term_start: first_term_start
+    retention_cutoff_date: retention_cutoff_date
     __omni_silent_group: ""
   base_view: all_student_terms
   calculations:

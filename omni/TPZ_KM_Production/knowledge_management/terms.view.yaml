@@ -52,7 +52,11 @@ dimensions:
           END
 
   term_year:
-    sql: CAST(SUBSTRING(${terms.name}, LENGTH(${terms.name}) - 3, 4) AS INTEGER)
+    sql: |-
+      CASE
+        WHEN ${terms.name} REGEXP '[0-9]{4}$' THEN CAST(RIGHT(${terms.name}, 4) AS INTEGER)
+        ELSE NULL
+      END
 
 measures:
   count:
