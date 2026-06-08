@@ -1,5 +1,5 @@
 base_view: omni__clean_attendance_query_view
-label: Student Demographics
+label: Student Information
 
 fields:
   [

@@ -15,10 +15,10 @@ ai_context: |
   - The current term is always the term with the current_term_label as Current Term in the terms table.
 
   Key Terminology:
-  - Retention: This is calculated by detemining how many students in a course attended at least 80% of the course days. For a student to be counted they needed to attend at least 3 days. This can be calculated per course or averaged across courses in a term.
-  - Advancement: This is calculated by detemining how many students enolled in a term, enroll again in one of the two following terms. For a student to be counted they needed to attend at least 3 days.
-  - Enrolled: This is referreing to students who registered for a course and attended at least 3 days of that course. This is not dependent on having an active registration for that course. If they attended at least 3 days they are counted towards enrolled.
-  - Registered: This is referring to anyone who has a registeration for a course where the active column is true.
+  - Retention: This is calculated by detemining how many students in a course attended at least 80% of the course days. For a student to be counted they needed to attend at least 3 days. This can be calculated per course or averaged across courses in a term. Calculating this should use the max_days field from the courses table and a count of unique days where att_pct is greater than 0 from the student_attendances table. 
+  - Advancement: This is calculated by detemining how many students enolled in a term, enroll again in one of the two following terms. For a student to be counted they needed to attend at least 3 days. To check for re-enrollment, the registrations table should be used. To make sure they attended at least 3 days in a term a count of unique days where att_pct > 0 from the student_attendances table should be used. 
+  - Enrolled: This is referreing to students who registered for a course and attended at least 3 days of that course. This is not dependent on having an active registration for that course. If they attended at least 3 days they are counted towards enrolled. If someone asks for Currenly Enrolled then they are referring to active registations but just asking for enrolled in a term or course should only have a requirement of 3 attendance days. 
+  - Registered: This is referring to anyone who has a registeration for a course. Asking for currently registrered would mean checking for the active column is true.
   - Course Experiences: This is referring to the number of seats offered for a term. This acconts for students who register in multiple courses at once.
   - Student Experiences: This is referring to the number of unique students who registered for a course in a term.
 
@@ -35,7 +35,7 @@ ai_context: |
   Program Iteration:
   There have been a few versions of the program which have changed the logic for course naming and progression. During some phases of the program we ran school day programming instead of after schoo. When a course has DY in the course code it was a school day course.
     1. From Winter 2022 through Summer 2024 we ran a 4 stage version of the program. We had Discover, Ideate, Incubate, and Consult. These were more entrepreneurial focused where students would come up with a business idea and develop it over the course of the program. These courses had an attendance requirement so if a student took Discover twice it would mean they didn't attend enough days to move on to the next class.
-    2. From Fall 2024 through Summer 2025 we offered a 3 stage version of the program. We had a Discover course followed by a more focused Explore course which has a specific type followed by Create. You were supposed to take Explore twice. Create never got taken because this program era ended before anyone made it to that course. There were a few pathways classes that could be taken Future You, Interen, Apply, Decide. Students needed to attend a certain number of days to move from Discover to Explore, Explore to Intern, etc. 
+    2. From Fall 2024 through Summer 2025 we offered a 3 stage version of the program. We had a Discover course followed by a more focused Explore course which has a specific type followed by Create. You were supposed to take Explore twice. Create never got taken because this program era ended before anyone made it to that course. There were a few pathways classes that could be taken Future You, Intern, Apply, Decide. Students needed to attend a certain number of days to move from Discover to Explore, Explore to Intern, etc. 
     3. From Fall 2025 to Present we have offered Launch Labs with different focuses. The focuses are defined using the friendly_name column in the courses table or by the name in the course_types table. Students can take a launch lab as many times as they want and the program is not intended to be sequential. 
 
   Topic Hierarchy:
@@ -43,7 +43,7 @@ ai_context: |
   Don't use the pathways_data topic unless someone specifically asks for Pathways data or mentions wanting junior and senior data for advising specifically.
   Use the cleaned_student_attendance_data topic for questions related to student attendance.
   Use the student_attendance_rates_data topic for questions about historical term retention but add a note to the user that data for the current term isn't availble in this topic. Never use this topic when someone is asking about the current term.
-  The student_demographics_data topic can be used when someone is asking for information about a student such as their race or language spoken at home.
+  The student_informtion_data topic can be used when someone is asking for information about a student such as their race or language spoken at home as well as general information about where they went to school or what courses they're in.
   The recruitment_pipeline topic should not be used unless someone is specifically asking for information about the recruitment process.
 
   Table Hierarchy:
@@ -84,7 +84,7 @@ ai_chat_topics:
     alumni_survey_data,
     pathways_data,
     cleaned_student_attendance_data,
-    student_demographics_data,
+    student_information_data,
     student_survey_data,
     student_attendance_rates_data
   ]
