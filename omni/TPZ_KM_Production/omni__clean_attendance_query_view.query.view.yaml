@@ -175,8 +175,8 @@ measures:
     aggregate_type: count_distinct
 
   effective_course_days:
-    sql: CASE WHEN ${courses.max_days} NOT NULL THEN ${courses.max_days} ELSE
-      COUNT(DISTINCT attendance_date) END
+    sql: COALESCE(MAX(${courses.max_days}), COUNT(DISTINCT
+      ${omni__clean_attendance_query_view.attendance_date}))
     description: Returns courses.max_days when populated, otherwise counts unique
       attendance dates
 
