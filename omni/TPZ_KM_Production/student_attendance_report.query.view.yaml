@@ -1,0 +1,158 @@
+# Reference this view as student_attendance_report
+label: Student Attendance Report
+
+sql: |-
+  WITH attendance_bounds AS (
+    SELECT
+      context_id AS course_id,
+      person_id,
+      MIN(date) AS student_first_date
+    FROM student_attendances
+    WHERE context_type = 'Course'
+      AND active = true 
+   GROUP BY context_id, person_id
+  ),
+  course_bounds AS (
+    SELECT
+      context_id AS course_id,
+      MIN(date) AS course_first_date, 
+    	COUNT(DISTINCT date) AS course_date_count
+    FROM student_attendances
+    WHERE context_type = 'Course'
+      AND active = true
+    GROUP BY context_id
+  ), 
+  course_days AS (
+    SELECT
+      context_id AS course_id,
+      date
+    FROM student_attendances
+    WHERE context_type = 'Course'
+      AND active = true
+    GROUP BY context_id, date
+  ), 
+  days_added_late AS (
+    SELECT
+      cd.course_id,
+      ab.person_id,
+      COUNT(*) AS days_added_late
+    FROM course_days cd
+    JOIN attendance_bounds ab
+      ON ab.course_id = cd.course_id
+     AND cd.date < ab.student_first_date
+    GROUP BY
+      cd.course_id,
+      ab.person_id
+  ),
+  attendance_totals AS (
+    SELECT 
+    p.id, 
+    p.first_name, 
+    p.middle_name, 
+    p.last_name, 
+    c.course_code, 
+    c.friendly_name, 
+    cb.course_date_count AS count_class_days, 
+    COALESCE(dal.days_added_late, 0) AS days_added_late,
+    (cb.course_date_count - COALESCE(dal.days_added_late, 0)) AS adjusted_count_class_days,
+    ct.name AS course_type_name, 
+    d.name AS department_name,
+    t.name AS term_name,
+    -- Aggregation logic for P, H, A
+    SUM(CASE WHEN sa.att_pct = 1 THEN 1 ELSE 0 END) AS P,
+    SUM(CASE WHEN sa.att_pct = 0.5 THEN 1 ELSE 0 END) AS H,
+    SUM(CASE WHEN sa.att_pct = 0 THEN 1 ELSE 0 END) AS A,
+    r.active AS registration_status
+  FROM student_attendances sa
+  JOIN attendance_bounds ab ON ab.course_id = sa.context_id AND ab.person_id = sa.person_id
+  JOIN course_bounds cb ON cb.course_id = sa.context_id
+  LEFT JOIN days_added_late dal ON dal.course_id = sa.context_id AND dal.person_id = sa.person_id
+  JOIN people p ON sa.person_id = p.id
+  JOIN courses c ON sa.context_id = c.id AND sa.context_type = 'Course'
+  JOIN course_types ct ON c.course_type_id = ct.id
+  JOIN departments d ON ct.department_id = d.id
+  JOIN terms t ON c.term_id = t.id
+  JOIN (
+    SELECT
+      person_id,
+      context_id,
+      MAX(active) AS active
+    FROM registrations
+    WHERE context_type = 'Course'
+    GROUP BY person_id, context_id
+  ) r
+    ON r.context_id = c.id
+   AND r.person_id = p.id
+  GROUP BY 
+    p.id, 
+    p.first_name, 
+    p.middle_name, 
+    p.last_name, 
+    c.id,
+    c.course_code, 
+    c.friendly_name, 
+    ct.name, 
+    d.name,
+    r.active
+  )
+  SELECT
+    *,
+    (P + H) / count_class_days AS attendance,
+    (P + H) / adjusted_count_class_days AS adjusted_attendance
+  FROM attendance_totals
+
+dimensions:
+  id: {}
+  first_name: {}
+  middle_name: {}
+  last_name: {}
+  course_code: {}
+  friendly_name: {}
+  count_class_days: {}
+  days_added_late: {}
+  adjusted_count_class_days: {}
+  course_type_name: {}
+  department_name: {}
+  term_name: {}
+  registration_status: {}
+  attendance: {}
+  adjusted_attendance: {}
+
+  p:
+    sql: "`P`"
+
+  h:
+    sql: "`H`"
+
+  a:
+    sql: "`A`"
+
+  course_code_groups:
+    sql: ${student_attendance_report.course_code}
+    groups:
+      - filter:
+          and:
+            - contains: LH
+            - not_contains: IC
+        name: Lawrence
+      - filter:
+          contains: IC
+        name: Boston
+    else: Other
+    label: Sites
+
+  schedule:
+    sql: ${student_attendance_report.course_code}
+    groups:
+      - filter:
+          ends_with: A
+        name: A Section
+      - filter:
+          ends_with: B
+        name: B Section
+    else: Other
+    label: Schedule
+
+measures:
+  count:
+    aggregate_type: count
